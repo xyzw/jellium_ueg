@@ -1,0 +1,220 @@
+Verification of the revised Jellium–UEG proof
+
+Scope
+
+Jellium.Main.equality proves equality at every positive hbar and density,
+and Main.coupling_equality gives the equivalent positive-coupling statement.
+Both invoke Conjecture51.equality, which proves the two comparisons from
+explicit literature, operator and analytic laws on one ChargeModel and
+StateAPI. The constrained indirect energy and canonical ball energy are
+infima in that abstract model. Neither desired comparison nor the canonical
+completion estimate is assumed as an input.
+
+This is relative formal verification. Concrete trace-class Fock operators,
+Sobolev domains, literature theorems and the local orbital-sampling construction
+remain inputs. The lower confined-state predicate and upper near-ground-ball
+law are separately supplied interfaces. Their interpretation as the same
+physical canonical Dirichlet problem is not constructed from operator theory.
+LITERATURE.txt describes these qualifications and the primary references.
+
+Manuscript
+
+The reviewed source is jellium_ueg.tex dated 12 October 2026. The update covers
+the main proof in Section 4 and the shell completion in Appendix B, together
+with the scaling reduction of the main theorem. The Basic facts subsection
+is outside the requested formalization scope. Its analytic and operator
+results remain explicit inputs. Existing helper identities are retained.
+Appendix A reviews the literature behind the Jellium inputs and is not
+separately rebuilt. verification.json records the precise manuscript and
+local-source SHA-256 hashes.
+
+Changes made for this revision
+
+Main.UnitParameterInputs collects the existing lower, upper, localization
+and interpolation inputs at hbar = 1. Main.equality uses these at each
+positive density, invokes Conjecture51.equality, derives the powers hbar^6
+and hbar^(-8) from density scaling, and proves the full parameter statement.
+Main.coupling_equality derives the equivalent lambda formulation. The audit
+now checks this connected proof, including all three scaling steps.
+The intended finite spin multiplicity is represented by the selected state
+model and constants, not by a constructed family of spin operators.
+
+Neutralization.select_orbitals selects a realization at or below the exact
+mean, retains the negative omitted self-interaction term, and no longer
+adds an artificial unit error. The completion proof uses the shell estimate
+at the outer radius directly, with the manuscript's excess-background sign
+convention. The favorable negative charge-square term is retained before
+the weaker completion result drops it for the lower comparison.
+
+UniformCounting now proves pointwise counting bounds for the actual selected
+periodic balls, uniformly over the translation cell. UpperBox uses these to
+prove an explicit normalized energy remainder and the eventual uniform
+upper bound in eq:attack_fixed_packing_upper. The existing equality proof
+continues to use exact averaged coverage.
+
+Proof map
+
+1. General inputs and the bounded transition layer
+
+The identity eq:conj_identity is CoulombForm.jellium_eq_indirect_add_charge,
+specialized to the lower background by LowerPhysical.jellium_identity.
+TrialState.StateAPI.product supplies the disjoint fermionic product law.
+Its indirect-energy and Jellium-energy consequences are derived algebraically.
+The Coulomb interpolation inequality, LO and HO inequalities, Newton/polar
+laws and LLS localization remain named analytic or literature inputs.
+
+Spatial and Boundary.local_sum_from_tiling derive finite-window cell counts,
+boundary support, the partition-power estimate and the uniform local-energy
+sum. The absolute cell energy controls missing interior volume for either
+energy sign. Boundary.averaged_localization_lower_bound inserts that bound
+into LLS localization. bounded_layer_from_standard_localization proves the
+ordered large-box then large-cell limits. It requires no uniform kinetic
+bound for the original density sequence.
+
+2. Lower comparison and shell completion
+
+InnerDensity constructs a smoothed inner-ball density with strict Dirichlet
+support margin. It proves mass, pointwise bounds, both UEG scale conditions,
+and vanishing normalized Coulomb discrepancy. The formal sequence has inner
+radius (n+1)^2, width 1/(n+1), and confining radius (n+1)^2 + 2*A/(n+1).
+This is an equivalent explicit choice rather than the exact ell^(-1/2)
+parametrization in the manuscript.
+
+LowerPhysical.exists_trial_sequence chooses constrained-search near-minimizers.
+exists_sector_le selects an occupied sector with energy no greater than its
+countable mixture average. It assumes neither integer mean particle number
+nor radiality of the selected sector.
+
+Neutralization.charge_bound derives the surface-order charge bound from the
+Onsager/capacity lower bound and extensive upper energy estimate.
+NeutralizationGeometry.exists_prepared_annulus constructs the rounded neutral
+outer radius, positive integer shell population, fixed width and a lower
+bound for the trimmed sampling volume. shellCharge_properties constructs the
+radial signed shell charge and controls its mass and total variation.
+
+NeutralizationElectrostatics proves shell cancellation through a symmetric
+radial kernel estimate. This is an alternative to the manuscript's
+cumulative-charge integration-by-parts identity eq:completion_shell_identity.
+The outer-radius consequence is used directly by
+Neutralization.shell_correction_bound_at_outer_radius. Its negative monopole
+term is retained in exists_neutral_completion_with_monopole before being
+dropped for the thermodynamic comparison.
+
+OrbitalSample provides the iid classical expectation with its negative
+omitted self-interaction, an integrable kinetic penalty, particle count and
+local orbital energy estimate. select_orbitals proves favorable realization
+selection. The continuum iid measure, actual orbitals, exact numerical
+penalty constants and their Fock realization are not implemented here.
+The completion theorem combines these local inputs with the proved charge,
+geometry and cancellation estimates. LowerPhysical.lower_comparison then
+uses only the canonical LN limit on neutral balls to obtain eJ <= eU.
+
+3. Upper comparison
+
+SmoothCollar and RadialCollar construct compensated profiles and prove their
+neutrality, regularity, zero exterior potential and surface costs. Gluing,
+FluidRegularity and UpperConstruction produce the core-plus-fluid geometry
+and finite trial estimate. The fluid law is a bounded-density quasifree bound.
+It suffices for the proved fluid density cap, but does not verify the full
+unbounded-density LLS epsilon-dependent lemma or its numerical constants.
+
+Packing and PackingParameters construct separated integer-neutral cores.
+Lattice, PeriodicTrial, SelectedConstruction and PeriodicSelected construct
+the measurable finite selection of translates. SmoothCube and UpperBackground
+supply the fixed smoothed cubic background.
+
+CoulombForm.core_fluid_identity and MeasurableTrial.given_product_jellium give
+the exact fixed-background identity eq:attack_exact_upper_identity. Core-core,
+core-collar and distinct-collar cross terms vanish by proved support and
+Newton cancellation. No estimate for a moving outer background is used.
+
+Periodic, Coverage, ProfileAverage, BaseProfiles, CenteredProfiles, JointDensity
+and UpperDensity prove the averaged density plateau, bounded transition
+layer and support. The exterior support is expressed through the containing
+coordinate cube, sufficient for the same bounded-layer argument.
+UpperDensity.average_uniform_bounds also proves the packing-independent cap
+from core neutrality and coverage. The localization step uses the sufficient
+fixed-packing cap, since the packing is held fixed in the large-box limit.
+MixtureIntegrability, PotentialBound and UpperMixture
+justify averaging at a fixed background. Only linear observables are affine.
+
+UniformCounting compares two shifts in a fundamental cell and integrates
+exact coverage at enlarged and reduced box sizes. It proves the actual
+uniform counting error with constant 26*(radiusMax + 3*a + L), a larger
+fixed-packing constant than the manuscript's 26*(a + L). The rate is still
+O(R^2). UpperPhysical.fixed_packing_uniform_rate gives a normalized energy
+remainder of order 1/R. fixed_packing_uniform_upper proves that, for every
+positive eta, every shift is eventually bounded by the fixed-packing energy
+plus eta. This is the epsilon form of eq:attack_fixed_packing_upper, without
+introducing explicit supremum or limsup operators.
+
+These uniform estimates supplement the equality proof, which uses the exact
+averaged coverage from UpperCoverage and UpperEnergy. UpperBox and
+UpperPhysical hold the packing fixed in the first limit, then send its error
+to zero. Both versions handle either sign of eJ.
+
+Retired arguments and audit
+
+The old Canonical, CanonicalConstruction, Canonicalization,
+ProbabilityApproximation and contraction-energy arguments remain historical
+helpers. Generic mollifier and ball-volume helpers are still reused.
+Audit.lean rejects use of retired assignment, contraction and scalar-obligation
+proofs by the final equality. It also requires the main lower, shell, upper
+and localization lemmas to occur in the equality's actual dependency graph.
+The graph is rooted at Main.coupling_equality and also requires Main.equality,
+Conjecture51.equality and all three EnergyScaling reductions.
+
+The axiom audit covers every non-internal declaration imported under the
+Jellium root, including its transitive dependencies.
+Only propext, Classical.choice and Quot.sound are allowed. It rejects sorryAx
+and other axioms, and prints the equality type and principal law structures.
+This logical audit does not prove that the physical inputs are implemented.
+
+Reproduction
+
+From lean/ run
+
+    python3 check.py
+
+The current full run uses python3 check.py --jobs 4. This forces the same
+checks with four compiler processes, scheduled after their local imports.
+
+This forces a rebuild of all local sources with autoImplicit=false,
+relaxedAutoImplicit=false and warnings treated as errors. For changed modules
+and a fresh audit run
+
+    python3 check.py --build Jellium.lean Audit.lean
+
+The checker verifies the compiler version against lean-toolchain and always
+reruns Audit.lean, including when its compiled output is current. Dependencies
+use the existing mathlib cache. No dependency files are modified.
+The cached mathlib commit matches the pinned revision. Its only tracked
+differences are existing executable-bit changes on Python utility scripts,
+with no content changes. The verification does not execute those scripts.
+
+The unchanged runner was previously checked using a temporary compiler fixture. Those checks
+covered dependency ordering with parallel workers, incremental freshness,
+mandatory audit execution, wrong-version rejection and failure propagation.
+
+Build result
+
+Passed on 12 October 2026 at 19.39 CEST.
+
+    python3 check.py --jobs 4
+
+The full forced rebuild exited successfully. All 64 local modules were
+compiled, comprising 62 mathematical modules, Jellium.lean and Audit.lean.
+Warnings were treated as errors. The audit checked 939 theorem declarations
+and 470 definitions with no sorryAx or additional axioms. It confirmed
+that every required main, lower, shell, upper, localization and scaling step
+is present in the main theorem's dependency graph. No retired assignment,
+contraction or scalar-obligation proof is used.
+The complete output, theorem types and principal input laws are in verification.log.
+The checked manuscript and Lean files match the recorded source hashes.
+
+SHA-256 of the checked jellium_ueg.tex
+
+    854fd12270e0d3e66b0a0c555871dd885402ea53d63557f4a54da37b226cd774
+
+verification.json records the source hashes, checked module list, compiler,
+mathlib revision and log digest. This task did not edit the manuscript.

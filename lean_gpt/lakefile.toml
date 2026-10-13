@@ -1,0 +1,18 @@
+name = "jellium_verification"
+version = "0.1.0"
+defaultTargets = ["Jellium", "Audit"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "85e3a25e006c35636f0e53b0e9296caca2685bc0"
+
+[[lean_lib]]
+name = "Jellium"
+
+[[lean_lib]]
+name = "Audit"

@@ -1,0 +1,226 @@
+Literature inputs and scope of the Lean development
+
+This is relative formal verification of the Jellium–UEG equality. Charges,
+finite-energy states, Sobolev spaces and their observables are explicit
+interfaces. Physical trace-class Fock operators are not constructed from Lean
+foundations. Every literature or operator law is a visible theorem hypothesis.
+No law asserts either desired comparison or the new canonical completion bound.
+
+The current update excludes the manuscript's Basic facts section. General
+results stated there are used through the existing explicit law interfaces.
+Appendix A reviews the literature behind the Jellium inputs and is not a
+separate construction of their operator-theoretic proofs.
+
+The same ChargeModel and StateAPI are used on both sides. The lower confined
+predicate and upper near-ground-ball interface are separately supplied laws
+with the same scalar eJ. Their identification with the same concrete canonical
+Dirichlet model is part of the physical interpretation of those inputs, not
+a constructed equivalence of concrete operator domains.
+Density functions may
+be chosen representatives, while constrained search and Coulomb identities
+respect almost-everywhere equality. The physical Coulomb form includes 1/2.
+The reference density and kinetic coefficient are positive, and the finite
+spin multiplicity is the same throughout.
+
+1. Canonical Dirichlet Jellium thermodynamic limit and stability
+
+Primary source
+E. H. Lieb and H. Narnhofer, The Thermodynamic Limit for Jellium,
+Journal of Statistical Physics 12 (1975), 291–310.
+https://doi.org/10.1007/BF01012066
+https://fig.if.usp.br/~marchett/rg/thermodynamic-limit-jellium_lieb-narnhofer.pdf
+
+LowerPhysical.StandardLaws.ln is the canonical ground-energy limit restricted
+to neutral balls. Its energy is the actual constrained infimum over confined
+fixed-number states. Section 5.4(iii) includes the ground-state limit. No
+identification with unconfined grand-canonical Jellium is taken as an input.
+The former disconnected-domain LN specialization is not used in the new proof.
+
+Neutralization.StandardLaws.onsager retains the positive smeared Coulomb term
+from the ordinary Onsager inequality. A signed charge of mass Q supported in
+B_(R+a) has Coulomb energy at least Q^2/(2(R+a)). This follows by subtracting Q
+times the uniform probability charge on the sphere and using positivity.
+The resulting finite-sector lower bound is a general electrostatic input.
+Lean derives the required charge bound from it rather than assuming that
+low-energy sectors have surface-order charge.
+
+The local shell operations adapt the sampling/penalty/disjoint-orbital method
+in LN Section 5.1. The published leftover-region lemma is not invoked as a
+ready-made completion theorem. Appendix B of the manuscript writes out the
+adaptation, retaining the core–shell interaction.
+
+Neutralization.OrbitalSample and StandardLaws.sample specify the following
+local facts for admissible annular radii, positive particle number and a confined
+core. Independent point sampling at constant density on the trimmed annulus
+has the exact classical Coulomb expectation, including the negative omitted
+diagonal term. The integrable inverse-square short-distance penalty has mean
+at most a constant times density bound times particle number. LN's radial
+orbitals in disjoint balls give an exact canonical Fock state. Their kinetic
+cost is bounded by that penalty plus a constant per particle. Pair Coulomb
+interactions and the harmonic core potential are preserved by radial averaging.
+Smearing the bounded background attraction costs at most a constant per particle.
+
+These probability/continuum operator constructions remain explicit analytic
+inputs. Lean proves the favorable-sample selection, integer completion,
+charge cancellation and surface-order bound from them. The strengthened
+exists_neutral_completion_with_monopole retains the favorable negative
+charge-square term at the outer radius before the original completion theorem
+drops it. Selection is at or below the exact mean and retains the omitted
+self-interaction correction, with no added unit error. The completion uses
+the outer-radius shell estimate with the excess-background sign convention
+of the manuscript. The numerical orbital and penalty constants in Appendix B remain
+abstracted into orbitalConstant, rather than individually derived.
+Lean does not construct
+the iid measure or orbitals in a concrete Fock-space implementation. The sample
+law contains no assumption of total neutrality, bounded charge imbalance or
+surface-order energy. The new completion theorem derives all three.
+
+The upper construction's NearGroundBallLaw is the canonical ball limit followed
+by the variational principle and rotation averaging. It concerns the same
+canonical Jellium energy as the lower comparison.
+
+2. Fixed-density UEG and localization
+
+Primary source
+M. Lewin, E. H. Lieb and R. Seiringer, The Local Density Approximation in
+Density Functional Theory, Pure and Applied Analysis 2 (2020), 35–73.
+https://doi.org/10.2140/paa.2020.2.35
+https://msp.org/paa/2020/2-1/paa-v2-n1-p03-p.pdf
+https://arxiv.org/abs/1903.04046
+
+Theorem 1 supplies the fixed-smoothed-density UEG limit. Its mollifier has unit
+mass, compact support and finite square-root Dirichlet integral. The smoothing
+scale satisfies delta/R -> 0 and delta*R -> infinity. LowerPhysical's ueg field
+is its specialization to balls. InnerDensity proves both conditions for the
+actual new density sequence, its strict support margin and the discrepancy
+estimate. None of those construction-specific conclusions is an input.
+
+Published Proposition 16, equation (47), supplies the averaged lower
+localization inequality. It is Proposition 2 in arXiv v2. Theorem 1 has the
+same numbering in both versions. At fixed smoothing thickness the localization
+error is O(1/l) times the integral of density plus density squared.
+UpperDensity and Boundary derive the needed bounded-transition-layer result
+from this standard inequality and the large-cell UEG limit.
+
+Earlier primary UEG source
+M. Lewin, E. H. Lieb and R. Seiringer, Statistical mechanics of the uniform
+electron gas, Journal de l'Ecole polytechnique — Mathematiques 5 (2018), 79–116.
+https://jep.centre-mersenne.org/articles/10.5802/jep.64/
+
+Section 5 provides the quantum grand-canonical UEG framework. Its whole-space
+Jellium relaxation is not assumed to have the same limit as canonical LN
+Jellium. The stronger fixed-convolution limit used here comes from the 2020
+paper.
+
+Underlying localization source
+G. M. Graf and D. Schenker, On the molecular limit of Coulomb gases,
+Communications in Mathematical Physics 174 (1995), 215–227.
+https://doi.org/10.1007/BF02099471
+
+Its smeared inequality is the source used by the LLS localization argument.
+This is Graf–Schenker localization, not the Graf–Solovej correlation estimate.
+
+3. General density and state-space laws
+
+E. H. Lieb and S. Oxford, Improved lower bound on the indirect Coulomb energy,
+International Journal of Quantum Chemistry 19 (1981), 427–439.
+https://doi.org/10.1002/qua.560190306
+
+The grand-canonical form is recorded in the 2020 LLS paper, Section 3.1,
+equation (17). It supplies the lower stability of the constrained indirect
+functional and the transition-layer estimates.
+
+E. H. Lieb, Density functionals for Coulomb systems,
+International Journal of Quantum Chemistry 24 (1983), 243–277.
+https://doi.org/10.1002/qua.560240302
+
+Representability and the constrained-search framework are standard inputs.
+The quasifree density construction and kinetic bound used by the upper fluid
+are described in the 2020 LLS paper, Sections 3.2–3.3.
+
+V. Bach, E. H. Lieb and J. P. Solovej, Generalized Hartree-Fock theory and the
+Hubbard model, Journal of Statistical Physics 76 (1994), 3–89.
+https://doi.org/10.1007/BF02188656
+
+StateAPI supplies ordinary quasifree and disjoint-support Fock product laws.
+Its quasifree input is a bounded-density estimate with a gradient term and
+M^(2/3) times the mass. This is sufficient for the constructed fluid, whose
+density has a proved uniform bound. It does not formalize the full epsilon
+dependent LLS fluid lemma for arbitrary unbounded densities or its displayed
+numerical constants. The measurable choice of such a fluid state remains
+part of FockOperations.
+MeasurableTrial and Variational supply translation, measurable finite products
+and continuum mixtures, including the required integrability. The upper
+construction proves that these conditions hold for its actual trial family.
+The indirect-energy functional is never assumed affine in the state.
+
+LowerPhysical.SectorData is the ordinary number-sector decomposition, with a
+summable energy expectation and admissible occupied sectors. There is no
+prescribed mean particle number and no sector rotation. exists_sector_le proves
+the selection of a sector no higher in energy than the average.
+
+4. General Coulomb, Sobolev and elementary analytic laws
+
+The ChargeModel uses a real vector space of finite charges embedded into
+functions. Background evaluation is required for bounded measurable domains.
+Coulomb symmetry, bilinearity, positivity and potential pairing are inputs.
+Standard Newton and polar integral formulas identify physical three-dimensional
+radial charges with RadialShells' one-dimensional mass representation.
+NeutralizationElectrostatics proves the new shell cancellation and estimates
+using that representation.
+
+The Coulomb interpolation bound
+D(f) <= C*||f||_1^(5/3)*||f||_infinity^(1/3)
+is the usual near/far kernel estimate. InnerDensity proves the exact missing
+mass, its polynomial surface bound and the resulting vanishing normalized
+Coulomb energy. The former BV and density-contraction inputs are unnecessary.
+
+M. Hoffmann-Ostenhof and T. Hoffmann-Ostenhof, Schrodinger inequalities and
+asymptotic behavior of the electron density of atoms and molecules,
+Physical Review A 16 (1977), 1782–1785.
+https://doi.org/10.1103/PhysRevA.16.1782
+
+The square-root density inequality, ordinary Sobolev chain rules, polar
+integration and convolution regularity are standard analytic inputs.
+SmoothCollar, RadialCollar, SmoothCube and UpperBackground prove the needed
+profile bounds, compensated collar costs and box-background properties.
+Vitali approximation is the geometric input for the upper packing, whose
+integer radii, separation, finite selection and limiting coverage are proved.
+
+5. Derived conclusions and audit scope
+
+The active proof derives inner-density mass/support/scale estimates, its
+Coulomb error, low-sector selection, the charge estimate, rounded annular
+geometry, shell mass and radial cancellation, favorable orbital realization,
+finite-volume canonical completion and the lower thermodynamic comparison.
+The upper packing, collars, averaged density and upper comparison are proved
+by their corresponding modules. The current proof also records the sharper
+negative-part energy estimate and a maximum-radius transition width.
+The packing-independent averaged density cap is proved separately. The
+localization step uses the sufficient fixed-packing cap, since the packing
+is held fixed throughout the large-box limit.
+The upper thermodynamic limit uses exact averaged lattice coverage.
+UniformCounting additionally proves a translation-uniform O(R^2) counting
+error for the actual selected balls by comparing shifts and averaging exact
+counts in enlarged and reduced cubes. Its constant may depend on the largest
+radius as well as the period and collar width. UpperBox derives the explicit
+uniform O(1/R) normalized energy remainder and the epsilon form of the
+manuscript's fixed-packing supremum/limsup conclusion. These supplementary
+results are not needed by the existing averaged trial-state proof.
+
+EnergyScaling proves the algebraic reduction from hbar = 1 at all positive
+densities and the equivalence with the lambda formulation, given the two
+physical scaling relations. Main.equality and Main.coupling_equality now
+connect those reductions to Conjecture51.equality through UnitParameterInputs
+at every positive density. The density scaling law itself gives the parameter
+scaling powers. The fixed finite spin multiplicity is encoded by the selected
+state model and its constants. Concrete physical operator families as spin
+or hbar varies are not constructed.
+
+No premise asserts a GC limit, equality of ensembles, completion inequality,
+new trial convergence, bounded-layer conclusion or either final comparison.
+The old assignment and contraction arguments remain in historical helper
+modules but are absent from the final theorem's dependency graph. Audit.lean
+checks that exclusion, checks logical axioms, and prints the final theorem
+and the explicit local shell input interfaces. Logical axiom checks do not
+prove the physical interpretation of those interfaces.
