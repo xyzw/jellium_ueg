@@ -17,7 +17,7 @@ structure PreparedAnnulus (ρ R H L : ℝ) (N : ℕ) where
   radius : ℝ
   total : ℕ
   particles : ℕ
-  radius_lower : R + 3 ≤ radius
+  radius_lower : R + 4 ≤ radius
   radius_upper : radius ≤ R + H
   neutral : ρ * ballVolume radius = (total : ℝ)
   count : particles + N = total
@@ -25,9 +25,9 @@ structure PreparedAnnulus (ρ R H L : ℝ) (N : ℕ) where
   particles_le : (particles : ℝ) ≤ L * R ^ 2
   background_nonnegative : 0 ≤ ρ * (ballVolume radius - ballVolume R)
   background_le : ρ * (ballVolume radius - ballVolume R) ≤ L * R ^ 2
-  trimmed_lower : ballFactor * R ^ 2 ≤ ballVolume (radius - 1) - ballVolume (R + 1)
+  trimmed_lower : 8 * Real.pi * R ^ 2 ≤ ballVolume (radius - 1) - ballVolume (R + 1)
   sampling_bound : (particles : ℝ) /
-    (ballVolume (radius - 1) - ballVolume (R + 1)) ≤ L / ballFactor
+    (ballVolume (radius - 1) - ballVolume (R + 1)) ≤ L / (8 * Real.pi)
 
 theorem cube_increment_lower (R h : ℝ) (hR : 0 ≤ R) (hh : 0 ≤ h) :
     h * R ^ 2 ≤ (R + h) ^ 3 - R ^ 3 := by
@@ -58,19 +58,8 @@ theorem exists_prepared_annulus {ρ K : ℝ} (hρ : 0 < ρ) (hK : 0 ≤ K) :
     dsimp [H₀]
     rw [mul_add, mul_div_cancel₀ _ hb.ne']
     nlinarith only [hb]
-  let H := H₀ + 1 + 1 / b
+  let H := H₀ + 1
   have hH : 0 < H := by dsimp [H]; positivity
-  have hgap : 0 ≤ H - H₀ := by
-    dsimp [H]
-    have := one_div_pos.mpr hb
-    linarith only [this]
-  have hgain₁ : 1 ≤ b * (H - H₀) := by
-    have hid : b * (H - H₀) = b + 1 := by
-      dsimp [H]
-      field_simp
-      ring
-    rw [hid]
-    linarith only [hb]
   let A := b * (3 * H + 3 * H ^ 2 + H ^ 3)
   let L := A + K + 1
   have hA : 0 ≤ A := by dsimp [A]; positivity
@@ -94,14 +83,14 @@ theorem exists_prepared_annulus {ρ K : ℝ} (hρ : 0 < ρ) (hK : 0 ≤ K) :
     have hp := pow_lt_pow_left₀ (lt_of_not_ge h) hSpos.le (by decide : 3 ≠ 0)
     have := mul_lt_mul_of_pos_left hp hb
     linarith only [hMlo, hneutral, this]
-  have hRbase : 1 ≤ (R + H₀) ^ 2 := by nlinarith only [hR, hH₀]
-  have hstep := cube_increment_lower (R + H₀) (H - H₀) (by positivity) hgap
+  have hRbase : H₀ ≤ (R + H₀) ^ 2 := by nlinarith only [hR, hH₀]
+  have hstep := cube_increment_lower (R + H₀) 1 (by positivity) (by norm_num)
   have hstep' := mul_le_mul_of_nonneg_left hstep hb.le
-  have hone := mul_le_mul_of_nonneg_left hRbase (mul_nonneg hb.le hgap)
+  have hone := mul_le_mul_of_nonneg_left hRbase hb.le
   have htop : b * (R + H₀) ^ 3 + 1 ≤ b * (R + H) ^ 3 := by
-    have hid : R + H₀ + (H - H₀) = R + H := by ring
+    have hid : R + H₀ + 1 = R + H := by dsimp [H]; ring
     rw [hid] at hstep'
-    nlinarith only [hstep', hone, hgain₁]
+    nlinarith only [hstep', hone, hgain, hK]
   have hShi : S ≤ R + H := by
     by_contra h
     have hp := pow_lt_pow_left₀ (lt_of_not_ge h) (by positivity : 0 ≤ R + H)
@@ -144,17 +133,21 @@ theorem exists_prepared_annulus {ρ K : ℝ} (hρ : 0 < ρ) (hK : 0 ≤ K) :
     rw [hPcast]
     dsimp [L]
     nlinarith only [hmasshi, hl, sq_nonneg R]
-  have hS3 : R + 3 ≤ S := by linarith only [hSlo, hH₀]
-  have htrim : ballFactor * R ^ 2 ≤ ballVolume (S - 1) - ballVolume (R + 1) := by
-    have hp := pow_le_pow_left₀ (by positivity : 0 ≤ R + 2) (by linarith only [hS3] : R + 2 ≤ S - 1) 3
-    have hpoly : R ^ 2 ≤ (R + 2) ^ 3 - (R + 1) ^ 3 := by nlinarith only [hR, sq_nonneg R]
+  have hS4 : R + 4 ≤ S := by linarith only [hSlo, hH₀]
+  have htrim : 8 * Real.pi * R ^ 2 ≤ ballVolume (S - 1) - ballVolume (R + 1) := by
+    have hp := pow_le_pow_left₀ (by positivity : 0 ≤ R + 3)
+      (by linarith only [hS4] : R + 3 ≤ S - 1) 3
+    have hpoly : 6 * R ^ 2 ≤ (R + 3) ^ 3 - (R + 1) ^ 3 := by
+      nlinarith only [hR]
     have hp' := mul_le_mul_of_nonneg_left hp ballFactor_pos.le
     have hpoly' := mul_le_mul_of_nonneg_left hpoly ballFactor_pos.le
-    change ballFactor * R ^ 2 ≤ ballFactor * (S - 1) ^ 3 - ballFactor * (R + 1) ^ 3
+    have hfactor : 8 * Real.pi = 6 * ballFactor := by unfold ballFactor; ring
+    rw [hfactor]
+    change 6 * ballFactor * R ^ 2 ≤ ballFactor * (S - 1) ^ 3 - ballFactor * (R + 1) ^ 3
     linarith only [hp', hpoly']
   have htrimpos : 0 < ballVolume (S - 1) - ballVolume (R + 1) :=
-    lt_of_lt_of_le (mul_pos ballFactor_pos (sq_pos_of_pos hRpos)) htrim
-  refine ⟨⟨S, M, P, hS3, hShi, ?_, hcount, hPpos, hPle, ?_, ?_, htrim, ?_⟩⟩
+    lt_of_lt_of_le (by positivity) htrim
+  refine ⟨⟨S, M, P, hS4, hShi, ?_, hcount, hPpos, hPle, ?_, ?_, htrim, ?_⟩⟩
   · rw [hV]
     exact hneutral
   · rw [mul_sub, hV S, hneutral, hV R]
@@ -166,9 +159,10 @@ theorem exists_prepared_annulus {ρ K : ℝ} (hρ : 0 < ρ) (hK : 0 ≤ K) :
     dsimp [L]
     nlinarith only [hmasshi, mul_nonneg hK (sq_nonneg R), sq_nonneg R]
   · apply (div_le_iff₀ htrimpos).2
-    have hprod := mul_le_mul_of_nonneg_left htrim (div_nonneg hL.le ballFactor_pos.le)
-    have hid : (L / ballFactor) * (ballFactor * R ^ 2) = L * R ^ 2 := by
-      field_simp [ne_of_gt ballFactor_pos]
+    have hprod := mul_le_mul_of_nonneg_left htrim
+      (div_nonneg hL.le (by positivity : (0 : ℝ) ≤ 8 * Real.pi))
+    have hid : (L / (8 * Real.pi)) * (8 * Real.pi * R ^ 2) = L * R ^ 2 := by
+      field_simp
     rw [hid] at hprod
     exact le_trans hPle hprod
 

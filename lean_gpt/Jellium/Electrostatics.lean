@@ -32,7 +32,7 @@ def indirect (kinetic repulsion : ℝ) (density : V) : ℝ :=
 def jellium (kinetic repulsion : ℝ) (density background : V) : ℝ :=
   kinetic + repulsion - 2 * D.form density background + D.form background background
 
-/-- Equation `attack_J_identity`, with the factor one half already in `D`. -/
+/-- Equation `eq:conj_identity`, with the factor one half already in `D`. -/
 theorem jellium_eq_indirect_add_charge
     (kinetic repulsion : ℝ) (density background : V) :
     D.jellium kinetic repulsion density background =
@@ -63,7 +63,7 @@ theorem self_sum {ι : Type*} (s : Finset ι) (charge : ι → V)
     (fun j hj hji => hcross j hj i hi hji)
     (fun h => (h hi).elim)
 
-/-- The exact core-plus-fluid identity underlying `attack_exact_upper_identity`.
+/-- The exact core-plus-fluid identity underlying `eq:upper_exact_identity`.
 
 The product-state theorem from Fock-space theory supplies `hproduct`.
 Newton's theorem and the support geometry must supply the three zero-cross

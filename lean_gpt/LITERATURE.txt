@@ -6,10 +6,10 @@ interfaces. Physical trace-class Fock operators are not constructed from Lean
 foundations. Every literature or operator law is a visible theorem hypothesis.
 No law asserts either desired comparison or the new canonical completion bound.
 
-The current update excludes the manuscript's Basic facts section. General
-results stated there are used through the existing explicit law interfaces.
-Appendix A reviews the literature behind the Jellium inputs and is not a
-separate construction of their operator-theoretic proofs.
+General results in the manuscript's Basic facts section are used through the
+existing explicit law interfaces. Appendix A now sketches the limit on balls.
+Its elementary sequence-convergence lemma is proved in Lean, but the full
+thermodynamic limit and its operator-theoretic construction remain inputs.
 
 The same ChargeModel and StateAPI are used on both sides. The lower confined
 predicate and upper near-ground-ball interface are separately supplied laws
@@ -42,42 +42,65 @@ B_(R+a) has Coulomb energy at least Q^2/(2(R+a)). This follows by subtracting Q
 times the uniform probability charge on the sphere and using positivity.
 The resulting finite-sector lower bound is a general electrostatic input.
 Lean derives the required charge bound from it rather than assuming that
-low-energy sectors have surface-order charge.
+low-energy sectors have surface-order charge. The coefficient is now
+2*(1+a)*c + sqrt(2*(1+a)*(C+c*b)), with b = 4*pi*rho/3. For unit smearing it
+is 4*c + 2*sqrt(C+c*b), as in the revised appendix. The annular geometry
+also proves the appendix's 8*pi*R^2 lower bound on the trimmed volume.
 
 The local shell operations adapt the sampling/penalty/disjoint-orbital method
 in LN Section 5.1. The published leftover-region lemma is not invoked as a
 ready-made completion theorem. Appendix B of the manuscript writes out the
 adaptation, retaining the core–shell interaction.
 
-Neutralization.OrbitalSample and StandardLaws.sample specify the following
-local facts for admissible annular radii, positive particle number and a confined
-core. Independent point sampling at constant density on the trimmed annulus
-has the exact classical Coulomb expectation, including the negative omitted
-diagonal term. The integrable inverse-square short-distance penalty has mean
-at most a constant times density bound times particle number. LN's radial
-orbitals in disjoint balls give an exact canonical Fock state. Their kinetic
-cost is bounded by that penalty plus a constant per particle. Pair Coulomb
-interactions and the harmonic core potential are preserved by radial averaging.
-Smearing the bounded background attraction costs at most a constant per particle.
+Neutralization.StandardLaws.sample now constructs an OrbitalSample. Its law is
+the finite product of normalized Lebesgue measure on the trimmed annulus.
+OrbitalSampling proves the exact classical Coulomb expectation, including the
+negative omitted diagonal term, and almost-sure distinctness of the centers.
+OrbitalGeometry assigns half the minimum of one and the nearest-neighbour
+distance as each orbital radius. It proves disjointness, confinement and the
+kinetic bound by a short-distance inverse-square pair penalty.
+OrbitalRadial defines the sine reduced profile and the associated Euclidean
+orbital function. It proves reduced mass one and Dirichlet integral pi^2/r^2.
+The radial Newton kernel then gives the point-charge potential outside the
+ball and bounds the background-smearing loss by pi*rho/2 when r <= 1/2.
+OrbitalKernel proves the penalty's three-dimensional integrability and exact
+integral 32*pi^3. These results give the numerical constant
+kineticCoeff*(4*pi^2 + 16*pi^3) + (pi/2)*abs(rho) used by the sampler.
 
-These probability/continuum operator constructions remain explicit analytic
-inputs. Lean proves the favorable-sample selection, integer completion,
-charge cancellation and surface-order bound from them. The strengthened
+OrbitalConstruction.OperatorLaws retains the general Sobolev/Fock product
+law for arbitrary smooth normalized reduced profiles with zero endpoint
+values. This law supplies a confined many-body state and its exact energy
+decomposition. The identification of those profiles with physical Sobolev
+orbitals and the construction of antisymmetrized Fock states are not rebuilt
+here. The exact pair Newton identity, radial averaging of the core potential,
+and the polar/Fubini background identity also remain explicit inputs. The
+background identity uses a measurable angular occupation fraction between
+zero and one. Lean derives its loss bound rather than assuming one.
+StandardLaws.shell_pairing is an exact Coulomb expansion for an arbitrary
+real uniform annular charge and a confined core. It does not concern a sampled
+configuration or assert an energy estimate. Integrability of the core's
+one-body potential on the sampling annulus remains an analytic input.
+
+Lean proves the local orbital energy bound, favorable-sample selection,
+integer completion, charge cancellation and surface-order bound from these
+general laws. The strengthened
 exists_neutral_completion_with_monopole retains the favorable negative
 charge-square term at the outer radius before the original completion theorem
 drops it. Selection is at or below the exact mean and retains the omitted
 self-interaction correction, with no added unit error. The completion uses
 the outer-radius shell estimate with the excess-background sign convention
-of the manuscript. The numerical orbital and penalty constants in Appendix B remain
-abstracted into orbitalConstant, rather than individually derived.
-Lean does not construct
-the iid measure or orbitals in a concrete Fock-space implementation. The sample
-law contains no assumption of total neutrality, bounded charge imbalance or
-surface-order energy. The new completion theorem derives all three.
+of the manuscript. No remaining law assumes the orbital cost, iid penalty
+estimate, total neutrality, bounded charge imbalance or surface-order
+completion energy. Those conclusions are derived. The physical Fock-space
+implementation remains outside the development.
 
 The upper construction's NearGroundBallLaw is the canonical ball limit followed
 by the variational principle and rotation averaging. It concerns the same
-canonical Jellium energy as the lower comparison.
+canonical Jellium energy as the lower comparison. The current manuscript
+chooses rotation-invariant exact ground states. Lean retains the sufficient
+near-ground-state bounds and does not add an attainment assumption. Likewise,
+the lower proof uses constrained-search near-minimizers instead of the exact
+minimizers now chosen in the manuscript.
 
 2. Fixed-density UEG and localization
 
@@ -189,10 +212,19 @@ integer radii, separation, finite selection and limiting coverage are proved.
 
 5. Derived conclusions and audit scope
 
+ThermodynamicSequence formalizes the elementary scalar convergence lemma
+lem:LN_sequences newly included in Appendix A. Its finite-sum envelope and
+successor identity are proved directly, and bounded monotone convergence
+gives the limit. This theorem is audited but is supplementary to the main
+equality. The physical packing recursion and its quantum-radius rescaling
+are not constructed here, and the canonical LN limit remains an input.
+
 The active proof derives inner-density mass/support/scale estimates, its
 Coulomb error, low-sector selection, the charge estimate, rounded annular
 geometry, shell mass and radial cancellation, favorable orbital realization,
 finite-volume canonical completion and the lower thermodynamic comparison.
+The orbital realization uses the explicit profiles and proved estimates
+through the general Fock product law described above.
 The upper packing, collars, averaged density and upper comparison are proved
 by their corresponding modules. The current proof also records the sharper
 negative-part energy estimate and a maximum-radius transition width.

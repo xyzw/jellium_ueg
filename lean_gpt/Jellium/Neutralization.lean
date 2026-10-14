@@ -1,12 +1,16 @@
 import Jellium.NeutralizationElectrostatics
 import Jellium.NeutralizationGeometry
+import Jellium.OrbitalConstruction
+import Jellium.OrbitalAnnulus
+import Jellium.OrbitalKernel
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 
 /-! Canonical completion of a charged ball by an annulus.
-The input laws are the Onsager/capacity inequality and the usual iid sampling
-and disjoint radial orbital construction. They do not include a canonical
-completion bound, a grand-canonical limit, or either energy comparison. -/
+The input laws are the Onsager/capacity inequality, general radial operator
+identities and Coulomb integral pairings. The iid sampler and local orbital
+construction are derived. No canonical completion bound, grand-canonical
+limit or either energy comparison is assumed. -/
 
 open MeasureTheory Set
 
@@ -20,7 +24,8 @@ theorem charge_bound (R N E a c b C : ℝ)
     (hR : 1 ≤ R) (ha : 0 ≤ a) (hc : 0 ≤ c) (hb : 0 ≤ b) (hC : 0 ≤ C)
     (hupper : E ≤ C * R ^ 3)
     (hlower : (N - b * R ^ 3) ^ 2 / (2 * (R + a)) - c * N ≤ E) :
-    |N - b * R ^ 3| ≤ (2 * (1 + a) * (C + c * b + c) + 1) * R ^ 2 := by
+    |N - b * R ^ 3| ≤
+      (2 * (1 + a) * c + Real.sqrt (2 * (1 + a) * (C + c * b))) * R ^ 2 := by
   have hR0 : 0 < R := by linarith
   let q := N - b * R ^ 3
   let x := |q| / R ^ 2
@@ -55,15 +60,34 @@ theorem charge_bound (R N E a c b C : ℝ)
     have hh : (x ^ 2 - (A + B * x)) * R ^ 4 ≤ 0 := by nlinarith only [hpoly']
     have := nonpos_of_mul_nonpos_left hh (by positivity : 0 < R ^ 4)
     linarith
-  have hxbound : x ≤ A + B + 1 := by
+  have hxbound : x ≤ B + Real.sqrt A := by
     by_contra hn
-    have hlarge : A + B + 1 < x := lt_of_not_ge hn
-    have hxx : 0 < (x - 1) * (x - B) := mul_pos (by linarith) (by linarith)
-    nlinarith only [hsq, hxx, hlarge]
+    have hlarge : B + Real.sqrt A < x := lt_of_not_ge hn
+    have hsqrt := Real.sqrt_nonneg A
+    have hxx : 0 < (x - B - Real.sqrt A) * (x + Real.sqrt A) :=
+      mul_pos (by linarith) (by linarith)
+    nlinarith only [hsq, hxx, Real.sq_sqrt hA, mul_nonneg hB hsqrt]
   have := mul_le_mul_of_nonneg_right hxbound (sq_nonneg R)
   rw [← hqx] at this
   dsimp [q, A, B] at this
-  nlinarith only [this]
+  exact this
+
+/-- The explicit constant `K₀` in `completion_charge_bound`, with unit
+smearing radius. The absolute value covers either sign of the core charge. -/
+theorem charge_bound_unit_smearing (R N E c b C : ℝ)
+    (hR : 1 ≤ R) (hc : 0 ≤ c) (hb : 0 ≤ b) (hC : 0 ≤ C)
+    (hupper : E ≤ C * R ^ 3)
+    (hlower : (N - b * R ^ 3) ^ 2 / (2 * (R + 1)) - c * N ≤ E) :
+    |N - b * R ^ 3| ≤ (4 * c + 2 * Real.sqrt (C + c * b)) * R ^ 2 := by
+  have hsqrt : Real.sqrt (2 * (1 + (1 : ℝ)) * (C + c * b)) =
+      2 * Real.sqrt (C + c * b) := by
+    rw [show 2 * (1 + (1 : ℝ)) = 2 ^ 2 by norm_num,
+      Real.sqrt_mul (by positivity : (0 : ℝ) ≤ 2 ^ 2),
+      Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2)]
+  have h := charge_bound R N E 1 c b C hR (by norm_num) hc hb hC hupper hlower
+  rw [hsqrt] at h
+  convert h using 1
+  ring
 
 /-- An ordinary iid point sample, followed by LN's disjoint radial orbitals.
 The classical expectation includes the omitted diagonal self interaction.
@@ -205,11 +229,10 @@ theorem shellCharge_properties {ρ R H L : ℝ} {N : ℕ}
           layer_integral _ _ (by linarith [g.radius_lower]), hmassp, layer_mass_volume]
       _ ≤ (2 * L) * R ^ 2 := by linarith [g.particles_le, g.background_le]
 
-/-- The general analytic and Fock-space inputs. `sample` is the ordinary iid
-annular sampler and LN local radial-orbital estimate at arbitrary particle
-number and annular width. The total classical charge correction is an exact
-expectation, not a bound. All cancellation, count choices, averaging and the
-surface-order conclusion are derived below. -/
+/-- General analytic and operator inputs. `shell_pairing` identifies the
+ordinary Coulomb double integrals for a real uniform shell charge with its
+radial Newton representation. It makes no assertion about a sampled
+configuration or a constructed state. The sampler is derived below. -/
 structure StandardLaws {State : Type*}
     (energy : ℝ → State → ℝ) (confined : ℝ → ℕ → State → Prop) (ρ : ℝ) where
   smearRadius : ℝ
@@ -219,13 +242,157 @@ structure StandardLaws {State : Type*}
   onsager : ∀ R N Γ, 0 < R → confined R N Γ →
     ((N : ℝ) - ρ * ballVolume R) ^ 2 / (2 * (R + smearRadius)) -
       onsagerConstant * N ≤ energy R Γ
-  orbitalConstant : ℝ
-  orbitalConstant_nonnegative : 0 ≤ orbitalConstant
-  sample : ∀ R S N P Γ, 0 < R → R + 3 ≤ S → 0 < P → confined R N Γ →
+  operators : OrbitalConstruction.OperatorLaws energy confined ρ
+  potential_integrable : ∀ R S N Γ, 0 < R → R + 3 ≤ S → confined R N Γ →
+    Integrable (operators.oneBody R S Γ) (OrbitalAnnulus.centerLaw R S)
+  shell_pairing : ∀ R S N Γ (t : ℝ), 0 < R → R + 3 ≤ S → confined R N Γ →
+    t ^ 2 / 2 * (∫ x, ∫ y, OrbitalConstruction.pointKernel x y
+      ∂OrbitalAnnulus.centerLaw R S ∂OrbitalAnnulus.centerLaw R S) +
+      t * (∫ x, operators.oneBody R S Γ x ∂OrbitalAnnulus.centerLaw R S) +
+      operators.backgroundConstant R S Γ =
+      RadialShells.energy (fun s => (t / trimmedVolume R S) * layer (R + 1) (S - 1) s -
+        ρ * layer R S s) + ((N : ℝ) - ρ * ballVolume R) *
+      potential (fun s => (t / trimmedVolume R S) * layer (R + 1) (S - 1) s -
+        ρ * layer R S s) 0
+
+namespace StandardLaws
+
+variable {State : Type*} {energy : ℝ → State → ℝ}
+variable {confined : ℝ → ℕ → State → Prop} {ρ : ℝ}
+
+noncomputable def orbitalConstant (laws : StandardLaws energy confined ρ) : ℝ :=
+  laws.operators.kineticCoeff * (4 * Real.pi ^ 2 + 16 * Real.pi ^ 3) + Real.pi / 2 * |ρ|
+
+theorem orbitalConstant_nonnegative (laws : StandardLaws energy confined ρ) :
+    0 ≤ laws.orbitalConstant := by
+  have := laws.operators.kineticCoeff_nonnegative
+  unfold orbitalConstant
+  positivity
+
+/-- The old local sampler assumption is now constructed from the actual
+uniform product measure, distinct-center geometry and radial sine orbitals. -/
+noncomputable def sample (laws : StandardLaws energy confined ρ) (hρ : 0 ≤ ρ)
+    (R S : ℝ) (N P : ℕ) (Γ : State)
+    (hR : 0 < R) (hS : R + 3 ≤ S) (hP : 0 < P) (hΓ : confined R N Γ) :
     OrbitalSample energy confined R S N P Γ
       (RadialShells.energy (shellCharge ρ R S P) +
         ((N : ℝ) - ρ * ballVolume R) * potential (shellCharge ρ R S P) 0)
-      ((P : ℝ) / trimmedVolume R S) orbitalConstant
+      ((P : ℝ) / trimmedVolume R S) laws.orbitalConstant := by
+  classical
+  let ν := OrbitalAnnulus.centerLaw R S
+  let : IsProbabilityMeasure ν := OrbitalAnnulus.centerLaw_probability hR hS
+  let μ := OrbitalSampling.sampleMeasure ν P
+  let good (c : Fin P → Space) := Function.Injective c ∧
+    ∀ i, R + 1 < ‖c i‖ ∧ ‖c i‖ < S - 1
+  have hgood : ∀ᵐ c ∂μ, good c := OrbitalAnnulus.ae_centers hR hS P
+  have build (c : Fin P → Space) (hc : good c) :=
+    OrbitalConstruction.exists_local_state laws.operators hρ hR hΓ c hc.1 hc.2
+  let realize (c : Fin P → Space) : State :=
+    if hc : good c then Classical.choose (build c hc) else Γ
+  let k := OrbitalConstruction.pointKernel
+  let v := laws.operators.oneBody R S Γ
+  let B := laws.operators.backgroundConstant R S Γ
+  let classical := OrbitalSampling.classicalEnergy k v B (n := P)
+  let penalty (c : Fin P → Space) := laws.operators.kineticCoeff * OrbitalGeometry.pairPenalty c
+  let κ := ∫ x, ∫ y, k x y ∂ν ∂ν
+  have hk : Integrable (Function.uncurry k) (ν.prod ν) :=
+    OrbitalKernel.integrable_coulomb_centerLaw_prod hR hS
+  have hv : Integrable v ν := laws.potential_integrable R S N Γ hR hS hΓ
+  have hκ : 0 ≤ κ := by
+    apply integral_nonneg
+    intro x
+    apply integral_nonneg
+    intro y
+    exact one_div_nonneg.mpr dist_nonneg
+  have hp : (0 : ℝ) < P := by exact_mod_cast hP
+  have hw := OrbitalKernel.integrable_uncurry_w hR hS
+  have hpenalty : penalty = fun c : Fin P → Space =>
+      laws.operators.kineticCoeff * OrbitalSampling.pairSum OrbitalKernel.w c := by
+    funext c
+    rw [← OrbitalKernel.pairPenalty_eq_pairSum]
+  have hpi : Integrable penalty μ := by
+    rw [hpenalty]
+    exact (OrbitalSampling.integrable_pairSum ν hw).const_mul _
+  refine {
+    measure := μ
+    probability := inferInstance
+    realize := realize
+    classical := classical
+    penalty := penalty
+    classical_integrable := OrbitalSampling.integrable_classicalEnergy ν hk hv B
+    penalty_integrable := hpi
+    omittedSelf := (P : ℝ) ^ 2 / 2 * κ
+    omittedSelf_nonnegative := by positivity
+    classical_mean := ?_
+    penalty_mean := ?_
+    canonical := ?_
+    orbital_energy := ?_
+  }
+  · have hm := OrbitalSampling.integral_classicalEnergy ν hk hv B (n := P)
+    have hs := laws.shell_pairing R S N Γ P hR hS hΓ
+    change (P : ℝ) ^ 2 / 2 * κ + P * (∫ x, v x ∂ν) + B = _ at hs
+    change (∫ c, classical c ∂μ) = _
+    rw [show (∫ c, classical c ∂μ) = _ from hm, hs]
+    congr 1
+    dsimp [κ]
+    field_simp [hp.ne']
+  · rw [hpenalty, integral_const_mul, OrbitalSampling.integral_pairSum ν hw]
+    have hwmean := OrbitalKernel.integral_w_centerLaw_prod_le hR hS
+    have hvol : OrbitalAnnulus.centerVolume R S = trimmedVolume R S := by
+      unfold OrbitalAnnulus.centerVolume trimmedVolume RadialShells.layerMass ballVolume
+      ring
+    rw [hvol] at hwmean
+    have hvolume : 0 < trimmedVolume R S := hvol ▸ OrbitalAnnulus.centerVolume_pos hR hS
+    have hcoef : 16 * Real.pi ^ 3 * laws.operators.kineticCoeff ≤ laws.orbitalConstant := by
+      have hkin := laws.operators.kineticCoeff_nonnegative
+      have hrest : 0 ≤ laws.operators.kineticCoeff * (4 * Real.pi ^ 2) +
+          Real.pi / 2 * |ρ| := by positivity
+      unfold orbitalConstant
+      nlinarith only [hrest]
+    have hpn : 0 ≤ (P : ℝ) - 1 := by
+      have hP1 : (1 : ℝ) ≤ P := by exact_mod_cast (Nat.succ_le_iff.mpr hP)
+      linarith
+    have hm := mul_le_mul_of_nonneg_left hwmean
+      (show 0 ≤ laws.operators.kineticCoeff * ((P : ℝ) * ((P : ℝ) - 1) / 2) by
+        have := laws.operators.kineticCoeff_nonnegative
+        positivity)
+    have hpn' : (P : ℝ) * ((P : ℝ) - 1) ≤ (P : ℝ) ^ 2 := by nlinarith
+    have hn := mul_le_mul_of_nonneg_left hpn'
+      (show 0 ≤ (16 * Real.pi ^ 3 * laws.operators.kineticCoeff) / trimmedVolume R S by
+        have := laws.operators.kineticCoeff_nonnegative
+        positivity)
+    have hc := mul_le_mul_of_nonneg_right hcoef
+      (show 0 ≤ ((P : ℝ) / trimmedVolume R S) * P by positivity)
+    calc
+      _ = laws.operators.kineticCoeff * ((P : ℝ) * ((P : ℝ) - 1) / 2) *
+          (∫ x, ∫ y, OrbitalKernel.w x y ∂ν ∂ν) := by ring
+      _ ≤ laws.operators.kineticCoeff * ((P : ℝ) * ((P : ℝ) - 1) / 2) *
+          (32 * Real.pi ^ 3 / trimmedVolume R S) := hm
+      _ = (16 * Real.pi ^ 3 * laws.operators.kineticCoeff) / trimmedVolume R S *
+          ((P : ℝ) * ((P : ℝ) - 1)) := by ring
+      _ ≤ (16 * Real.pi ^ 3 * laws.operators.kineticCoeff) / trimmedVolume R S *
+          (P : ℝ) ^ 2 := hn
+      _ = (16 * Real.pi ^ 3 * laws.operators.kineticCoeff) *
+          (((P : ℝ) / trimmedVolume R S) * P) := by ring
+      _ ≤ laws.orbitalConstant * (((P : ℝ) / trimmedVolume R S) * P) := hc
+      _ = _ := by ring
+  · filter_upwards [hgood] with c hc
+    simpa only [realize, dite_eq_left hc] using (Classical.choose_spec (build c hc)).1
+  · filter_upwards [hgood] with c hc
+    have he := (Classical.choose_spec (build c hc)).2
+    have hconst : (4 * Real.pi ^ 2 * laws.operators.kineticCoeff + Real.pi / 2 * ρ) * P ≤
+        laws.orbitalConstant * P := by
+      apply mul_le_mul_of_nonneg_right _ (Nat.cast_nonneg P)
+      have hkin := laws.operators.kineticCoeff_nonnegative
+      unfold orbitalConstant
+      rw [abs_of_nonneg hρ]
+      nlinarith [mul_nonneg hkin (pow_nonneg Real.pi_pos.le 3)]
+    change energy S (realize c) ≤ energy R Γ + classical c + laws.orbitalConstant * P + penalty c
+    simp only [realize, dite_eq_left hc]
+    dsimp [classical, penalty, k, v, B]
+    linarith only [he, hconst]
+
+end StandardLaws
 
 /-- Canonical completion retaining the favorable outer-radius monopole term
 from the appendix. The core charge can have either sign. Exact sampling
@@ -240,8 +407,8 @@ theorem exists_neutral_completion_with_monopole {State : Type*}
           ((N : ℝ) - ρ * ballVolume R) ^ 2 / (2 * S) + D * R ^ 2 := by
   let b := ρ * NeutralizationGeometry.ballFactor
   have hb : 0 ≤ b := mul_nonneg hρ.le NeutralizationGeometry.ballFactor_pos.le
-  let K := 2 * (1 + laws.smearRadius) *
-    (C + laws.onsagerConstant * b + laws.onsagerConstant) + 1
+  let K := 2 * (1 + laws.smearRadius) * laws.onsagerConstant +
+    Real.sqrt (2 * (1 + laws.smearRadius) * (C + laws.onsagerConstant * b))
   have hK : 0 ≤ K := by
     dsimp [K]
     have := laws.smearRadius_nonnegative
@@ -250,7 +417,7 @@ theorem exists_neutral_completion_with_monopole {State : Type*}
   obtain ⟨H, L, hH, hL, hgeometry⟩ :=
     NeutralizationGeometry.exists_prepared_annulus hρ hK
   let D := H * ((2 * L) ^ 2 / 2 + K * (2 * L)) +
-    laws.orbitalConstant * (1 + L / NeutralizationGeometry.ballFactor) * L
+    laws.orbitalConstant * (1 + L / (8 * Real.pi)) * L
   have hD : 0 ≤ D := by
     dsimp [D]
     have := laws.orbitalConstant_nonnegative
@@ -268,6 +435,7 @@ theorem exists_neutral_completion_with_monopole {State : Type*}
       (by simpa only [hbg] using laws.onsager R N Γ hR0 hΓ)
     simpa only [hbg] using h
   obtain ⟨g⟩ := hgeometry R N hR hcharge
+  have hsep : R + 3 ≤ g.radius := by linarith [g.radius_lower]
   obtain ⟨hm, hi, hs, hmass, hL1⟩ := shellCharge_properties hρ hR g
   have hcorrection := shell_correction_bound_at_outer_radius
     (shellCharge ρ R g.radius g.particles) R g.radius
@@ -278,7 +446,7 @@ theorem exists_neutral_completion_with_monopole {State : Type*}
     (radial_self_integrable _ R H hR0 hm hi hs)
   simp only [neg_mul, sub_neg_eq_add, neg_sq] at hcorrection
   obtain ⟨Ψ, hΨ, heΨ⟩ := select_orbitals
-    (laws.sample R g.radius N g.particles Γ hR0 g.radius_lower g.particles_pos hΓ)
+    (laws.sample hρ.le R g.radius N g.particles Γ hR0 hsep g.particles_pos hΓ)
   refine ⟨g.radius, g.total, Ψ, by linarith [g.radius_lower], g.radius_upper,
     g.neutral, ?_, ?_⟩
   · have hc : N + g.particles = g.total := (Nat.add_comm _ _).trans g.count
@@ -287,17 +455,17 @@ theorem exists_neutral_completion_with_monopole {State : Type*}
       lt_of_lt_of_le (by have := NeutralizationGeometry.ballFactor_pos; positivity) g.trimmed_lower
     have hd : 0 ≤ (g.particles : ℝ) / trimmedVolume R g.radius := by positivity
     have hcost : laws.orbitalConstant * (1 + (g.particles : ℝ) / trimmedVolume R g.radius) *
-        g.particles ≤ laws.orbitalConstant * (1 + L / NeutralizationGeometry.ballFactor) *
+        g.particles ≤ laws.orbitalConstant * (1 + L / (8 * Real.pi)) *
           L * R ^ 2 := by
       have hcoef : laws.orbitalConstant *
           (1 + (g.particles : ℝ) / trimmedVolume R g.radius) ≤
-          laws.orbitalConstant * (1 + L / NeutralizationGeometry.ballFactor) := by
+          laws.orbitalConstant * (1 + L / (8 * Real.pi)) := by
         apply mul_le_mul_of_nonneg_left _ laws.orbitalConstant_nonnegative
         change 1 + (g.particles : ℝ) /
           (ballVolume (g.radius - 1) - ballVolume (R + 1)) ≤ _
         linarith only [g.sampling_bound]
       calc
-        _ ≤ (laws.orbitalConstant * (1 + L / NeutralizationGeometry.ballFactor)) *
+        _ ≤ (laws.orbitalConstant * (1 + L / (8 * Real.pi))) *
             (L * R ^ 2) := mul_le_mul hcoef g.particles_le (Nat.cast_nonneg _)
               (by have := laws.orbitalConstant_nonnegative
                   have := NeutralizationGeometry.ballFactor_pos
@@ -311,10 +479,10 @@ theorem exists_neutral_completion_with_monopole {State : Type*}
         (show g.radius - R ≤ H by linarith [g.radius_upper])
         (show 0 ≤ ((2 * L) ^ 2 / 2 + K * (2 * L)) * R ^ 2 by positivity)
       nlinarith only [hcorrection, hwidth]
-    have hself : 0 ≤ (laws.sample R g.radius N g.particles Γ hR0
-        g.radius_lower g.particles_pos hΓ).omittedSelf / (g.particles : ℝ) :=
-      div_nonneg (laws.sample R g.radius N g.particles Γ hR0
-        g.radius_lower g.particles_pos hΓ).omittedSelf_nonnegative (Nat.cast_nonneg _)
+    have hself : 0 ≤ (laws.sample hρ.le R g.radius N g.particles Γ hR0
+        hsep g.particles_pos hΓ).omittedSelf / (g.particles : ℝ) :=
+      div_nonneg (laws.sample hρ.le R g.radius N g.particles Γ hR0
+        hsep g.particles_pos hΓ).omittedSelf_nonnegative (Nat.cast_nonneg _)
     have hsum := add_le_add (add_le_add_left hc' (energy R Γ)) hcost
     apply (heΨ.trans (sub_le_self _ hself)).trans
     convert hsum using 1 <;> ring

@@ -1,4 +1,4 @@
-\documentclass[final,onefignum,onetabnum,reqno]{amsart}
+\documentclass[final,reqno]{amsart}
 
 
 
@@ -15,8 +15,6 @@
 \usepackage{physics}
 \usepackage{bbold}
 \usepackage[makeroom]{cancel}
-\usepackage[yyyymmdd,hhmmss]{datetime}
-\usepackage[all]{background}
 \usepackage{soul}
 
 \usepackage{stmaryrd}
@@ -25,16 +23,6 @@
 
 %Added this for \mathfrak
 \usepackage{mathrsfs}
-
-\SetBgContents{}% Set contents
-
-
-\SetBgContents{\texttt{\today\ \currenttime}}% Set contents
-\SetBgPosition{-0.5cm,-5.0cm}% Select location
-\SetBgOpacity{1.0}% Select opacity
-\SetBgAngle{90.0}% Select rotation of logo
-\SetBgScale{2.0}% Select scale factor of logo
-
 
 \undef\ul
 
@@ -194,7 +182,7 @@
 
 
 \let\oldphi=\phi
-\let\phi=\varphi 
+\let\phi=\varphi
 
 \newcommand{\valpha}{{\bm{\alpha}}}
 \newcommand{\vbeta}{{\bm{\beta}}}
@@ -289,16 +277,22 @@
 \author{Mih\'aly A. Csirik}
 \address{Department of Mathematical Sciences, Chalmers University of
 Technology and the University of Gothenburg, G\"oteborg, Sweden}
+\email{csirik@gmail.com}
+\hypersetup{
+  pdftitle={Equality of the Jellium and the Uniform Electron Gas Energies},
+  pdfauthor={Mih\'aly A. Csirik}
+}
 
 \begin{document}
+\raggedbottom
 
 
 \begin{abstract}
 Jellium, a system of electrons in a uniform neutralizing background, and the uniform electron gas (UEG), a system of electrons with constant density and no background, are two standard models of the electron gas. We prove that the ground-state energy per unit volume of Jellium, as defined by Lieb and Narnhofer, coincides with the UEG energy defined by Lewin, Lieb and Seiringer, i.e.
-$$
-e^\hbar_\Jel(\rho_0)=e^\hbar_\UEG(\rho_0)
-$$
-This equality was recently established in the classical case by Lewin, Lieb and Seiringer and independently by Cotar and Petrache.
+\[
+e^\hbar_\Jel(\rho_0)=e^\hbar_\UEG(\rho_0).
+\]
+This equality was previously established in the classical case by Lewin, Lieb and Seiringer and independently by Cotar and Petrache.
 \end{abstract}
 
 
@@ -311,30 +305,30 @@ This equality was recently established in the classical case by Lewin, Lieb and 
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The electron gas, an infinite system of interacting electrons spread uniformly over space, is one of the most studied models of many-body quantum mechanics~\cite{giuliani2005quantum}. In the physics literature the terms ``electron gas'', (interacting) ``Fermi gas'' and ``Jellium'' are mostly used interchangeably. Jellium is a system of electrons moving in a uniform background of positive charge which exactly neutralizes them. The uniformity of Jellium is, however, only that of the background. Wigner predicted that the electrons crystallize at low density~\cite{wigner1934interaction}, and so the ground state of Jellium is not expected to have constant density~\cite{lewin2022coulomb}. Mathematically, the thermodynamic limit of Jellium was established by Lieb and Narnhofer~\cite{lieb1975thermodynamic}, building on the work of Lieb and Lebowitz on real Coulomb matter~\cite{lieb1972constitution}. For the ground-state energy their result reads as follows. Let $\{\Omega_N\}$ be a sequence of bounded domains that grow regularly to $\RR^3$, for instance balls, with $\rho_0|\Omega_N|=N$. Then the limit
+The electron gas, an infinite system of interacting electrons spread uniformly over space, is one of the most studied models of many-body quantum mechanics~\cite{giuliani2005quantum}. In the physics literature the terms ``electron gas'', (interacting) ``Fermi gas'' and ``Jellium'' are mostly used interchangeably. Jellium is a system of electrons moving in a uniform background of positive charge which exactly neutralizes them. The uniformity of Jellium is, however, only that of the background. Wigner predicted that the electrons crystallize at low density~\cite{wigner1934interaction}, and so the ground state of Jellium is not expected to have constant density~\cite{lewin2019floating}. Mathematically, the thermodynamic limit of Jellium was established by Lieb and Narnhofer~\cite{lieb1975thermodynamic}, building on the work of Lieb and Lebowitz~\cite{lieb1972constitution}. For the ground-state energy their result reads as follows. Let $\{\Omega_N\}$ be a sequence of bounded domains that grow regularly to $\RR^3$, for instance balls, with $\rho_0|\Omega_N|=N$. Then the limit
 \begin{multline*}
 e^\hbar_\Jel(\rho_0)=\lim_{N\to\infty}\frac1{|\Omega_N|}\inf\spec\bigg(-\hbar^2\sum_{j=1}^N\Delta_{x_j}+\sum_{1\le j<k\le N}\frac{1}{|x_j-x_k|}\\
 -\rho_0\sum_{j=1}^N\int_{\Omega_N}\frac{\mathrm dy}{|x_j-y|}+\frac{\rho_0^2}2\iint_{\Omega_N\times\Omega_N}\frac{\mathrm dx\,\mathrm dy}{|x-y|}\bigg)
 \end{multline*}
 exists and does not depend on the shape of the domains. Here the Hamiltonian acts on antisymmetric functions of $N$ variables in $\Omega_N$, each carrying $q$ spin states, with homogeneous Dirichlet boundary conditions on $\partial\Omega_N$. The third term is the attraction between the electrons and the background, and the last one is the electrostatic self-energy of the background. The system is thus \emph{exactly neutral} as the number of electrons equals the total charge of the background.
 
-The approach of Lewin, Lieb and Seiringer~\cite{lewin2018statistical} is different. They \emph{define} the uniform electron gas (UEG) as a system of electrons whose density is constant everywhere, without any background. In the quantum case its energy is expressed through the grand-canonical Levy--Lieb functional~\cite{lewin2019universal}, the minimal kinetic and interaction energy of electrons with a prescribed density. Since quantum densities cannot be cut off sharply, the indicator function of the domain has to be smoothed. In the equivalent and particularly convenient form of~\cite{lewin2020local}, the UEG energy per unit volume is
+The approach of Lewin, Lieb and Seiringer~\cite{lewin2018statistical} does not involve the ground-state problem. They \emph{define} the uniform electron gas (UEG) as a system of electrons whose density is constant everywhere, without any background. In the quantum case its energy is expressed through the grand-canonical Levy--Lieb functional~\cite{lewin2019universal}, the minimal kinetic and interaction energy of electrons with a prescribed density. Since quantum densities cannot be cut off sharply, the indicator function of the domain has to be smoothed. In the convenient form of~\cite{lewin2020local}, the UEG energy per unit volume is
 \begin{multline*}
 e^\hbar_\UEG(\rho_0)=\\
 \lim_{N\to\infty}\frac1{|\Omega_N|}\Bigg(\inf_{\rho_{\vGamma}=\rho_0\iden_{\Omega_N}*\chi_{\delta_N}}\sum_{n\ge1}\Tr\bigg[\bigg(-\hbar^2\sum_{j=1}^n\Delta_{x_j}+\sum_{1\le j<k\le n}\frac1{|x_j-x_k|}\bigg)\Gamma^{(n)}\bigg]\\
 -\frac{\rho_0^2}2\iint_{\RR^3\times\RR^3}\frac{(\iden_{\Omega_N}*\chi_{\delta_N})(x)\,(\iden_{\Omega_N}*\chi_{\delta_N})(y)}{|x-y|}\,\mathrm dx\,\mathrm dy\Bigg),
 \end{multline*}
-where $\chi_\delta(x)=\delta^{-3}\chi(\delta^{-1}x)$ for a fixed radial function $0\le\chi\in C_c^\infty(\RR^3)$ with $\supp\chi\subset B_1$ and $\int_{\RR^3}\chi=1$. The domains satisfy the hypotheses of Theorem~\ref{thm:UEG}(ii), and the smoothing scales $\delta_N>0$ satisfy $\delta_N/|\Omega_N|^{1/3}\to0$ and $\delta_N|\Omega_N|^{1/3}\to\infty$. The infimum is taken over all grand-canonical fermion states $\vGamma=(\Gamma^{(n)})_{n\ge0}$, verifying the constraint $\rho_{\vGamma}=\rho_0\iden_{\Omega_N}*\chi_{\delta_N}$. The limit exists~\cite{lewin2018statistical,lewin2020local}, and it has the expected behavior at high density~\cite{lewin2018statistical}. The same point of view was adopted for the magnetic UEG in~\cite{csirik2024thermodynamic}. The price to pay is that the connection with a Schr\"odinger ground-state problem is lost.
+where $\chi_\delta(x)=\delta^{-3}\chi(\delta^{-1}x)$ for a fixed radial function $0\le\chi\in C_c^\infty(\RR^3)$ with $\supp\chi\subset B_1$ and $\int_{\RR^3}\chi=1$. The domains satisfy the hypotheses of Theorem~\ref{thm:UEG}(ii), and the smoothing scales $\delta_N>0$ satisfy $\delta_N/|\Omega_N|^{1/3}\to0$ and $\delta_N|\Omega_N|^{1/3}\to\infty$. The infimum is taken over all grand-canonical fermion states $\vGamma=(\Gamma^{(n)})_{n\ge0}$, satisfying the constraint $\rho_{\vGamma}=\rho_0\iden_{\Omega_N}*\chi_{\delta_N}$. The limit exists~\cite{lewin2018statistical,lewin2020local}, and it has the expected behavior at high density~\cite{lewin2018statistical}.
 
-For the classical UEG (which is obtained by taking $\hbar=0$, dropping $\chi_\delta$ and optimizing over classical $N$-particle probability measures), it was shown that the Jellium and the UEG energies coincide~\cite{lewin2019floating,cotar2017equality}. Averaging a crystal over translations (the ``floating crystal'') gives a constant density, but the charge fluctuations at the boundary of the sample raise the energy by an amount proportional to the volume~\cite{lewin2015improved}. This issue was overcome by Lewin, Lieb and Seiringer, who constructed a floating Wigner crystal with no boundary charge fluctuations by introducing a liquid layer at the boundary~\cite{lewin2019floating}, and independently by Cotar and Petrache~\cite{cotar2017equality} by a different method. 
+For the classical UEG (which is obtained by taking $\hbar=0$, dropping $\chi_\delta$ and optimizing over classical $N$-particle probability measures), it was shown that the Jellium and the UEG energies coincide~\cite{lewin2019floating,cotar2017equality}. Averaging a crystal over translations (the ``floating crystal'') gives a constant density, but the charge fluctuations at the boundary of the sample raise the energy by an amount proportional to the volume~\cite[Appendix~B]{lewin2015improved}. This issue was overcome by Lewin, Lieb and Seiringer, who constructed a floating Wigner crystal with no boundary charge fluctuations by introducing a liquid layer at the boundary~\cite{lewin2019floating}, and independently by Cotar and Petrache~\cite{cotar2017equality} by a different method.
 
-In the quantum case, it is believed that the two energies coincide as well~\cite[Sec.~2.2]{lewin2020local}. The easy inequality $e_\UEG^\hbar(\rho_0)\ge e_\Jel^\hbar(\rho_0)$ was proved in~\cite{lewin2018statistical} for a grand-canonical version of Jellium, in which the number of electrons is free and the electrons are not confined to the support of the background. The reverse inequality is harder, because Jellium states, which are expected to be crystalline, have to be turned into states with an exactly constant density at a cost which is negligible compared with the volume. In the quantum case the question remained open~\cite{csirik2024thermodynamic}.
+In the quantum case, it is believed that the two energies coincide as well~\cite[Sec.~2.2]{lewin2020local}. The easy inequality $e_\UEG^\hbar(\rho_0)\ge e_\Jel^\hbar(\rho_0)$ was proved in~\cite{lewin2018statistical} for a grand-canonical version of Jellium. The reverse inequality is harder, because Jellium states, which are expected to be crystalline, have to be turned into states with an exactly constant density at a cost which is negligible compared with the volume.
 
 In this paper we prove that the Jellium and the UEG energies coincide also in the quantum case. Our main result, Theorem~\ref{thm:main} below, states that
 \[
 \boxed{e^\hbar_\Jel(\rho_0)=e^\hbar_\UEG(\rho_0).}
 \]
-In particular, the known properties of the UEG carry over to Jellium (Remark~\ref{rem:main_consequences}). For instance, at fixed $\hbar$,
+In particular, the known properties of the UEG carry over to Jellium (Remark~\ref{rem:main_consequences}). For instance, at fixed $\hbar>0$,
 \[
 e^\hbar_\Jel(\rho_0)=\frac35\Big(\frac{6\pi^2}{q}\Big)^{2/3}\hbar^2\rho_0^{5/3}-\frac34\Big(\frac{6}{q\pi}\Big)^{1/3}\rho_0^{4/3}+o(\rho_0^{4/3})\qquad\text{as }\rho_0\to\infty.
 \]
@@ -360,28 +354,30 @@ The first term is the kinetic energy of the free Fermi gas and the second one is
 \label{fig:energy_shape}
 \end{figure}
 \vspace{.3em}\\
-\noindent\emph{Organization of the paper.} In Section~\ref{sec:setting}, we fix our notation (Section~\ref{sec:notation}) and recall the definitions and the known results for Jellium (Section~\ref{sec:LN}) and for the UEG (Section~\ref{sec:UEG}). Section~\ref{sec:main} contains our main result, Theorem~\ref{thm:main}, its consequences for Jellium (Remark~\ref{rem:main_consequences}) and an outline of its proof (Section~\ref{sec:main_strategy}). The proofs are given in Section~\ref{sec:proofs}: after collecting some general facts in Section~\ref{sec:basic}, we prove the inequality $e_\Jel\le e_\UEG$ in Section~\ref{sec:lower} and the inequality $e_\UEG\le e_\Jel$ in Section~\ref{sec:upper}. Appendix~\ref{sec:LN_proof} sketches the proofs of the results of Lieb and Narnhofer at zero temperature, and Appendix~\ref{sec:canonical_completion} contains the neutralization construction used in Section~\ref{sec:lower}.
+\noindent\emph{Organization of the paper.} In Section~\ref{sec:setting}, we fix our notation (Section~\ref{sec:notation}) and recall the definitions and the known results for Jellium (Section~\ref{sec:LN}) and for the UEG (Section~\ref{sec:UEG}). Section~\ref{sec:main} contains our main result, Theorem~\ref{thm:main}, its consequences for Jellium (Remark~\ref{rem:main_consequences}) and an outline of its proof (Section~\ref{sec:main_strategy}). The proofs are given in Section~\ref{sec:proofs}: after collecting some general facts in Section~\ref{sec:basic}, we prove the inequality $e^\hbar_\Jel(\rho_0)\le e^\hbar_\UEG(\rho_0)$ in Section~\ref{sec:lower} and the inequality $e^\hbar_\UEG(\rho_0)\le e^\hbar_\Jel(\rho_0)$ in Section~\ref{sec:upper}. Appendix~\ref{sec:LN_proof} sketches the proof of the thermodynamic limit of Jellium on balls at zero temperature, and Appendix~\ref{sec:canonical_completion} contains the neutralization construction used in Section~\ref{sec:lower}.
 
 \subsection*{Acknowledgments}
 The author has received funding from the ERC-2021-STG under grant agreement No.~101041487 REGAL.
 
 \subsection*{Use of AI tools}
-The author made substantial use of the large language models ChatGPT (OpenAI) and Claude (Anthropic) in the preparation of this work, including the development of the proofs, writing, making figures and editing. The author has checked all the proofs by hand, and takes full responsibility for the content of the article.
+The author made substantial use of the LLMs ChatGPT (OpenAI) and Claude (Anthropic) in the preparation of this work, including the development of the proofs, writing and making figures. The author has checked all the proofs by hand, and takes full responsibility for the content of the article.
 
 \subsection*{Lean verification}
-The arguments of Sections~\ref{sec:lower} and~\ref{sec:upper} and Appendix~\ref{sec:canonical_completion}, together with the reduction to $\hbar=1$, were also checked in Lean~4 with Mathlib, in a formalization produced with the help of the same AI tools. The verification is relative: the cited results from the literature, the general facts of Section~\ref{sec:basic}, the local orbital construction of Appendix~\ref{sec:canonical_completion} and the underlying operator theory enter as explicit hypotheses. None of these hypotheses asserts either inequality or the neutralization estimate of Lemma~\ref{lem:lower_completion}. The formalization contains no \texttt{sorry} and uses only the standard axioms of Lean.
+The formalization in \texttt{lean\_gpt}\footnote{\url{https://github.com/xyzw/jellium_ueg}}, produced with the help of the same AI tools, checks the lower and upper comparisons of Sections~\ref{sec:lower} and~\ref{sec:upper} and the neutralization construction of Appendix~\ref{sec:canonical_completion} in Lean~4 with Mathlib.
+The verification is relative to explicit hypotheses on abstract states and charges. The cited literature results, including the physical Lieb--Narnhofer thermodynamic limit, and the general facts of Section~\ref{sec:basic} remain inputs. The representation of quantum states by density operators on Hilbert space and the general identities for their kinetic and Coulomb energies are assumed rather than formalized.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Setting}\label{sec:setting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Notations}\label{sec:notation}
+\subsection{Notation}\label{sec:notation}
 
 For $\ell>0$ we write $C_\ell=(-\ell/2,\ell/2)^3$ for the open cube of side length $\ell$ centered at the origin. For functions $f,g:\RR^3\to\RR$  we write
 \[
 D(f,g):=\frac12\int_{\RR^3}\int_{\RR^3}\frac{f(x)g(y)}{|x-y|}\,\mathrm{d}x\,\mathrm{d}y,\qquad D(f):=D(f,f)
 \]
-for the Coulomb inner product and the direct Coulomb energy. For $q\ge1$ internal (spin) states, the Thomas--Fermi and Dirac constants are
+for the Coulomb inner product and the direct Coulomb energy. For an integer spin multiplicity $q\ge1$, the Thomas--Fermi and Dirac constants are
 \[
 c_\TF=\frac35\Big(\frac{6\pi^2}{q}\Big)^{2/3},\qquad c_{\mathrm{D}}=\frac34\Big(\frac{6}{q\pi}\Big)^{1/3}.
 \]
@@ -397,7 +393,7 @@ with the convention $\int\mathrm{d}\mathbf{x}:=\sum_{s=1}^q\int_{\RR^3}\mathrm{d
 
 \subsection{Jellium}\label{sec:LN}
 
-Here we summarize the results of Lieb and Narnhofer~\cite{lieb1975thermodynamic} on the thermodynamic limit of Jellium, restricted to what concerns the \emph{quantum ground-state energy per unit volume} $e^\hbar_\Jel(\rho_0)$. 
+Here we summarize the results of Lieb and Narnhofer~\cite{lieb1975thermodynamic} on the thermodynamic limit of Jellium, restricted to what concerns the \emph{quantum ground-state energy per unit volume} $e^\hbar_\Jel(\rho_0)$.
 
 Let $\rho_0>0$. For a bounded measurable set $\Omega\subset\RR^3$ and $N\ge1$, the classical Jellium energy of $N$ points $X=(x_1,\dots,x_N)\in(\RR^3)^N$ in the background $\rho_0\iden_\Omega$ is
 \begin{equation}\label{eq:LN_U}
@@ -407,7 +403,7 @@ Here the points need not lie in $\Omega$, and $N$ need not equal $\rho_0|\Omega|
 \begin{equation}\label{eq:LN_H}
 H^{\hbar,\rho_0}_\Omega:=\sum_{j=1}^N\big(-\hbar^2\Delta_{x_j}\big)+U^{\rho_0}_\Omega(x_1,\dots,x_N),
 \end{equation}
-acting on $\bigwedge_{j=1}^NL^2(\Omega\times\{1,\dots,q\})$. More precisely, $H^{\hbar,\rho_0}_\Omega$ denotes the Friedrichs extension of this operator from $\bigwedge^NC_c^\infty(\Omega;\CC^q)$, whose form domain is $\bigwedge^NH^1_0(\Omega;\CC^q)$; this corresponds to \emph{homogeneous Dirichlet boundary conditions} on $\partial\Omega$. Its ground-state energy is
+acting on $\bigwedge_{j=1}^NL^2(\Omega\times\{1,\dots,q\})$. More precisely, for $\hbar>0$, $H^{\hbar,\rho_0}_\Omega$ denotes the Friedrichs extension of this operator from $\bigwedge^NC_c^\infty(\Omega;\CC^q)$, whose form domain consists of antisymmetric functions in $H^1_0(\Omega^N;(\CC^q)^{\otimes N})$; this corresponds to \emph{homogeneous Dirichlet boundary conditions} on $\partial\Omega$. Its ground-state energy is
 given by the variational principle
 \[
 \boxed{E^\hbar_\Jel(\rho_0,\Omega):=\inf_{\|\Psi\|=1}\big\langle\Psi,H^{\hbar,\rho_0}_\Omega\Psi\big\rangle.}
@@ -416,7 +412,7 @@ For $\hbar=0$ this is the classical energy $E^0_\Jel(\rho_0,\Omega)=\inf_{X\in\O
 \[
 e^\hbar_\Jel(\rho_0,\Omega):=\frac{E^\hbar_\Jel(\rho_0,\Omega)}{|\Omega|}.
 \]
-The class of domains admissible domains $\Omega$ for taking the thermodynamic limit is essentially that of Lieb and Lebowitz~\cite[Sec.~V]{lieb1972constitution} (conditions (A), (B) below, which we paraphrase), together with four extra conditions introduced for the quantum case in~\cite[Sec.~5.2]{lieb1975thermodynamic}. For $h>0$, consider the inner and outer layers of $\Omega_N$ of width $h$,
+The class of admissible domains $\Omega$ for taking the thermodynamic limit is essentially that of Lieb and Lebowitz~\cite[Sec.~V]{lieb1972constitution} (conditions (A), (B) below, which we paraphrase), together with four extra conditions introduced for the quantum case in~\cite[Sec.~5.2]{lieb1975thermodynamic}. For $h>0$, consider the inner and outer layers of $\Omega_N$ of width $h$,
 \begin{align*}
 \Sigma^{-1}_{N,h}&:=\{x\in\Omega_N:\ d(x,\partial\Omega_N)\le h\}, & \Sigma^{-2}_{N,h}&:=\{x\in\Omega_N:\ h<d(x,\partial\Omega_N)\le2h\},\\
 \Sigma^{+1}_{N,h}&:=\{x\notin\Omega_N:\ d(x,\Omega_N)\le h\}, & \Sigma^{+2}_{N,h}&:=\{x:\ h<d(x,\Omega_N)\le2h\}
@@ -460,14 +456,14 @@ A sequence $\{\Omega_N\}_{N\ge1}$ of bounded open sets with $\rho_0|\Omega_N|=N$
 \item[(A)] (Van Hove) $\big|\{x:\ d(x,\partial\Omega_N)\le h\}\big|=o(|\Omega_N|)$ for every $h>0$;
 \item[(B)] (ball condition) $|\Omega_N|\ge\delta\,|B(\Omega_N)|$ for some $\delta>0$ independent of $N$, where $B(\Omega_N)$ is the smallest ball containing $\Omega_N$;
 \item[(i)] $\sup_N|\Sigma^{+1}_{N,h}|/|\Sigma^{+2}_{N,h}|<\infty$ for every $h>0$;
-\item[(ii)] the potential $\varphi_{N,h}(x):=\int_{\RR^3}\sigma^+_{N,h}(y)|x-y|^{-1}\,\mathrm dy$ is $o(1)$ 
+\item[(ii)] the potential $\varphi_{N,h}(x):=\int_{\RR^3}\sigma^+_{N,h}(y)|x-y|^{-1}\,\mathrm dy$ is $o(1)$
 as $h\to0$, uniformly in $N\ge1$ and $x\in\Omega_N\cup\Sigma^{+1}_{N,h}\cup\Sigma^{+2}_{N,h}$;
 \item[(iii)] $D(\sigma^+_{N,h})=o(|\Omega_N|)$ for every $h>0$;
 \item[(iv)] for every $h>0$, $|\Sigma^{-2}_{N,h}|>0$ for all sufficiently large $N$, and $D(\sigma^-_{N,h})=o(|\Omega_N|)$ as $N\to\infty$.
 \end{enumerate}
 \end{definition}
 
-For comparison, the Fisher $\eta$-regularity used in~\cite{lewin2018statistical} implies (A), and together with connectedness it implies (B) by~\cite[Lemma~1]{fisher1964free}, as used in the proof of~\cite[Thm.~2.6]{lewin2018statistical}. Neutral balls form an LN-admissible sequence (Remark~\ref{rem:LN_balls} in Appendix~\ref{sec:LN_proof}).
+For comparison, the Fisher $\eta$-regularity used in~\cite{lewin2018statistical} implies (A), and together with connectedness it implies (B) by~\cite[Sec.~V and Appendix~A]{lieb1972constitution}, as used in the proof of~\cite[Thm.~2.6]{lewin2018statistical}. Neutral balls form an LN-admissible sequence (Remark~\ref{rem:LN_balls} in Appendix~\ref{sec:LN_proof}).
 
 \begin{theorem}[Stability {\cite[Appendix]{lieb1975thermodynamic}}]\label{thm:LN_stability}
 Let $\rho_0>0$ and let $\Omega\subset\RR^3$ be a bounded measurable set.
@@ -492,26 +488,26 @@ By Theorem~\ref{thm:LN_stability}, the energy per unit volume $e^\hbar_\Jel(\rho
 \begin{theorem}[Jellium {\cite[Secs.~5.1--5.4]{lieb1975thermodynamic}}]\label{thm:LN_main}
 Let $\hbar>0$ and $\rho_0>0$.
 \begin{enumerate}[(i)]
-\item (Balls) Along the standard sequence of balls $\{B_K\}$ of Lemma~\ref{lem:LN_packing} (which depends on $\rho_0$), the limit $\lim_{K\to\infty}e^\hbar_\Jel(\rho_0,B_K)$ exists.
+\item (Balls) Along the standard sequence of balls $\{\mathcal B_K\}$ of Lemma~\ref{lem:LN_packing} (which depends on $\rho_0$), the limit $\lim_{K\to\infty}e^\hbar_\Jel(\rho_0,\mathcal B_K)$ exists.
 \item (General domains) For every LN-admissible sequence $\{\Omega_N\}$, the limit
 \[
 \boxed{e^\hbar_\Jel(\rho_0):=\lim_{N\to\infty}e^\hbar_\Jel(\rho_0,\Omega_N)}
 \]
 exists and is equal to the limit in item~(i). In particular, it does not depend on the shape of the domains.
-\item (Scaling) $e^\hbar_\Jel(\rho_0)=\rho_0^{4/3}\,\tilde e_\Jel\big(\hbar^2\rho_0^{1/3}\big)$, where $\tilde e_\Jel(\lambda):=e^{\sqrt\lambda}_\Jel(1)$, $\lambda=\hbar^2>0$, is the energy at unit density.
+\item (Scaling) $e^\hbar_\Jel(\rho_0)=\rho_0^{4/3}\,\tilde e_\Jel\big(\hbar^2\rho_0^{1/3}\big)$, where $\tilde e_\Jel(\lambda):=e^{\sqrt\lambda}_\Jel(1)$, $\lambda>0$, is the energy at unit density.
 \item (Regularity) $\lambda\mapsto \tilde e_\Jel(\lambda)$ is concave and non-decreasing on $(0,\infty)$, hence continuous. Therefore $\rho_0\mapsto e^\hbar_\Jel(\rho_0)$ is continuous on $(0,\infty)$. Moreover, for a fixed LN-admissible sequence at unit density, the convergence $e^{\sqrt\lambda}_\Jel(1,\Omega_N)\to \tilde e_\Jel(\lambda)$ is locally uniform in $\lambda\in(0,\infty)$.
 \end{enumerate}
 \end{theorem}
 
 For $\hbar=0$ we write $e^0_\Jel(\rho_0)$ for the limit in item~(ii) whenever it exists for all LN-admissible sequences and is independent of them, and $e_\Jel:=e^0_\Jel(1)$. (The Jellium energy of~\cite{lewin2018statistical} is defined through a slightly different grand-canonical problem; see Remark~\ref{rem:UEG_vs_Jel}.) By Theorem~\ref{thm:LN_stability}, $e_\Jel\ge-c_{\rm LN}$, $\tilde e_\Jel(\lambda)\ge c_\TF\lambda-c_{\rm LN}$ for all $\lambda>0$, and $e^\hbar_\Jel(\rho_0)\ge-\rho_0\,c_{\rm LN}^2/(4\hbar^2c_\TF)$ for all $\rho_0>0$.
 
-Items (i)--(ii) are proved in~\cite[Secs.~5.1--5.2]{lieb1975thermodynamic} for the free energy at $T>0$; the ground-state version is stated in~\cite[Sec.~5.4(iii)]{lieb1975thermodynamic}. A sketch of the proof at $T=0$ is given in Appendix~\ref{sec:LN_proof}. Item (iii) is the zero-temperature form of~\cite[Eqs.~(62)--(64)]{lieb1975thermodynamic}. Item (iv) is the zero-temperature analog of~\cite[Secs.~3.4.1 and~5.3]{lieb1975thermodynamic}: at $T>0$, continuity in $\rho_0$ is derived there from the joint convexity of $(\beta,\gamma)\mapsto\log\Tr e^{-\beta K-\gamma U}$ and uniformity from Dini's theorem. At $T=0$ the same conclusions follow from concavity in $\lambda=\hbar^2$, which is the argument of~\cite{lewin2018statistical} for $\tilde e_\UEG(\lambda)$.
+Items (i)--(ii) are proved in~\cite[Secs.~5.1--5.2]{lieb1975thermodynamic} for the free energy at $T>0$; the ground-state version is stated in~\cite[Sec.~5.4(iii)]{lieb1975thermodynamic}. A sketch of the proof of item~(i) at $T=0$ is given in Appendix~\ref{sec:LN_proof}. Item (iii) is the zero-temperature form of~\cite[Eqs.~(62)--(64)]{lieb1975thermodynamic}. Item (iv) is the zero-temperature analog of~\cite[Secs.~3.4.1 and~5.3]{lieb1975thermodynamic}: at $T>0$, continuity in $\rho_0$ is derived there from the joint convexity of $(\beta,\gamma)\mapsto\log\Tr e^{-\beta K-\gamma U}$ and uniformity from Dini's theorem. At $T=0$ the same conclusions follow from concavity in $\lambda=\hbar^2$, which is the argument of~\cite{lewin2018statistical} for $\tilde e_\UEG(\lambda)$.
 
 \subsection{The Uniform Electron Gas}\label{sec:UEG}
 
-We briefly recall the definition of the quantum UEG given by Lewin, Lieb and Seiringer, in two versions. The first is from~\cite[Sec.~5]{lewin2018statistical}, where the density is optimized over a transition region near the boundary. The second is from~\cite[Sec.~2]{lewin2020local}, where the density is a fixed smoothing of $\rho_0\iden_\Omega$. In contrast to Jellium there is no background; instead, the one-particle density is prescribed. Both papers work grand-canonically. The conventions are those of Section~\ref{sec:LN}.
+We briefly recall the definition of the quantum UEG given by Lewin, Lieb and Seiringer, in two versions. The first is from~\cite[Sec.~5]{lewin2018statistical}, where the density is optimized over a transition region near the boundary. The second is from~\cite[Sec.~2]{lewin2020local}, where the density is a fixed smoothing of $\rho_0\iden_\Omega$. In contrast to Jellium there is no background; instead, the one-particle density is prescribed.
 
-Let $\rho\ge0$ with $\sqrt\rho\in H^1(\RR^3)$. By Harriman and Lieb~\cite{harriman1981orthonormal,lieb1983density}, these are exactly the densities of states with finite mean particle number and finite kinetic energy. The grand-canonical Levy--Lieb functional (\cite[Eq.~(5.1)]{lewin2018statistical}, \cite[Sec.~2.1]{lewin2020local}) is
+Let $\rho\ge0$ with $\sqrt\rho\in H^1(\RR^3)$. The grand-canonical Levy--Lieb functional (\cite[Eq.~(5.1)]{lewin2018statistical}, \cite[Sec.~2.1]{lewin2020local}) is
 \[
 F^\hbar_{\rm LL}(\rho):=\inf_{\rho_{\vGamma}=\rho}\sum_{n\ge1}\Tr_{\Hil^n}\Bigg(-\hbar^2\sum_{j=1}^n \Delta_{x_j}+\sum_{1\le j<k\le n}\frac{1}{|x_j-x_k|}\Bigg)\Gamma^{(n)},
 \]
@@ -520,13 +516,15 @@ and the indirect energy of $\rho$ is
 \boxed{E^\hbar(\rho):=F^\hbar_{\rm LL}(\rho)-D(\rho).}
 \end{equation}
 \begingroup\emergencystretch=1em
-The number $\int_{\RR^3}\rho$ need not be an integer. We write $E^0$ for the classical indirect energy~\cite[Eq.~(2.1)]{lewin2018statistical}. A priori bounds are collected in Lemma~\ref{lem:basic_apriori}.
+The number $\int_{\RR^3}\rho$ need not be an integer.
 \par\endgroup
 
 Let $\chi\ge0$ be radial with compact support, $\int_{\RR^3}\chi=1$ and $\int_{\RR^3}|\nabla\sqrt\chi|^2<\infty$, and set $\chi_\delta:=\delta^{-3}\chi(\cdot/\delta)$ for $\delta>0$. For a bounded set $\Omega\subset\RR^3$, the UEG energy per unit volume with smoothing $\chi_\delta$ is
 \[
 e^\hbar_\UEG(\rho_0,\Omega,\chi_\delta):=\frac{E^\hbar\big(\rho_0\iden_\Omega\ast\chi_\delta\big)}{|\Omega|}.
 \]
+
+The following theorem gives the common thermodynamic limit of the two UEG constructions, together with its scaling, regularity and limiting properties.
 
 \begin{theorem}[Quantum UEG {\cite[Thm.~5.1]{lewin2018statistical}, \cite[Thm.~1]{lewin2020local}}]\label{thm:UEG}
 Let $\rho_0>0$ and $\hbar>0$.
@@ -547,14 +545,14 @@ Then the limit
 exists and is independent of $\{\Omega_N\}$ and $\{\ell_N\}$.
 \item[(ii)] Let $\{\Omega_N\}$ be bounded connected domains with $|\Omega_N|\to\infty$ and
 \[
-|\partial\Omega_N+B_r|\le Cr|\Omega_N|^{2/3}\qquad\text{for all }r\le|\Omega_N|^{1/3}/C,
+|\partial\Omega_N+B_r|\le Cr|\Omega_N|^{2/3}\qquad\text{for all }0<r\le|\Omega_N|^{1/3}/C,
 \]
 for some $C>0$. Let $\delta_N>0$ with $\delta_N/|\Omega_N|^{1/3}\to0$ and $\delta_N|\Omega_N|^{1/3}\to\infty$. Then
 \begin{equation}\label{eq:UEG_LDA}
 \boxed{e^\hbar_\UEG(\rho_0)=\lim_{N\to\infty}e^\hbar_\UEG(\rho_0,\Omega_N,\chi_{\delta_N}),}
 \end{equation}
 and the limit is independent of $\{\Omega_N\}$, $\{\delta_N\}$ and $\chi$.
-\item[(iii)] (Scaling) $e^\hbar_\UEG(\rho_0)=\rho_0^{4/3}\,\tilde e_\UEG\big(\hbar^2\rho_0^{1/3}\big)$, where $\tilde e_\UEG(\lambda):=e^{\sqrt\lambda}_\UEG(1)$, $\lambda=\hbar^2>0$, is the energy at unit density.
+\item[(iii)] (Scaling) $e^\hbar_\UEG(\rho_0)=\rho_0^{4/3}\,\tilde e_\UEG\big(\hbar^2\rho_0^{1/3}\big)$, where $\tilde e_\UEG(\lambda):=e^{\sqrt\lambda}_\UEG(1)$, $\lambda>0$, is the energy at unit density.
 \item[(iv)] (Regularity) $\lambda\mapsto \tilde e_\UEG(\lambda)$ is concave and non-decreasing on $(0,\infty)$, hence continuous. Therefore $\rho_0\mapsto e^\hbar_\UEG(\rho_0)$ is continuous on $(0,\infty)$.
 \item[(v)] (Classical limit) $\lim_{\lambda\to0}\tilde e_\UEG(\lambda)=e_\UEG$, the classical UEG energy of~\cite[Thm.~2.6]{lewin2018statistical}.
 \item[(vi)] (High-density limit) $\tilde e_\UEG(\lambda)=c_\TF\lambda-c_{\mathrm{D}}+o(1)$ as $\lambda\to\infty$.
@@ -565,10 +563,10 @@ Items (i) and (iii)--(vi) are~\cite[Thm.~5.1]{lewin2018statistical}, and the lim
 
 In item~(i), the density is held at the fixed constant $\rho_0$ well inside $\Omega_N$ and to $0$ far outside. In the transition layer of width $2\ell_N$ around $\partial\Omega_N$ it is only required that $0\le\rho\le\rho_0$, and the energy is minimized over all admissible $\rho$.
 
-In item~(ii), the condition $\delta_N/|\Omega_N|^{1/3}\to0$ makes the smeared region around $\partial\Omega_N$ negligible in volume. The condition $\delta_N|\Omega_N|^{1/3}\to\infty$ makes the kinetic energy of the transition region negligible, since $\int_{\RR^3}|\nabla\sqrt{\iden_{\Omega_N}\ast\chi_{\delta_N}}|^2\le C|\Omega_N|^{2/3}/\delta_N$. In particular $\delta_N$ may tend to zero, provided $\delta_N\gg|\Omega_N|^{-1/3}$. Under the weaker assumption that $\Omega_N$ is $\eta$-regular, the same holds with the second condition replaced by $\delta_N^{-2}\eta(\delta_N|\Omega_N|^{-1/3})\to0$~\cite[Rem.~2]{lewin2020local}. 
+In item~(ii), the condition $\delta_N/|\Omega_N|^{1/3}\to0$ makes the smeared region around $\partial\Omega_N$ negligible in volume. The condition $\delta_N|\Omega_N|^{1/3}\to\infty$ makes the kinetic energy of the transition region negligible, since $\int_{\RR^3}|\nabla\sqrt{\iden_{\Omega_N}\ast\chi_{\delta_N}}|^2\le C|\Omega_N|^{2/3}/\delta_N$. In particular $\delta_N$ may tend to zero, provided $\delta_N\gg|\Omega_N|^{-1/3}$. Under the weaker assumption that $\Omega_N$ is $\eta$-regular, the same holds with the second condition replaced by $\delta_N^{-2}\eta(\delta_N|\Omega_N|^{-1/3})\to0$~\cite[Rem.~2]{lewin2020local}.
 
 \begin{remark}[UEG versus Jellium]\label{rem:UEG_vs_Jel}
-It is noted in~\cite[Sec.~2.2]{lewin2020local} that $e_\UEG$ ``is believed to be the same as the ground state energy of Jellium''. In the classical case, the equality $e_\UEG=e_\Jel$ has been proved~\cite{lewin2019floating,cotar2017equality}; in the quantum case the equality was open. The inequality $\tilde e_\UEG(\lambda)\ge\tilde e^{\rm GC}_\Jel(\lambda)$ is proved in~\cite[proof of Thm.~5.1, Step~4]{lewin2018statistical}, where $\tilde e^{\rm GC}_\Jel(\lambda)$ is the thermodynamic limit of grand-canonical Jellium, with free particle number and without confinement to the support of the background; see~\eqref{eq:conj_relaxation} below. This energy is attributed there to~\cite{lieb1975thermodynamic}, but~\cite{lieb1975thermodynamic} treats the canonical Jellium with Dirichlet boundary conditions and does not prove the identification of the two limits. Theorem~\ref{thm:lower} proves the inequality for the Jellium energy of Theorem~\ref{thm:LN_main}.
+It is noted in~\cite[Sec.~2.2]{lewin2020local} that $e_\UEG$ ``is believed to be the same as the ground state energy of Jellium''. In the classical case, the equality $e_\UEG=e_\Jel$ has been proved~\cite{lewin2019floating,cotar2017equality}; in the quantum case the equality was open. The inequality $\tilde e_\UEG(\lambda)\ge\tilde e^{\rm GC}_\Jel(\lambda)$ is proved in~\cite[proof of Thm.~5.1, Step~4]{lewin2018statistical}, where $\tilde e^{\rm GC}_\Jel(\lambda)$ is the thermodynamic limit of grand-canonical Jellium, with free particle number and without confinement to the support of the background. This energy is attributed there to~\cite{lieb1975thermodynamic}, but~\cite{lieb1975thermodynamic} treats the canonical Jellium with Dirichlet boundary conditions and does not prove the identification of the two limits. Theorem~\ref{thm:lower} proves the inequality for the Jellium energy of Theorem~\ref{thm:LN_main}.
 \end{remark}
 
 
@@ -577,10 +575,10 @@ It is noted in~\cite[Sec.~2.2]{lewin2020local} that $e_\UEG$ ``is believed to be
 \section{Main result: the Jellium and UEG energies coincide}\label{sec:main}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Sections~\ref{sec:LN} and~\ref{sec:UEG} define two energies per unit volume at density $\rho_0$. The Jellium energy $e^\hbar_\Jel(\rho_0)$ is canonical and exactly neutral, with Dirichlet boundary conditions and a fixed background $\rho_0\iden_\Omega$, while the particle density is free. On the other hand, the UEG energy $e^\hbar_\UEG(\rho_0)$ is grand-canonical, with a prescribed density and no background. Our main result is that the two coincide.
+Sections~\ref{sec:LN} and~\ref{sec:UEG} define two energies per unit volume at density $\rho_0$. The Jellium energy $e^\hbar_\Jel(\rho_0)$ is canonical and exactly neutral, with Dirichlet boundary conditions and a fixed background, while the particle density is free. On the other hand, the UEG energy $e^\hbar_\UEG(\rho_0)$ is grand-canonical, with a prescribed density and no background. Our main result is that the two coincide.
 
 \begin{theorem}[Jellium $=$ UEG]\label{thm:main}
-For every finite spin multiplicity $q\ge1$, every $\rho_0>0$ and every $\hbar>0$,
+For every integer spin multiplicity $q\ge1$, every $\rho_0>0$ and every $\hbar>0$,
 \begin{equation}\label{eq:main}
 e^\hbar_\Jel(\rho_0)=e^\hbar_\UEG(\rho_0).
 \end{equation}
@@ -595,30 +593,30 @@ By Theorem~\ref{thm:main}, the properties of $\tilde e_\UEG$ in Theorem~\ref{thm
 
 \subsection{Strategy of the proof}\label{sec:main_strategy}
 
-Section~\ref{sec:proofs} proves the two inequalities separately, each involving the canonical neutral Dirichlet energy of Theorem~\ref{thm:LN_main}. 
+Section~\ref{sec:proofs} proves the two inequalities separately, each involving the canonical neutral Dirichlet energy of Theorem~\ref{thm:LN_main}.
 
 \medskip
 \noindent\emph{The lower bound $e^\hbar_\Jel(\rho_0)\le e^\hbar_\UEG(\rho_0)$} (Theorem~\ref{thm:lower}).
-We start from near-minimizers of the UEG problem with density $\rho_0\iden_{B_{\ell-2\delta_\ell}}*\chi_{\delta_\ell}$, where $\supp\chi\subset B_1$ and $\delta_\ell=\ell^{-1/2}$. These are Dirichlet states in $B_\ell$. Their indirect energy is $e^\hbar_\UEG(\rho_0)|B_\ell|+o(\ell^3)$ by Theorem~\ref{thm:UEG}(ii), and the self-energy of their discrepancy from $\rho_0\iden_{B_\ell}$ is $o(\ell^3)$. Thus~\eqref{eq:conj_identity} gives the same upper bound on their Jellium energy.
+We start from minimizers of the Levy--Lieb functional at the density $\rho_0\iden_{B_{\ell-2\delta_\ell}}*\chi_{\delta_\ell}$, where $\supp\chi\subset B_1$ and $\delta_\ell=\ell^{-1/2}$. These are states supported in $B_\ell$ satisfying homogeneous Dirichlet boundary conditions. Their indirect energy is $e^\hbar_\UEG(\rho_0)|B_\ell|+o(\ell^3)$ by Theorem~\ref{thm:UEG}(ii), and the self-energy of their discrepancy from $\rho_0\iden_{B_\ell}$ is $o(\ell^3)$. Thus~\eqref{eq:conj_identity} gives the same upper bound on their Jellium energy.
 
-Since Jellium energy is affine, one particle-number sector has energy no greater than this average. Its excess charge is $O(\ell^2)$ by the Onsager bound with the positive Coulomb term retained. Lemma~\ref{lem:lower_completion} then adds the missing background and particles in an annulus of fixed thickness, with an upper energy cost $O(\ell^2)$. The completed state is exactly neutral and canonical in a ball of radius $\ell+O(1)$. The canonical limit on balls of~\cite{lieb1975thermodynamic} proves the lower bound. The shell construction is given in Appendix~\ref{sec:canonical_completion} and does not require the density of the selected sector to be radial.
+Since Jellium energy is affine, one particle-number sector has energy no greater than this average. Its excess charge is $\mathcal O(\ell^2)$ by the Onsager bound with the positive Coulomb term retained. Lemma~\ref{lem:lower_completion} then adds the missing background and particles in an annulus of fixed thickness, with an upper energy cost $\mathcal O(\ell^2)$. The completed state is exactly neutral and canonical in a ball of radius $\ell+\mathcal O(1)$. The canonical limit on balls of~\cite{lieb1975thermodynamic} proves the lower bound. The shell construction is given in Appendix~\ref{sec:canonical_completion} and does not require the density of the selected sector to be radial.
 
 \medskip
 \noindent\emph{The upper bound $e^\hbar_\UEG(\rho_0)\le e^\hbar_\Jel(\rho_0)$} (Theorem~\ref{thm:upper}).
-Here Jellium states must be turned into states with a prescribed constant density, at no extensive cost in energy. The Jellium ground state is not expected to have constant density; at low density it should form a Wigner crystal. Averaging a crystal over translations (the ``floating crystal'') gives a constant density, but because of boundary charge fluctuations, the indirect energy per unit volume of a floating crystal can be strictly larger than its Jellium energy~\cite{lewin2015improved}. In the classical case this obstruction was overcome by constructing a floating Wigner crystal without boundary charge fluctuations~\cite{lewin2019floating}; a different proof is due to Cotar and Petrache~\cite{cotar2017equality}.
+Here Jellium states must be turned into states with a prescribed constant density, at no extensive cost in energy. The Jellium ground state is not expected to have constant density; at low density it should form a Wigner crystal. Averaging a crystal over translations (the ``floating crystal'') gives a constant density, but because of boundary charge fluctuations, the indirect energy per unit volume of a floating crystal can be strictly larger than its Jellium energy~\cite[Appendix~B]{lewin2015improved}. In the classical case this obstruction was overcome by constructing a floating Wigner crystal without boundary charge fluctuations~\cite{lewin2019floating}.
 
-The proof in Section~\ref{sec:upper} does not use a crystal. A large cube is filled, up to a fraction $\varepsilon$ of its volume, by a periodic family of balls with room between them (Lemma~\ref{lem:upper_packing}). Each ball carries a near-minimizing canonical Dirichlet Jellium state, averaged over rotations, so that its charge relative to the background is neutral and radial. The rest of the cube is filled by a quasi-free state with prescribed density, taken from~\cite{lewin2020local} (Theorem~\ref{thm:basic_fluid}). Its density must vanish at the boundary of each Dirichlet ball. A compensated shell (Lemma~\ref{lem:upper_collar}) lets this density vanish smoothly near the ball and returns the missing mass in its outer part. The shell charge is neutral and radial, and its kinetic and Coulomb energies are proportional to the surface area of the ball. Consequently all cross interactions between balls, shells and the quasi-free state vanish, and the Jellium energy of the product state is given by the exact identity~\eqref{eq:upper_exact_identity}.
+The proof in Section~\ref{sec:upper} does not use a crystal. A large cube is filled, up to a fraction $\varepsilon$ of its volume, by a periodic family of balls with room between them (Lemma~\ref{lem:upper_packing}). Each ball carries a canonical Dirichlet Jellium ground state, averaged over rotations, so that its charge relative to the background is neutral and radial. The rest of the cube is filled by a quasi-free state with prescribed density, taken from~\cite{lewin2020local} (Theorem~\ref{thm:basic_fluid}). Its density must vanish at the boundary of each Dirichlet ball. A compensated shell (Lemma~\ref{lem:upper_collar}) lets this density vanish smoothly near the ball and returns the missing mass in its outer part. The shell charge is neutral and radial, and its kinetic and Coulomb energies are proportional to the surface area of the ball. Consequently the cross Coulomb terms between the resulting neutral charge distributions vanish, and the Jellium energy of the product state is given by the exact identity~\eqref{eq:upper_exact_identity}.
 
-The density of each such state is not constant. It becomes constant after averaging over translations of the packing, with the outer background held fixed. The average has Jellium energy equal to the average of the Jellium energies, and~\eqref{eq:conj_identity} bounds its indirect energy by this quantity. Its density equals $\rho_0$ except in a boundary layer of fixed width, where it is bounded by a fixed multiple of $\rho_0$. Lemma~\ref{lem:upper_bounded_layer}, which relies on the localization bound of~\cite{lewin2020local}, shows that such a layer does not lower the UEG energy per unit volume. The parameters are chosen in a fixed order. For a given accuracy, a minimum ball radius is fixed first, and only then a finite packing whose balls all have at least this radius. A finer packing therefore needs more balls and a larger period cell, but never smaller balls: it is obtained by dilating a packing of the unit cube until its smallest ball has the minimum radius. This is crucial because the kinetic and Coulomb energies of the shells are proportional to the total surface area of the balls, and this area per unit volume is at most a fixed multiple of the inverse minimum radius, independently of the packing. In the thin gaps between the shells the quasi-free state has constant density, so the gradient term in the kinetic energy bound of Theorem~\ref{thm:basic_fluid} vanishes there, and the remaining Thomas--Fermi term is small because the uncovered volume is small. The quantities that do depend on the packing, such as the period and the width of the boundary layer, are harmless, because the size of the cube tends to infinity with the packing held fixed. Only afterwards is the accuracy improved, with the minimum radius sent to infinity.
+The density of each such state is not constant. It becomes constant in the interior after averaging over translations of the packing, with the outer background held fixed. The average has Jellium energy equal to the average of the Jellium energies, and~\eqref{eq:conj_identity} bounds its indirect energy by this quantity. Its density equals $\rho_0$ except in a boundary layer of fixed width, where it is bounded by a fixed multiple of $\rho_0$. Lemma~\ref{lem:upper_bounded_layer}, which relies on the localization bound of~\cite{lewin2020local}, shows that such a layer does not lower the UEG energy per unit volume. The parameters are chosen in a fixed order. For a given accuracy, a minimum ball radius is fixed first, and only then a finite packing whose balls all have at least this radius. A finer packing therefore needs more balls and a larger period cell, but never smaller balls: it is obtained by dilating a packing of the unit cube until its smallest ball has the minimum radius. This is crucial because the kinetic and Coulomb energies of the shells are proportional to the total surface area of the balls, and this area per unit volume is at most a fixed multiple of the inverse minimum radius, independently of the packing. In the thin gaps between the shells the quasi-free state has constant density, so the gradient term in the kinetic energy bound of Theorem~\ref{thm:basic_fluid} vanishes there, and the remaining Thomas--Fermi term is small because the uncovered volume is small. The quantities that do depend on the packing, such as the period and the width of the boundary layer, are harmless, because the size of the cube tends to infinity with the packing held fixed. Only afterwards is the accuracy improved, with the minimum radius sent to infinity.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proofs}\label{sec:proofs}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this section we prove Theorem~\ref{thm:main}, following the outline in Section~\ref{sec:main_strategy}. Section~\ref{sec:basic} collects the general facts used in the proofs. The lower bound is Theorem~\ref{thm:lower} and the upper bound is Theorem~\ref{thm:upper}. Both concern exactly the canonical neutral Dirichlet energy of Theorem~\ref{thm:LN_main}, so together they prove~\eqref{eq:main} for every $q\in\NN$ and $\rho_0>0$ at $\hbar=1$, which suffices by the reduction below. No identification of unconfined grand-canonical Jellium with the canonical Dirichlet problem is assumed.
+In this section we prove Theorem~\ref{thm:main}, following the outline in Section~\ref{sec:main_strategy}. Section~\ref{sec:basic} collects the general facts used in the proofs. The lower bound is Theorem~\ref{thm:lower} and the upper bound is Theorem~\ref{thm:upper}. Both concern exactly the canonical neutral Dirichlet energy of Theorem~\ref{thm:LN_main}, so together they prove~\eqref{eq:main} for every integer $q\ge1$ and $\rho_0>0$ at $\hbar=1$, which suffices by the reduction below. No identification of unconfined grand-canonical Jellium with the canonical Dirichlet problem is assumed.
 
-By the scaling relations $e^\hbar_\bullet(\rho_0)=\hbar^{-8}e^1_\bullet(\hbar^6\rho_0)$ for both energies (Theorems~\ref{thm:LN_main}(iii) and~\ref{thm:UEG}(iii)), it suffices to prove~\eqref{eq:main} for $\hbar=1$ and all $\rho_0>0$. To reduce clutter, in this section and in Appendix~\ref{sec:canonical_completion} we set $\hbar=1$ and drop it from the notation, writing $E(\rho)$, $F_{\rm LL}(\rho)$, $H^{\rho_0}_\Omega$, $E_\Jel(\rho_0,\Omega)$, $e_\Jel(\rho_0)$ and $e_\UEG(\rho_0)$ for $E^1(\rho)$, $F^1_{\rm LL}(\rho)$, $H^{1,\rho_0}_\Omega$, $E^1_\Jel(\rho_0,\Omega)$, $e^1_\Jel(\rho_0)$ and $e^1_\UEG(\rho_0)$. Thus $e_\Jel(\rho_0)$ and $e_\UEG(\rho_0)$ are functions of the density, as in~\cite{lewin2020local}, not the functions $\tilde e_\Jel(\lambda)$ and $\tilde e_\UEG(\lambda)$ of Theorems~\ref{thm:LN_main} and~\ref{thm:UEG}.
+By the scaling relations $e^\hbar_\bullet(\rho_0)=\hbar^{-8}e^1_\bullet(\hbar^6\rho_0)$ for both energies (Theorems~\ref{thm:LN_main}(iii) and~\ref{thm:UEG}(iii)), it suffices to prove~\eqref{eq:main} for $\hbar=1$ and all $\rho_0>0$. To reduce clutter, in this section and in Appendices~\ref{sec:LN_proof} and~\ref{sec:canonical_completion} we set $\hbar=1$ and drop it from the notation, writing $E(\rho)$, $F_{\rm LL}(\rho)$, $H^{\rho_0}_\Omega$, $E_\Jel(\rho_0,\Omega)$, $e_\Jel(\rho_0)$ and $e_\UEG(\rho_0)$.
 
 \subsection{Basic facts}\label{sec:basic}
 
@@ -634,29 +632,21 @@ and define its indirect energy
 \]
 By~\eqref{eq:UEG_E}, $E(\rho)=\inf_{\rho_{\vGamma}=\rho}\EC(\vGamma)$. We collect the general facts used in this section and in Appendix~\ref{sec:LN_proof}. An $N$-particle state, that is, a density matrix $\Gamma$ on $\Hil^N$, is identified with the grand-canonical state whose only nonzero sector is $\Gamma^{(N)}=\Gamma$. We keep non-bold letters for such canonical states.
 
-\begin{lemma}[A priori bounds]\label{lem:basic_apriori}
-Let $\vGamma$ be a grand-canonical state with $\int_{\RR^3}\rho_{\vGamma}<\infty$.
-\begin{enumerate}[(i)]
-\item (Hoffmann-Ostenhof) $\int_{\RR^3}|\nabla\sqrt{\rho_{\vGamma}}|^2\le\TC(\vGamma)$. In particular, $\sqrt{\rho_{\vGamma}}\in H^1(\RR^3)$ if $\TC(\vGamma)<\infty$.
-\item (Lieb--Oxford) If $\rho_{\vGamma}\in L^{4/3}(\RR^3)$, then $\Cc(\vGamma)-D(\rho_{\vGamma})\ge-c_{\rm LO}\int_{\RR^3}\rho_{\vGamma}^{4/3}$, where $c_{\rm LO}\le1.64$.
-\item (Berezin--Li--Yau) If $\Omega\subset\RR^3$ is open with $|\Omega|<\infty$, then
+We use the Lieb--Oxford inequality to bound the energy of localized densities near the boundary from below.
+
+\begin{theorem}[{Lieb--Oxford~\cite{lieb1981improved}, \cite[Sec.~3.1]{lewin2020local}}]\label{thm:basic_lieb_oxford}
+There is a universal constant $c_{\rm LO}>0$ such that every grand-canonical state $\vGamma$ with $\rho_{\vGamma}\in L^1\cap L^{4/3}(\RR^3)$ satisfies
 \[
-\Big\langle\Psi,\sum_{j=1}^N(-\Delta_{x_j})\Psi\Big\rangle\ge c_\TF N^{5/3}|\Omega|^{-2/3}
+\Cc(\vGamma)-D(\rho_{\vGamma})\ge-c_{\rm LO}\int_{\RR^3}\rho_{\vGamma}^{4/3}.
 \]
-for every normalized $\Psi\in\bigwedge^NH^1_0(\Omega;\CC^q)$.
-\end{enumerate}
-\end{lemma}
+\end{theorem}
 
-\begin{proof}
-Item (i) is the Hoffmann-Ostenhof inequality~\cite{hoffmann1977schrodinger}. Item (ii) is the Lieb--Oxford inequality~\cite{lieb1981improved}, with the constant of~\cite{chan1999optimized}; it holds for grand-canonical states, as used in~\cite{lewin2018statistical}. Item (iii) is the Berezin--Li--Yau inequality~\cite{li1983schrodinger}. Each Dirichlet eigenvalue of $-\Delta$ on $L^2(\Omega;\CC^q)$ has multiplicity $q$, so the sum of the $N$ lowest ones is at least $q\cdot\frac35(6\pi^2)^{2/3}(N/q)^{5/3}|\Omega|^{-2/3}=c_\TF N^{5/3}|\Omega|^{-2/3}$.
-\end{proof}
+The following lemma gives the gradient bounds needed to localize densities and control the kinetic energy
+of a smeared indicator.
 
-\begin{lemma}[Two elementary estimates]\label{lem:basic_elementary}
+\begin{lemma}\label{lem:basic_elementary}
+The following hold true.
 \begin{enumerate}[(i)]
-\item For every real $f\in L^1\cap L^\infty(\RR^3)$,
-\begin{equation}\label{eq:basic_coulomb_small}
-D(f)\le D(|f|)\le C\|f\|_1^{5/3}\|f\|_\infty^{1/3}.
-\end{equation}
 \item Let $\Omega\subset\RR^3$ be measurable, and let $\eta\ge0$ satisfy $\int_{\RR^3}\eta=1$ and $\sqrt\eta\in H^1(\RR^3)$. Then $0\le\iden_\Omega*\eta\le1$ and
 \begin{equation}\label{eq:basic_sqrt_cutoff}
 |\nabla\sqrt{\iden_\Omega*\eta}|^2
@@ -670,10 +660,18 @@ In particular, $\sqrt{\iden_\Omega*\eta}\in W^{1,\infty}(\RR^3)$. If $\rho\ge0$ 
 \le2\int_{\RR^3}|\nabla\sqrt\rho|^2
 +2\|\nabla\sqrt{\iden_\Omega*\eta}\|_\infty^2\int_{\RR^3}\rho.
 \]
+\item Let $\Omega\subset\RR^3$ be a bounded Lipschitz domain, and let $\eta$ satisfy the assumptions in~(i), with $\supp\eta\subset B_1$. Set $\eta_\delta(x)=\delta^{-3}\eta(x/\delta)$. Then
+\[
+\int_{\RR^3}|\nabla\sqrt{\iden_\Omega*\eta_\delta}|^2
+\le C\frac{|\partial\Omega|}{\delta}
+\]
+for all sufficiently small $\delta>0$, where $|\partial\Omega|=\mathcal H^2(\partial\Omega)$ is the surface area and $C$ depends only on $\eta$ and the Lipschitz geometry of $\Omega$.
 \end{enumerate}
 \end{lemma}
 
-\begin{theorem}[Newton's theorem]\label{thm:basic_newton}
+We use Newton's theorem to compute radial Coulomb potentials and show that neutral radial charges do not interact with charges outside their supporting balls.
+
+\begin{theorem}[{Newton's theorem~\cite[Thm.~5.2]{lieb2010stability}}]\label{thm:basic_newton}
 Let $f\in L^1(\RR^3)$ be radial about $a\in\RR^3$ and supported in $\overline{B_r(a)}$, and write $f(s)$ for its value at distance $s$ from $a$. Then, for $x\ne a$,
 \begin{equation}\label{eq:basic_newton}
 \frac{1}{4\pi}\int_{\RR^3}\frac{f(y)}{|x-y|}\,\mathrm dy=\frac1{|x-a|}\int_0^{|x-a|}f(s)s^2\,\mathrm ds+\int_{|x-a|}^\infty f(s)s\,\mathrm ds.
@@ -686,9 +684,9 @@ Consequently:
 \]
 If $\int_{\RR^3}f=0$, the left side vanishes outside $B_r(a)$, and $D(f,g)=0$ for every $g\in L^1(\RR^3)$ supported outside $B_r(a)$.
 \item If $f\ge0$, then $\int_{\RR^3}f(y)|x-y|^{-1}\,\mathrm dy\le|x-a|^{-1}\int_{\RR^3}f$ for all $x\ne a$.
-\item If $f_i$ and $f_j$ are functions of this kind, radial about $a_i$ and $a_j$ and supported in disjoint closed balls, then
+\item If $g\in L^1(\RR^3)$ is radial about $b\in\RR^3$ and supported in a closed ball $\overline{B_{r'}(b)}$ disjoint from $\overline{B_r(a)}$, then
 \begin{equation}\label{eq:basic_radial_cross}
-2D(f_i,f_j)=\frac1{|a_i-a_j|}\int_{\RR^3}f_i\int_{\RR^3}f_j.
+2D(f,g)=\frac1{|a-b|}\int_{\RR^3}f\int_{\RR^3}g.
 \end{equation}
 \item If $f$ is bounded, then
 \[
@@ -697,21 +695,7 @@ D(f)=\frac12\int_0^\infty\frac1{s^2}\Big(\int_{B_s(a)}f\Big)^2\,\mathrm ds.
 \end{enumerate}
 \end{theorem}
 
-\begin{proof}
-We may translate $a$ to zero. Formula~\eqref{eq:basic_newton} is the classical shell theorem: a uniform spherical shell of radius $s$ has potential equal to its charge divided by $\max\{s,|x|\}$ at the point $x$. It applies to signed functions by linearity. For $|x|\ge r$ the second integral in~\eqref{eq:basic_newton} vanishes and $4\pi\int_0^rf(s)s^2\,\mathrm ds=\int_{\RR^3}f$, which gives the first assertion of (i). The second follows from
-\[
-2D(f,g)=\int_{\RR^3}g(x)\int_{\RR^3}\frac{f(y)}{|x-y|}\,\mathrm dy\,\mathrm dx.
-\]
-For (ii),
-\[
-\int_{\RR^3}\frac{f(y)}{|x-y|}\,\mathrm dy-\frac1{|x|}\int_{\RR^3}f=4\pi\int_{|x|}^\infty f(s)s\Big(1-\frac s{|x|}\Big)\,\mathrm ds\le0.
-\]
-For (iii), item (i) applied to $f_i$ gives
-\[
-2D(f_i,f_j)=\int_{\RR^3}f_i\int_{\RR^3}\frac{f_j(x)}{|x-a_i|}\,\mathrm dx,
-\]
-and the last integral equals $|a_i-a_j|^{-1}\int_{\RR^3}f_j$ by (i) applied to $f_j$ at the point $a_i$. For (iv), Poisson's equation shows that $D(f)$ is $\frac1{8\pi}$ times the integral of the squared gradient of $\int_{\RR^3}f(y)|x-y|^{-1}\,\mathrm dy$. Differentiating~\eqref{eq:basic_newton} in $|x|$ shows that this gradient has length $|x|^{-2}\big|\int_{B_{|x|}}f\big|$ at the point $x$. Integration in polar coordinates gives the claim.
-\end{proof}
+The following form of Onsager's inequality retains the positive Coulomb term needed to control the excess charge in Appendix~\ref{sec:canonical_completion}.
 
 \begin{lemma}[{Onsager~\cite{onsager1939electrostatic}; cf.~\cite[Lemma~6.1]{lieb2010stability}}]\label{lem:basic_onsager}
 Let $\rho\in L^1(\RR^3)$ satisfy $0\le\rho\le\bar\rho$, and let $x_1,\dots,x_N\in\RR^3$. For $a>0$, let $\mu_j:=|B_a|^{-1}\iden_{B_a(x_j)}$. Then
@@ -740,31 +724,13 @@ Inserting these three facts into the expansion of $D(\nu)$ gives the claim, and 
 The proofs of the lower bound (Theorem~\ref{thm:lower}) and the upper bound (Theorem~\ref{thm:upper}) both use grand-canonical states. Let $\zeta\ge0$ be a background with $\zeta\in L^1\cap L^\infty(\RR^3)$. Consider a grand-canonical state $\vGamma=(\Gamma^{(n)})$ as in Section~\ref{sec:notation}, with finite kinetic energy and $\int_{\RR^3}\rho_{\vGamma}<\infty$. Its Jellium energy is
 \begin{multline*}
 \mathcal{J}_\zeta(\vGamma):=\sum_{n\ge1}\Tr_{\Hil^n}\bigg[\sum_{j=1}^n\Big(-\Delta_{x_j}-\int_{\RR^3}\frac{\zeta(y)}{|x_j-y|}\,\mathrm dy\Big)+\sum_{1\le j<k\le n}\frac{1}{|x_j-x_k|}\bigg]\Gamma^{(n)}\\
-+D(\zeta),
++D(\zeta).
 \end{multline*}
-and we set $E^{\rm GC}_\Jel(\zeta):=\inf_{\vGamma}\mathcal{J}_\zeta(\vGamma)$. Since $\mathcal{J}_\zeta$ is affine in $\vGamma$, $E^{\rm GC}_\Jel(\zeta)$ is the infimum over $n\ge0$ of the ground-state energies of the $n$-particle Jellium Hamiltonians with background $\zeta$, with the particles in all of $\RR^3$.
-
-Since $\int_{\RR^3}\int_{\RR^3}\rho_{\vGamma}(x)\zeta(y)|x-y|^{-1}\,\mathrm dx\,\mathrm dy=2D(\rho_{\vGamma},\zeta)$, every such state satisfies
+Here, the second term is simply $-2D(\rho_{\vGamma},\zeta)$, so
 \begin{equation}\label{eq:conj_identity}
 \mathcal{J}_\zeta(\vGamma)=\EC(\vGamma)+D(\rho_{\vGamma})-2D(\rho_{\vGamma},\zeta)+D(\zeta)=\EC(\vGamma)+D(\rho_{\vGamma}-\zeta).
 \end{equation}
 For a fixed background $\zeta$, the left side of~\eqref{eq:conj_identity} is affine in $\vGamma$. On the right, only the sum is affine: the indirect energy $\EC(\vGamma)$ is concave in $\vGamma$, because $D(\rho_{\vGamma})$ is convex, while the direct term $D(\rho_{\vGamma}-\zeta)$ is convex. Averaging trial states with a common background therefore gives an exact formula for the Jellium energy of the average, and dropping the direct term in~\eqref{eq:conj_identity} turns it into an upper bound on the indirect energy of the average. This will determine how we average the final trial states.
-
-For every $\rho\ge0$ with $\sqrt\rho\in H^1(\RR^3)$,
-\begin{equation}\label{eq:conj_relaxation}
-\begin{split}
-E^{\rm GC}_\Jel(\zeta)
-&=\inf_{\sqrt\sigma\in H^1(\RR^3)}\,\inf_{\rho_{\vGamma}=\sigma}\mathcal J_\zeta(\vGamma)\\
-&=\inf_{\sqrt\sigma\in H^1(\RR^3)}\Big\{\inf_{\rho_{\vGamma}=\sigma}\EC(\vGamma)+D(\sigma-\zeta)\Big\}\\
-&=\inf_{\sqrt\sigma\in H^1(\RR^3)}\Big\{E(\sigma)+D(\sigma-\zeta)\Big\}\\
-&\le E(\rho)+D(\rho-\zeta).
-\end{split}
-\end{equation}
-In particular, let $\Omega$ be a bounded domain as in Theorem~\ref{thm:UEG}(ii), and take the Jellium background $\zeta=\rho_0\iden_\Omega$ and the smeared UEG density $\rho=\rho_0\iden_\Omega*\chi_\delta$. Then
-\[
-E^{\rm GC}_\Jel(\rho_0\iden_\Omega)\le E(\rho_0\iden_\Omega*\chi_\delta)+D\big(\rho_0\iden_\Omega*\chi_\delta-\rho_0\iden_\Omega\big).
-\]
-The two densities differ only in a layer of width $O(\delta)$ around $\partial\Omega$, of volume at most $C\delta|\Omega|^{2/3}$, so by~\eqref{eq:basic_coulomb_small} the last term is at most $C\rho_0^2(\delta|\Omega|^{2/3})^{5/3}$, which is $o(|\Omega|)$ if $\delta|\Omega|^{1/15}\to0$. In this sense grand-canonical Jellium is a relaxation of the UEG; this is the mechanism behind the inequality of~\cite{lewin2018statistical} recalled in Remark~\ref{rem:UEG_vs_Jel}.
 
 Let $A_1,\ldots,A_J\subset\RR^3$ be pairwise disjoint measurable sets. Put $\mathfrak h_j=L^2(A_j;\CC^q)$ and let $\Fock$ denote fermionic Fock space. Since the spaces $\mathfrak h_j$ are mutually orthogonal, there is a canonical unitary
 \[
@@ -787,7 +753,7 @@ Let the states $\vGamma_1,\ldots,\vGamma_J$ be number-conserving, fermionic and 
 \label{eq:basic_product_interaction}
 \end{align}
 \end{lemma}
-Consequently, for every decomposition $\zeta=\sum_{1\le j\le J}\zeta_j$ into backgrounds $\zeta_j\ge0$ in $L^1\cap L^\infty(\RR^3)$,
+Consequently, for every decomposition $\zeta=\sum_{1\le j\le J}\zeta_j$ into $\zeta_j\ge0$ in $L^1\cap L^\infty(\RR^3)$,
 \begin{equation}\label{eq:basic_product_J}
 \mathcal J_\zeta(\vGamma)
 =\sum_{1\le j\le J}\mathcal J_{\zeta_j}(\vGamma_j)
@@ -805,23 +771,24 @@ Let $\rho\ge0$ be such that $\sqrt\rho\in H^1(\RR^3)$, and let $0<\varepsilon\le
 +\frac{19}{\varepsilon}
 \int_{\RR^3}|\nabla\sqrt\rho|^2.
 \end{equation}
-If $\rho$ vanishes on a set $A\subset\RR^3$, all occupied one-particle functions of this state vanish almost everywhere on $A$. \end{theorem}
+\end{theorem}
 
-We also recall the localization lower bound of~\cite{lewin2020local}. Choose a nonnegative radial function $\eta\in C_c^\infty(\RR^3)$ with $\int_{\RR^3}\eta=1$, $\supp\eta\subset B_1$, and $\sqrt\eta\in C_c^\infty(\RR^3)$. Such a function is obtained by normalizing the square of a nonnegative radial test function. For a smearing scale $\delta>0$ put $\eta_\delta=\delta^{-3}\eta(\cdot/\delta)$. Then $\eta_\delta$ is radial, $\int_{\RR^3}\eta_\delta=1$, $\supp\eta_\delta\subset B_\delta$, and $\int_{\RR^3}|\nabla\sqrt{\eta_\delta}|^2=\delta^{-2}\int_{\RR^3}|\nabla\sqrt\eta|^2$. Use the tetrahedral tiling of~\cite[Sec.~4.2]{lewin2020local}. Its twenty-four congruent tetrahedra $\mu_j\tetra$ tile the unit cube up to null sets, and $|\tetra|=1/24$. Let $h>0$. For a rotation $Q\in\mathrm{SO}(3)$ and a translation $a\in C_h$, the tetrahedra
+We also recall the localization lower bound of~\cite{lewin2020local}. Choose a nonnegative radial function $\eta\in C_c^\infty(\RR^3)$ with $\int_{\RR^3}\eta=1$, $\supp\eta\subset B_1$, and $\sqrt\eta\in C_c^\infty(\RR^3)$. Such a function is obtained by normalizing the square of a nonnegative radial test function. For a smearing scale $\delta>0$ put $\eta_\delta=\delta^{-3}\eta(\cdot/\delta)$. Then $\eta_\delta$ is radial, $\int_{\RR^3}\eta_\delta=1$, $\supp\eta_\delta\subset B_\delta$.
+
+We now describe the tetrahedral tiling of Graf and Schenker~\cite{graf1995molecular}, in the notation of~\cite[Sec.~4.2]{lewin2020local}. The unit cube $C_1$ is the union, up to null sets, of 24 disjoint congruent tetrahedra $\mu_j\tetra$, where $j=1,\ldots,24$. Here $\tetra$ is a reference tetrahedron centered at the origin and $|\tetra|=1/24$, and $\mu_j$ is an isometry $\mu_jx=R_jx-z_j$ for some $R_j\in\mathrm{SO}(3)$ and $z_j\in C_1$. Fix a scale $h>0$. For a rotation $Q\in\mathrm{SO}(3)$ and a translation $a\in C_h$, the tetrahedra
 \[
 Q^{-1}(h\mu_j\tetra+h z+a),
 \qquad
 z\in\ZZ^3,\ 1\le j\le24,
 \]
-tile $\RR^3$ up to null sets. This is the tiling with parameter $(Q,a)$. Each tetrahedron is congruent to $h\tetra$, so it has volume $|h\tetra|=h^3/24$, and its diameter is at most $d_0h$ for a fixed $d_0$. Convolution of the tiling identity with $\eta_\delta$ gives
+tile $\RR^3$ up to null sets. These tetrahedra are all congruent to $h\tetra$, so they have volume $|h\tetra|=h^3/24$ and diameter $d_0h$, where $d_0:=\operatorname{diam}\tetra$. Convolution of the tiling identity with $\eta_\delta$ gives
 \begin{equation}\label{eq:basic_partition}
 \sum_{z\in\ZZ^3}\sum_{j=1}^{24}\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta=1
 \quad\hbox{a.e.\ in }\RR^3.
 \end{equation}
-We call the term $\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta$ the smeared indicator of its tetrahedron. It takes values in $[0,1]$ and is supported in the $\delta$-neighborhood of the tetrahedron, which we call the $\delta$-enlargement of the tetrahedron. Since $\eta_\delta$ is radial, every isometry of $\RR^3$ mapping $h\tetra$ onto a tetrahedron maps $\iden_{h\tetra}*\eta_\delta$ onto the smeared indicator of that tetrahedron.
-
-\begin{lemma}[Localization on a tetrahedral tiling {\cite[Prop.~16]{lewin2020local}}]\label{lem:basic_localization}
-There is a constant $C$ such that for every $\rho\ge0$ with $\sqrt\rho\in H^1(\RR^3)$, every $\delta>0$ and every $h>C\delta$,
+We use normalized Haar measure $\mathrm dQ$ on $\mathrm{SO}(3)$. Using the IMS localization formula and the smeared Graf--Schenker inequality~\cite[Lemma~6]{graf1995molecular} one obtains
+\begin{theorem}[Localization on a tetrahedral tiling {\cite[Prop.~16]{lewin2020local}}]\label{thm:basic_localization}
+There is a constant $C>0$ such that for every $\rho\ge0$ with $\sqrt\rho\in H^1(\RR^3)$, every $\delta>0$ and every $h>C\delta$,
 \begin{multline}\label{eq:basic_localization}
 E(\rho)\ge
 \left(1-\frac{C\delta}h\right)
@@ -831,34 +798,27 @@ E\big((\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho\big)
 \,\mathrm da\,\mathrm dQ
 \\
 -\frac{C}{h}\int_{\RR^3}(\rho+\delta^3\rho^2)
--\frac{C}{h\delta}\int_{\RR^3}\rho
+-\frac{C}{h\delta}\int_{\RR^3}\rho.
 \end{multline}
-Here Haar measure on $\mathrm{SO}(3)$ is normalized to one.
-\end{lemma}
+\end{theorem}
 
-This is~\cite[Prop.~16, Eq.~(47)]{lewin2020local}, where the smearing function is $(10/\delta)^3\eta(10\,\cdot/\delta)$ instead of $\eta_\delta$. Replacing $\delta$ by $10\delta$ there changes only the value of $C$.
 
 \subsection{The lower bound}\label{sec:lower}
 
-The relaxation~\eqref{eq:conj_relaxation} gives the lower bound in terms of grand-canonical Jellium~\cite[proof of Thm.~5.1, Step~4]{lewin2018statistical}. To reach the canonical neutral Dirichlet energy, we instead select one particle-number sector of a confined UEG trial state and complete it to neutrality in a slightly larger ball. The following finite-volume statement supplies this step. Its proof in Appendix~\ref{sec:canonical_completion} uses the Onsager bound, Newton's theorem and the localized orbitals of~\cite{lieb1975thermodynamic}, independently of the equality of the thermodynamic energies.
-
+The following lemma allows us to complete a confined state to neutrality by adding particles and background charge in a shell of bounded thickness, with an energy increase bounded by a constant times the surface area.
 \begin{lemma}[Neutralization in a slightly larger ball]\label{lem:lower_completion}
-Fix $\rho_0>0$ and $C_0>0$. There are constants $h,C,\ell_0>0$ depending only on these parameters such that the following holds. Let $\ell\ge \ell_0$ and let $\Gamma_N$ be a normalized $N$-particle Dirichlet state in $B_\ell$, with finite kinetic and repulsion expectations and
+Fix $\rho_0>0$ and $C_0>0$. There exist constants $h,C_1>0$, depending only on $\rho_0$ and $C_0$, such that
+whenever  $\ell\ge1$ and a normalized $N$-particle state $\Gamma_N$ supported in $B_\ell$ with homogeneous Dirichlet boundary conditions verifies the bound
 \[
-\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)\le C_0\ell^3.
+\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)\le C_0\ell^3,
 \]
-There is a radius $\ell'\in[\ell,\ell+h]$ with $M=\rho_0|B_{\ell'}|\in\NN$ (neutrality), and a normalized $M$-particle Dirichlet state $\Gamma_M$ in $B_{\ell'}$ such that
+there exist a radius $\ell'\in[\ell,\ell+h]$ with $M=\rho_0|B_{\ell'}|\in\NN$ (neutrality) and a normalized $M$-particle state $\Gamma_M$ supported in $B_{\ell'}$ satisfying homogeneous Dirichlet boundary conditions such that
 \begin{equation}\label{eq:lower_completion}
 \mathcal J_{\rho_0\iden_{B_{\ell'}}}(\Gamma_M)
-\le\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)+C\ell^2.
+\le\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)+C_1\ell^2.
 \end{equation}
 \end{lemma}
-
-We immediately obtain that in particular
-\begin{equation}\label{eq:lower_neutral_energy}
-E_\Jel(\rho_0,B_{\ell'})\le\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)+C\ell^2,
-\end{equation}
-since $\Gamma_M$ is a trial state for $H^{\rho_0}_{B_{\ell'}}$.
+The proof can be found in Appendix~\ref{sec:canonical_completion}.
 
 \begin{theorem}\label{thm:lower}
 $e_\Jel(\rho_0)\le e_\UEG(\rho_0)$
@@ -873,13 +833,7 @@ The conditions $\delta_\ell/r_\ell\to0$ and $\delta_\ell r_\ell\to\infty$ allow 
 \[
 E\big(\rho_0\iden_{B_{r_\ell}}*\chi_{\delta_\ell}\big)=e_\UEG(\rho_0)|B_\ell|+o(\ell^3).
 \]
-Take grand-canonical states $\vGamma_\ell$ with $\rho_{\vGamma_\ell}=\rho_0\iden_{B_{r_\ell}}*\chi_{\delta_\ell}$ that are approximate minimizers for the Levy--Lieb functional, in the sense that their kinetic plus repulsion expectations satisfy
-\[
-\TC(\vGamma_\ell)+\Cc(\vGamma_\ell)\le F_{\rm LL}(\rho_{\vGamma_\ell})+o(\ell^3),
-\qquad\text{equivalently}\qquad
-\EC(\vGamma_\ell)\le E(\rho_{\vGamma_\ell})+o(\ell^3)
-\]
-by~\eqref{eq:UEG_E}. Clearly, $\supp\rho_{\vGamma_\ell}\subset B_{\ell-\delta_\ell}$. The expected number of particles outside this smaller ball is zero, so every occupied particle-number sector has all its coordinates there. Finite kinetic energy and the positive distance from $\partial B_\ell$ therefore make $\vGamma_\ell$ a Dirichlet state in $B_\ell$.
+By~\cite[Thm.~4]{lewin2019universal}, the infimum defining $F_{\rm LL}(\rho_0\iden_{B_{r_\ell}}*\chi_{\delta_\ell})$ is attained. Let $\vGamma_\ell$ be a minimizer, so that $\rho_{\vGamma_\ell}=\rho_0\iden_{B_{r_\ell}}*\chi_{\delta_\ell}$ and $\EC(\vGamma_\ell)=E(\rho_{\vGamma_\ell})$ by~\eqref{eq:UEG_E}. Clearly, $\supp\rho_{\vGamma_\ell}\subset B_{\ell-\delta_\ell}$.
 
 The density satisfies $0\le\rho_{\vGamma_\ell}\le\rho_0\iden_{B_\ell}$ and $\int_{\RR^3}\rho_{\vGamma_\ell}=\rho_0|B_{r_\ell}|$. Consequently, for $f_\ell=\rho_{\vGamma_\ell}-\rho_0\iden_{B_\ell}$,
 \begin{align*}
@@ -887,23 +841,39 @@ The density satisfies $0\le\rho_{\vGamma_\ell}\le\rho_0\iden_{B_\ell}$ and $\int
 \qquad \|f_\ell\|_\infty\le\rho_0,\\
 D(f_\ell)&\le C(\ell^2\delta_\ell)^{5/3}=C\ell^{5/2}=o(\ell^3),
 \end{align*}
-where the last estimate is Lemma~\ref{lem:basic_elementary}(i). The identity~\eqref{eq:conj_identity} now gives
+where we used $D(f)\le D(|f|)\le C\|f\|_1^{5/3}\|f\|_\infty^{1/3}$ for real $f\in L^1\cap L^\infty(\RR^3)$. Combining this with the identity~\eqref{eq:conj_identity} gives
 \begin{equation}\label{eq:lower_trial}
 \mathcal J_{\rho_0\iden_{B_\ell}}(\vGamma_\ell)
 =e_\UEG(\rho_0)|B_\ell|+o(\ell^3).
 \end{equation}
-With $p_n=\Tr\Gamma_\ell^{(n)}$, the definition of $\mathcal J_\zeta$ in Section~\ref{sec:basic} gives
+Set $p_n=\Tr\Gamma_\ell^{(n)}$. Since $\vGamma\mapsto \mathcal J_\zeta(\vGamma)$ is affine for fixed $\zeta$ we obtain
 \[
 \mathcal J_{\rho_0\iden_{B_\ell}}(\vGamma_\ell)=\sum_{n:\,p_n>0}p_n\,\mathcal J_{\rho_0\iden_{B_\ell}}\big(\Gamma_\ell^{(n)}/p_n\big),\qquad\sum_n p_n=1,
 \]
-so, by affineness of $\mathcal J_\zeta$ in the state for a fixed background, the left side of~\eqref{eq:lower_trial} is an average of the Jellium energies of the normalized sectors. 
-Hence there is $N_\ell$ with $p_{N_\ell}>0$ such that the $N_\ell$-particle state $\Gamma_{N_\ell}=\Gamma_\ell^{(N_\ell)}/p_{N_\ell}$ satisfies $\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_{N_\ell})\le\mathcal J_{\rho_0\iden_{B_\ell}}(\vGamma_\ell)$. 
-Lemma~\ref{lem:lower_completion}, applied to $\Gamma_{N_\ell}$ with a fixed sufficiently large $C_0$, together with~\eqref{eq:lower_neutral_energy} and~\eqref{eq:lower_trial}, gives $\ell'=\ell+O(1)$ with
+so the left side of~\eqref{eq:lower_trial} is an average of the Jellium energies of the normalized sectors.
+Hence there is $N_\ell$ with $p_{N_\ell}>0$ such that the $N_\ell$-particle state $\Gamma_{N_\ell}=\Gamma_\ell^{(N_\ell)}/p_{N_\ell}$ satisfies $\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_{N_\ell})\le\mathcal J_{\rho_0\iden_{B_\ell}}(\vGamma_\ell)$.
+
+Next, we check the hypotheses of Lemma~\ref{lem:lower_completion}. Since $\vGamma_\ell$ has finite kinetic energy and its density vanishes outside $B_{\ell-\delta_\ell}$, every occupied sector has finite kinetic energy and is supported in this smaller ball. In particular, $\Gamma_{N_\ell}$ satisfies homogeneous Dirichlet boundary conditions in $B_\ell$. Fix $C_0=1+|B_1||e_\UEG(\rho_0)|$.
+By~\eqref{eq:lower_trial} and the choice of $N_\ell$, for all sufficiently large $\ell$ we have
 \[
-E_\Jel(\rho_0,B_{\ell'})
-\le e_\UEG(\rho_0)|B_\ell|+o(\ell^3).
+\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_{N_\ell})
+\le\mathcal J_{\rho_0\iden_{B_\ell}}(\vGamma_\ell)
+\le C_0\ell^3.
 \]
-Divide by $|B_{\ell'}|$, use $|B_{\ell'}|/|B_\ell|\to1$, and apply Theorem~\ref{thm:LN_main}(ii) to the neutral balls $B_{\ell'}$ (Remark~\ref{rem:LN_balls}). This proves the claim.
+Thus Lemma~\ref{lem:lower_completion} applies with the same $\rho_0$ and $C_0$ for all these $\ell$. It provides constants $h,C_1>0$ independent of $\ell$ and, for each $\ell$, a radius $\ell'\in[\ell,\ell+h]$ with $M_\ell=\rho_0|B_{\ell'}|\in\NN$ and a normalized $M_\ell$-particle state $\Gamma_{M_\ell}$ supported in $B_{\ell'}$ satisfying homogeneous Dirichlet boundary conditions. This is a trial state for the canonical neutral Jellium problem in $B_{\ell'}$, so the variational principle and~\eqref{eq:lower_completion} give
+\begin{align*}
+E_\Jel(\rho_0,B_{\ell'})
+&\le\mathcal J_{\rho_0\iden_{B_{\ell'}}}(\Gamma_{M_\ell})\\
+&\le\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_{N_\ell})+C_1\ell^2\\
+&\le\mathcal J_{\rho_0\iden_{B_\ell}}(\vGamma_\ell)+C_1\ell^2\\
+&=e_\UEG(\rho_0)|B_\ell|+o(\ell^3).
+\end{align*}
+Here the last line uses~\eqref{eq:lower_trial} and $C_1\ell^2=o(\ell^3)$, since $C_1$ is independent of $\ell$. Moreover, $0\le\ell'-\ell\le h$ implies $\ell'/\ell\to1$. Dividing by $|B_{\ell'}|$ therefore gives
+\[
+\frac{E_\Jel(\rho_0,B_{\ell'})}{|B_{\ell'}|}
+\le e_\UEG(\rho_0)\left(\frac\ell{\ell'}\right)^3+o(1).
+\]
+The left side tends to $e_\Jel(\rho_0)$ by Theorem~\ref{thm:LN_main}(ii) applied to the neutral balls $B_{\ell'}$ (Remark~\ref{rem:LN_balls}), while the right side tends to $e_\UEG(\rho_0)$. This proves the claim.
 \end{proof}
 
 \subsection{The upper bound}\label{sec:upper}
@@ -914,25 +884,25 @@ The purpose of this section is to prove
 $e_\UEG(\rho_0)\le e_\Jel(\rho_0)$
 \end{theorem}
 
-Its proof is given after Lemma~\ref{lem:upper_packing} below and uses Lemmas~\ref{lem:upper_bounded_layer}, \ref{lem:upper_collar} and~\ref{lem:upper_packing}.
+Its proof is given after Lemma~\ref{lem:upper_packing} below. We first control densities with a bounded transition layer.
 
 \begin{lemma}[A bounded transition layer]\label{lem:upper_bounded_layer}
-Fix $\rho_0>0$ and $\Lambda\ge1$. For all sufficiently large $\ell>0$, let $\delta'=\delta'(\ell)\ge0$ be the width of the transition layer, and let $\rho_\ell$ satisfy $\sqrt{\rho_\ell}\in H^1(\RR^3)$ and
+Fix $\rho_0>0$ and $\Lambda\ge1$. For all sufficiently large $\ell>0$, let $\delta'=\delta'(\ell)\ge0$ be the width of the transition layer, and let $\rho_\ell\ge 0$ satisfy $\sqrt{\rho_\ell}\in H^1(\RR^3)$ and
 \[
 0\le\rho_\ell\le \Lambda\rho_0\iden_{C_\ell+B_{\delta'}},
 \qquad
-\rho_\ell=\rho_0\quad\hbox{a.e.\ on }C_\ell\setminus(\partial C_\ell+B_{\delta'}),
+\rho_\ell=\rho_0\quad\hbox{a.e.\ on }C_\ell\setminus(\partial C_\ell+B_{\delta'}).
 \]
-where $C_\ell=(-\ell/2,\ell/2)^3$ is the cube of side length $\ell$. If $\delta'/\ell\to0$ as $\ell\to\infty$, then
+If $\delta'/\ell\to0$ as $\ell\to\infty$, then
 \begin{equation}\label{eq:upper_bounded_layer}
 e_\UEG(\rho_0)\le \liminf_{\ell\to\infty}\frac{E(\rho_\ell)}{\ell^3}.
 \end{equation}
 \end{lemma}
 
 \begin{proof}
-All constants in this proof are independent of $\ell$, of $\delta\in(0,1]$, and of the translation and rotation of the tiling. Dependence on $\Lambda$ and $\rho_0$ is indicated where it enters. 
+All constants in this proof are independent of $\ell$, of $\delta\in(0,1]$, and of the translation and rotation of the tiling. Dependence on $\Lambda$ and $\rho_0$ is indicated where it enters.
 
-We use the tiling and the partition~\eqref{eq:basic_partition} introduced before Lemma~\ref{lem:basic_localization}. By Lemma~\ref{lem:basic_elementary}(ii), every localized density $(\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho_\ell$ is admissible for $E$. Fix $\delta\in(0,1]$ and $h>C\delta$, where $C$ is the constant of Lemma~\ref{lem:basic_localization}, so that $1-C\delta/h>0$. Since $\sqrt{\rho_\ell}\in H^1(\RR^3)$, Lemma~\ref{lem:basic_localization} gives
+We use the tiling and the partition~\eqref{eq:basic_partition} introduced before Theorem~\ref{thm:basic_localization}. By Lemma~\ref{lem:basic_elementary}(i), every localized density $(\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho_\ell$ is admissible for $E$. Fix $\delta\in(0,1]$ and $h>C\delta$, where $C$ is the constant of Theorem~\ref{thm:basic_localization}, so that $1-C\delta/h>0$. Since $\sqrt{\rho_\ell}\in H^1(\RR^3)$, Theorem~\ref{thm:basic_localization} gives
 \begin{multline}\label{eq:upper_layer_localization}
 E(\rho_\ell)\ge
 \left(1-\frac{C\delta}h\right)
@@ -965,7 +935,7 @@ To treat the first term of \eqref{eq:upper_layer_localization}, we introduce the
 \[
 J=\big\{(z,j)\in\ZZ^3\times\{1,\dots,24\}:Q^{-1}(h\mu_j\tetra+h z+a)\cap(C_\ell+B_{\delta'+\delta})\ne\emptyset\big\}
 \]
- If $(z,j)\notin J$, the localized density $(\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho_\ell$ vanishes, 
+ If $(z,j)\notin J$, the localized density $(\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho_\ell$ vanishes,
  because the smeared indicator of the tetrahedron is supported in its $\delta$-enlargement and $\rho_\ell$ vanishes outside
  $C_\ell+B_{\delta'}$. Let further
 \[
@@ -1018,11 +988,11 @@ Conversely, if a point $x\in C_\ell$ is at a distance more than $h'$ from $\part
 \le \ell^3-(\ell-2h')^3
 \le C \ell^2h'.
 \end{equation}
-For $(z,j)\in J_0$, the $\delta$-enlargement of the tetrahedron lies in $C_\ell\setminus(\partial C_\ell+B_{\delta'})$, where $\rho_\ell=\rho_0$. Hence the localized density equals $\rho_0\,\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta$. Translation invariance, orthogonal invariance, and radiality of the smoothing function show that its energy is the same finite number $E(\rho_0\,\iden_{h\tetra}*\eta_\delta)$. 
+For $(z,j)\in J_0$, the $\delta$-enlargement of the tetrahedron lies in $C_\ell\setminus(\partial C_\ell+B_{\delta'})$, where $\rho_\ell=\rho_0$. Hence the localized density equals $\rho_0\,\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta$. Translation invariance, orthogonal invariance, and radiality of the smoothing function show that its energy is the same finite number $E(\rho_0\,\iden_{h\tetra}*\eta_\delta)$.
 
 For $(z,j)\in J\setminus J_0$, the localized density $(\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho_\ell$ vanishes outside $\partial C_\ell+B_{h'}$. Indeed, a point outside $C_\ell$ at which $\rho_\ell$ is nonzero is within distance $\delta'$ of its boundary. If instead $x\in C_\ell$ has distance at least $h'$ from the boundary and $(\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)(x)>0$, then $x$ lies in the $\delta$-enlargement of the tetrahedron. Every point of the tetrahedron is then within distance $d_0h+\delta$ of $x$, which would give $(z,j)\in J_0$. This proves the assertion.
 
-The Lieb--Oxford inequality (Lemma~\ref{lem:basic_apriori}(ii)) and nonnegativity of the kinetic energy give $E(\rho)\ge-c_{\mathrm{LO}}\int_{\RR^3}\rho^{4/3}$ for each of the localized densities $\rho$. For the sum over $J\setminus J_0$ we use that each smeared indicator is at most $1$, so that its $4/3$ power is at most the smeared indicator itself, together with the partition identity~\eqref{eq:basic_partition}. This avoids an estimate that grows with the overlap multiplicity or the number of boundary tetrahedra. We obtain
+The Lieb--Oxford inequality (Theorem~\ref{thm:basic_lieb_oxford}) and nonnegativity of the kinetic energy give $E(\rho)\ge-c_{\mathrm{LO}}\int_{\RR^3}\rho^{4/3}$ for each of the localized densities $\rho$. For the sum over $J\setminus J_0$ we use that each smeared indicator is at most $1$, so that its $4/3$ power is at most the smeared indicator itself, together with the partition identity~\eqref{eq:basic_partition}. This avoids an estimate that grows with the overlap multiplicity or the number of boundary tetrahedra. We obtain
 \begin{align*}
 &\sum_{(z,j)\in J\setminus J_0}E\big((\iden_{Q^{-1}(h\mu_j\tetra+h z+a)}*\eta_\delta)\rho_\ell\big)\\
 &\qquad\ge-c_{\mathrm{LO}}\int_{\partial C_\ell+B_{h'}}\rho_\ell^{4/3}
@@ -1066,8 +1036,6 @@ At fixed $h$, the energy $E(\rho_0\,\iden_{h\tetra}*\eta_\delta)$ is finite and 
 \]
 Letting $h\to\infty$ at fixed $\delta$ in the previous lower bound proves~\eqref{eq:upper_bounded_layer}.
 \end{proof}
-
-The purpose of the shell is to reconcile two requirements. The density of the quasi-free state placed between the balls must vanish at the boundary of each Dirichlet ball, but removing mass from a neighborhood of that boundary would leave a charged layer. We return exactly the missing mass in a slightly larger concentric layer. Both layers together have zero charge, and their Coulomb potential vanishes outside the enlarged ball.
 
 \begin{lemma}\label{lem:upper_collar}
 Fix $\delta>0$ and $r\ge2\delta$. There exists a bounded radial function $g_{r,\delta}$ supported in $\overline{B_{r+2\delta}\setminus B_r}$ such that
@@ -1176,7 +1144,7 @@ D(g_{r,\delta})
 \le\delta\frac{\sup_tQ(t)^2}{r^2}
 \le C\rho_0^2r^2\delta^3.
 \]
-This proves the Lemma.
+This proves the lemma.
 \end{proof}
 
 \begin{lemma}[A finite packing with room for shells]\label{lem:upper_packing}
@@ -1195,12 +1163,12 @@ Let $\BC$ be the family of all closed balls $\overline{B_s(z)}$ with $s>0$ that 
 \[
 \sum_{k=1}^\infty|B_{s_k}|=|C_1|=1.
 \]
-Choose $M$ such that $\sum_{k=1}^M|B_{s_k}|>1-\varepsilon/2$. The balls $\overline{B_{s_m}(z_m)}$, $1\le m\le M$, are finitely many pairwise disjoint compact subsets of the open cube $C_1$. Hence
+Choose $M\ge2$ such that $\sum_{k=1}^M|B_{s_k}|>1-\varepsilon/2$. The balls $\overline{B_{s_m}(z_m)}$, $1\le m\le M$, are finitely many pairwise disjoint compact subsets of the open cube $C_1$. Hence
 \[
 d=\min\Big\{\min_{1\le m<k\le M}\big(|z_m-z_k|-s_m-s_k\big),\ \min_{1\le m\le M}\big(d(z_m,\partial C_1)-s_m\big)\Big\}>0.
 \]
 
-Next we dilate the cube $C_1$ and the balls $\overline{B_{s_m}(z_m)}$, $1\le m\le M$, by a large factor $L>0$. This gives the cube $C_L=LC_1$ and the balls $\overline{B_{Ls_m}(Lz_m)}$. 
+Next we dilate the cube $C_1$ and the balls $\overline{B_{s_m}(z_m)}$, $1\le m\le M$, by a large factor $L>0$. This gives the cube $C_L=LC_1$ and the balls $\overline{B_{Ls_m}(Lz_m)}$.
  We then round the radii $Ls_m$ down to neutral ones. For $1\le m\le M$ put
 \[
 N_m=\big\lfloor\rho_0|B_{Ls_m}|\big\rfloor,
@@ -1253,36 +1221,34 @@ so $\overline{B_{r_m+2\delta}(c_m)}\subset C_L$ when $Ld>2\delta$. See Figure~\r
 We are now in a position to complete the proof of the main result of this section.
 
 \begin{proof}[Proof of Theorem~\ref{thm:upper}]
-We shall apply Lemma~\ref{lem:upper_bounded_layer}. Then, it remains to bound the resulting $\liminf$ from above by $e_\Jel(\rho_0)$, up to an error that can be made arbitrarily small. 
+We shall apply Lemma~\ref{lem:upper_bounded_layer}. Then, it remains to bound the resulting $\liminf$ from above by $e_\Jel(\rho_0)$, up to an error that can be made arbitrarily small.
 
 Fix a shell width $\delta>0$ and a number $\varepsilon\in(0,1)$. Constants depending on $\rho_0,\delta$ will not depend on the finite packing constructed below.
 
-By the thermodynamic limit on neutral balls (Theorem~\ref{thm:LN_main}(ii) and Remark~\ref{rem:LN_balls}), there is a radius $r_*>2\delta$ such that every $r\ge r_*$ satisfying $N=\rho_0|B_r|\in\NN$ admits a normalized $\Psi_r\in\bigwedge^NH^1_0(B_r;\CC^q)$ with
+By the thermodynamic limit on neutral balls (Theorem~\ref{thm:LN_main}(ii) and Remark~\ref{rem:LN_balls}), there is a radius $r_*>2\delta$ such that every $r\ge r_*$ with $N=\rho_0|B_r|\in\NN$ satisfies
 \begin{equation}\label{eq:upper_core_energy}
-\big\langle\Psi_r,H^{\rho_0}_{B_r}\Psi_r\big\rangle
+E_\Jel(\rho_0,B_r)
 \le(e_\Jel(\rho_0)+\varepsilon)|B_r|.
 \end{equation}
-We may increase $r_*$ further whenever needed. For $Q\in\mathrm{SO}(3)$, let $U_Q$ be the unitary $(U_Qf)(x)=f(Q^{-1}x)$ on $L^2(\RR^3;\CC^q)$, acting as the identity on the spin variables, and also its $N$-fold tensor power. We average over rotations,
-\[
-\Gamma_r=\int_{\mathrm{SO}(3)}U_Q|\Psi_r\rangle\langle\Psi_r|U_Q^*\,\mathrm dQ.
-\]
-In general, this is a mixed $N$-particle state. The ball Hamiltonian $H^{\rho_0}_{B_r}$ commutes with every $U_Q$, so
+We may increase $r_*$ further whenever needed.
+
+For each such $r$, let $\Gamma_r$ be a normalized rotation-invariant ground-state density matrix of $H^{\rho_0}_{B_r}$. A ground state exists because the Dirichlet Hamiltonian on the ball has compact resolvent. Averaging a ground state over spatial rotations produces such a $\Gamma_r$, since the Hamiltonian commutes with rotations. This state may be mixed, and it satisfies
 \[
 \mathcal J_{\rho_0\iden_{B_r}}(\Gamma_r)
-=\big\langle\Psi_r,H^{\rho_0}_{B_r}\Psi_r\big\rangle.
+=E_\Jel(\rho_0,B_r).
 \]
-The density $\rho_{\Gamma_r}=\int_{\mathrm{SO}(3)}\rho_{\Psi_r}(Q^{-1}\cdot)\,\mathrm dQ$ is radial. It is supported in $B_r$, because $\Psi_r$ vanishes outside $B_r$, and its integral is the particle number $N=\rho_0|B_r|$. Hence $\rho_{\Gamma_r}-\rho_0\iden_{B_r}$ is a radial neutral charge distribution, and Theorem~\ref{thm:basic_newton}(i) gives
+The density $\rho_{\Gamma_r}$ is radial, supported in $B_r$, and has integral $N=\rho_0|B_r|$. Hence $\rho_{\Gamma_r}-\rho_0\iden_{B_r}$ is a radial neutral charge distribution, and Newton's theorem~\eqref{eq:basic_newton} gives
 \begin{equation}\label{eq:upper_core_zero_potential}
 \int_{\RR^3}\frac{\rho_{\Gamma_r}(y)-\rho_0\iden_{B_r}(y)}{|x-y|}\,\mathrm dy=0\quad\hbox{for }x\in\RR^3\setminus B_r.
 \end{equation}
-The density $\rho_{\Gamma_r}$ has finite Coulomb energy. Indeed, $\Gamma_r$ has finite kinetic energy, so $\sqrt{\rho_{\Gamma_r}}\in H^1$ by Lemma~\ref{lem:basic_apriori}(i). Hence $\rho_{\Gamma_r}\in L^1\cap L^3$, and its Coulomb energy is finite.
+The density $\rho_{\Gamma_r}$ has finite direct energy. Indeed, $\Gamma_r$ has finite kinetic energy, so $\sqrt{\rho_{\Gamma_r}}\in H^1$ by the Hoffmann--Ostenhof inequality~\cite{hoffmann1977schrodinger}. Hence $\rho_{\Gamma_r}\in L^1\cap L^3$, and its direct energy is finite.
 
-Apply Lemma~\ref{lem:upper_packing} with $\varepsilon$, $\delta$ and the chosen $r_*$. It gives a side length $L>0$ and finitely many balls $B_{r_m}(c_m)$, $1\le m\le M$, with $r_m\ge r_*$ and $\rho_0|B_{r_m}|\in\NN$, whose closed enlargements $\overline{B_{r_m+2\delta}(c_m)}$ are pairwise disjoint and contained in $C_L$, and which cover the fraction $\theta$ of $C_L$, where
+Next, we apply Lemma~\ref{lem:upper_packing} with $\varepsilon$, $\delta$ and the chosen $r_*$. It gives a side length $L>0$ and finitely many balls $B_{r_m}(c_m)$, $1\le m\le M$, with $r_m\ge r_*$ and $\rho_0|B_{r_m}|\in\NN$, whose closed enlargements $\overline{B_{r_m+2\delta}(c_m)}$ are pairwise disjoint and contained in $C_L$, and which cover the fraction $\theta$ of $C_L$, where
 \[
 \theta=\frac1{L^3}\sum_{m=1}^M|B_{r_m}|\ge1-\varepsilon.
 \]
-Since each $r_m$ is admissible in~\eqref{eq:upper_core_energy}, we may use the rotation-averaged state $\Gamma_{r_m}$ centered at the origin for $m=1,\dots,M$.
-For a shift $a\in C_L$ and an index $(z,m)\in\ZZ^3\times\{1,\dots,M\}$, the translated ball is $B_{r_m}(c_m+Lz+a)$ and the translated enlarged ball is $B_{r_m+2\delta}(c_m+Lz+a)$. Let $\Gamma_{z,m}$ be the translate of $\Gamma_{r_m}$ by $c_m+Lz+a$. The closed enlarged balls are disjoint, including between different periodic cells.
+Since each $r_m$ is admissible in~\eqref{eq:upper_core_energy}, we may use the rotation-invariant ground-state density matrix $\Gamma_{r_m}$ centered at the origin for $m=1,\dots,M$.
+For a fixed shift $a\in C_L$ and an index $(z,m)\in\ZZ^3\times\{1,\dots,M\}$, the translated ball is $B_{r_m}(c_m+Lz+a)$ and the translated enlarged ball is $B_{r_m+2\delta}(c_m+Lz+a)$. Let $\Gamma_{z,m,a}$ be the translate of $\Gamma_{r_m}$ by $c_m+Lz+a$. The closed enlarged balls are disjoint, including between different periodic cells.
 
 Choose a radial mollifier $\chi$, that is, a radial function with $\chi\ge0$, $\int_{\RR^3}\chi=1$, $\supp\chi\subset B_1$ and $\sqrt\chi\in C_c^\infty(\RR^3)$, and put $\chi_\delta(x)=\delta^{-3}\chi(x/\delta)$. We use the fixed outer background $\rho_0\iden_{C_\ell}*\chi_\delta$, which does not depend on $a$. It satisfies $0\le\rho_0\iden_{C_\ell}*\chi_\delta\le\rho_0$, $\int_{\RR^3}\rho_0\iden_{C_\ell}*\chi_\delta=\rho_0\ell^3$, and $\rho_0\iden_{C_\ell}*\chi_\delta=\rho_0$ on the cube $C_{\ell-2\delta}$ of points of $C_\ell$ at distance more than $\delta$ from $\partial C_\ell$. Its support lies in $C_\ell+B_\delta$.
 
@@ -1290,7 +1256,7 @@ Hence, we retain only the balls indexed by
 \begin{equation}\label{eq:upper_selected_indices}
 J_0(a,\ell)=\big\{(z,m)\in\ZZ^3\times\{1,\dots,M\}:\ \overline{B_{r_m+2\delta}(c_m+Lz+a)}\subset C_{\ell-2\delta}\big\}.
 \end{equation}
-See Figure~\ref{fig:upper_construction}.
+See Figure~\ref{fig:upper_construction} (top).
 Define the total volume and the total surface area of the selected balls by
 \[
 V(a,\ell)=\sum_{(z,m)\in J_0(a,\ell)}|B_{r_m}|,
@@ -1300,7 +1266,7 @@ A(a,\ell)=\sum_{(z,m)\in J_0(a,\ell)}|\partial B_{r_m}|.
 \begin{claim}
 Uniformly for $a\in C_L$,
 \begin{equation}\label{eq:upper_explicit_counting}
-V(a,\ell)=\theta \ell^3+O_{L,\delta}(\ell^2),
+V(a,\ell)=\theta \ell^3+\mathcal O_{L,\delta}(\ell^2),
 \qquad
 A(a,\ell)\le\frac3{r_*}V(a,\ell)\le\frac3{r_*}\ell^3.
 \end{equation}
@@ -1309,19 +1275,19 @@ A(a,\ell)\le\frac3{r_*}V(a,\ell)\le\frac3{r_*}\ell^3.
 \begin{proof}[Proof of the claim]
 For the first assertion, consider the cells $a+Lz+C_L$, $z\in\ZZ^3$, which tile $\RR^3$ up to null sets. The cell with index $z$ contains the balls $B_{r_m}(c_m+Lz+a)$, $1\le m\le M$, of total volume $\theta L^3$. Let
 \[
-Z_-=\{z\in\ZZ^3:\ a+Lz+\overline{C_L}\subset C_{\ell-2\delta}\},
+Z_0=\{z\in\ZZ^3:\ a+Lz+\overline{C_L}\subset C_{\ell-2\delta}\},
 \qquad
-Z_+=\{z\in\ZZ^3:\ (a+Lz+C_L)\cap C_\ell\ne\emptyset\}.
+Z=\{z\in\ZZ^3:\ (a+Lz+C_L)\cap C_\ell\ne\emptyset\}.
 \]
-If $z\in Z_-$, then all enlarged balls of that cell lie in $C_{\ell-2\delta}$, so $(z,m)\in J_0(a,\ell)$ for every $m$. If $(z,m)\in J_0(a,\ell)$, then $B_{r_m}(c_m+Lz+a)\subset C_\ell$, so $z\in Z_+$. Hence
+If $z\in Z_0$, then all enlarged balls of that cell lie in $C_{\ell-2\delta}$, so $(z,m)\in J_0(a,\ell)$ for every $m$. If $(z,m)\in J_0(a,\ell)$, then $B_{r_m}(c_m+Lz+a)\subset C_\ell$, so $z\in Z$. Hence
 \[
-\theta L^3|Z_-|\le V(a,\ell)\le\theta L^3|Z_+|.
+\theta L^3|Z_0|\le V(a,\ell)\le\theta L^3|Z|.
 \]
-Two points of the closure of a cell differ by less than $L$ in each coordinate. Therefore every cell meeting $C_{\ell-2\delta-2L}$ has its index in $Z_-$, and every cell with index in $Z_+$ is contained in $C_{\ell+2L}$. Comparing volumes gives
+Two points of the closure of a cell differ by at most $L$ in each coordinate. Therefore every cell meeting $C_{\ell-2\delta-2L}$ has its index in $Z_0$, and every cell with index in $Z$ is contained in $C_{\ell+2L}$. Comparing volumes gives
 \[
-(\ell-2\delta-2L)^3\le L^3|Z_-|,
+(\ell-2\delta-2L)^3\le L^3|Z_0|,
 \qquad
-L^3|Z_+|\le(\ell+2L)^3.
+L^3|Z|\le(\ell+2L)^3.
 \]
 Let $\ell\ge2(\delta+L)$. Using $(\ell-t)^3\ge \ell^3-3t\ell^2$ for $0\le t\le \ell$, $(\ell+2L)^3\le \ell^3+26L\ell^2$ for $\ell\ge L$, and $\theta\le1$, we obtain
 \[
@@ -1335,7 +1301,7 @@ A(a,\ell)=\sum_{(z,m)\in J_0(a,\ell)}\frac{3|B_{r_m}|}{r_m}
 and $V(a,\ell)\le \ell^3$ because the selected balls are pairwise disjoint subsets of $C_\ell$.
 \end{proof}
 
-\begin{figure}[ht]
+\begin{figure}[htp]
 \centering
 \begin{tikzpicture}[>=stealth,scale=0.8]
   \begin{scope}
@@ -1379,33 +1345,7 @@ and $V(a,\ell)\le \ell^3$ because the selected balls are pairwise disjoint subse
   \draw[->] (5.5,-0.3) node[right] {shell} -- (3.87,-0.22);
   \draw[->] (5.5,-1.25) node[right] {$C_{\ell-2\delta'}$} -- (2.6,-0.84);
 \end{tikzpicture}
-\caption{Two-dimensional sketch of the construction in the proof of Theorem~\ref{thm:upper} for one shift $a$, not to scale. The thin lines bound the cells $a+Lz+C_L$, $z\in\ZZ^3$, each containing a translate of the packing of Lemma~\ref{lem:upper_packing}; the arrow is the shift $a$, the center of the cell with $z=0$. A ball is selected, $(z,m)\in J_0(a,\ell)$, when its closed enlarged ball lies in $C_{\ell-2\delta}$ (dashed). The selected ball $B_{r_m}(c_m+Lz+a)$ (blue) carries the state $\Gamma_{z,m}$, and its shell of width $2\delta$ (red) carries the profile $g_{r_m,\delta}$. The other balls (dotted) are dropped. Outside the selected enlarged balls, $\tilde\rho_{\ell,a}$ equals $\rho_0\iden_{C_\ell}*\chi_\delta$, which is $\rho_0$ on $C_{\ell-2\delta}$ (dark gray) and is supported in $C_\ell+B_\delta$ (light gray, dotted boundary). After averaging over $a\in C_L$, the density equals $\rho_0$ on $C_{\ell-2\delta'}=\{x\in C_\ell:d(x,\partial C_\ell)>\delta'\}$ (dash-dotted), where $\delta'=5\delta+2\max_m r_m$.}
-\label{fig:upper_construction}
-\end{figure}
-
-For each $m$, apply Lemma~\ref{lem:upper_collar} with $r=r_m$, which is allowed because $r_m\ge r_*>2\delta$. This gives the profile $g_{r_m,\delta}$, supported in $\overline{B_{r_m+2\delta}\setminus B_{r_m}}$ and of integral zero, and the density $\rho_{r_m,\delta}$. Define the density
-\begin{equation}\label{eq:upper_expanded_fluid_density}
-\begin{aligned}
-\tilde\rho_{\ell,a}&=\rho_0\iden_{C_\ell}*\chi_\delta-
-\rho_0\sum_{(z,m)\in J_0(a,\ell)}\iden_{B_{r_m}(c_m+Lz+a)}
-+G_{\ell,a},\\
-G_{\ell,a}&=\sum_{(z,m)\in J_0(a,\ell)}g_{r_m,\delta}(\cdot-c_m-Lz-a).
-\end{aligned}
-\end{equation}
-Let $(z,m)\in J_0(a,\ell)$. Since $\rho_0\iden_{C_\ell}*\chi_\delta=\rho_0$ on $C_{\ell-2\delta}$ and the enlarged balls are disjoint, $\tilde\rho_{\ell,a}=0$ in the ball $B_{r_m}(c_m+Lz+a)$, and
-\[
-\tilde\rho_{\ell,a}=\rho_0+g_{r_m,\delta}(\cdot-c_m-Lz-a)=\rho_{r_m,\delta}(\cdot-c_m-Lz-a)
-\]
-in its shell $B_{r_m+2\delta}(c_m+Lz+a)\setminus B_{r_m}(c_m+Lz+a)$; see Figure~\ref{fig:collar}. In fact, this profile is zero up to distance $\delta/4$ from the boundary of the ball, leaving a positive separation between the support of $\tilde\rho_{\ell,a}$ and the selected balls. Outside all enlarged balls, it equals $\rho_0\iden_{C_\ell}*\chi_\delta$. The shells are disjoint and lie in the plateau of $\rho_0\iden_{C_\ell}*\chi_\delta$. Thus these descriptions match smoothly at their internal interfaces and
-\begin{equation}\label{eq:upper_fluid_mass_bound}
-0\le \tilde\rho_{\ell,a}\le C\rho_0,
-\qquad
-\int_{\RR^3}\tilde\rho_{\ell,a}=\rho_0(\ell^3-V(a,\ell)).
-\end{equation}
-The mass identity uses $\int_{\RR^3}g_{r_m,\delta}=0$ for every shell.
-
-\begin{figure}[ht]
-\centering
+\par\medskip
 \begin{tikzpicture}[>=stealth]
   % bands: ball and shell
   \fill[blue!15] (-1.800,0) rectangle (0,3.705);
@@ -1430,26 +1370,46 @@ The mass identity uses $\int_{\RR^3}g_{r_m,\delta}=0$ for every shell.
   \draw[->] (4.700,2.850) node[right] {$g_{r_m,\delta}>0$} -- (3.200,2.128);
   \node[right] at (4.400,1.558) {$\tilde\rho_{\ell,a}$};
 \end{tikzpicture}
-\caption{Radial profile of the density $\tilde\rho_{\ell,a}$ near a selected ball $B_{r_m}(c_m+Lz+a)$, plotted against the distance from its center (schematic, with $\delta/r_m=1/4$). It vanishes in the ball and up to distance $\delta/4$ from it, and equals $\rho_{r_m,\delta}(\cdot-c_m-Lz-a)$ in the shell. The charge removed near the ball (gray) is returned in the outer part of the shell (red), so that $g_{r_m,\delta}$ has total charge zero.}
-\label{fig:collar}
+\caption{Construction for the upper bound in Theorem~\ref{thm:upper}, shown schematically.
+\emph{Top.} For a fixed shift $a$ (arrow), thin lines mark the cells $a+Lz+C_L$.
+Selected balls (blue) carry $\Gamma_{z,m,a}$ and have their closed enlarged balls inside $C_{\ell-2\delta}$ (dashed).
+Their shells of width $2\delta$ (red) carry $g_{r_m,\delta}$, while dotted balls are discarded.
+Outside the selected enlarged balls, $\tilde\rho_{\ell,a}$ equals the smoothed background, supported in $C_\ell+B_\delta$ (light gray) and equal to $\rho_0$ on $C_{\ell-2\delta}$ (dark gray).
+After averaging over $a\in C_L$, the density equals $\rho_0$ on $C_{\ell-2\delta'}$ (dash-dotted).
+\emph{Bottom.} Radial profile of $\tilde\rho_{\ell,a}$ near a selected ball, with $\delta/r_m=1/4$.
+It vanishes in the ball and in a gap of width $\delta/4$, then follows the shell profile $\rho_{r_m,\delta}$.
+The charge removed near the ball (gray) is returned in the outer shell (red), so that $g_{r_m,\delta}$ has total charge zero.}
+\label{fig:upper_construction}
 \end{figure}
 
-The outer smoothing satisfies
+For each $m$, apply Lemma~\ref{lem:upper_collar} with $r=r_m$, which is allowed because $r_m\ge r_*>2\delta$. This gives the profile $g_{r_m,\delta}$, supported in $\overline{B_{r_m+2\delta}\setminus B_{r_m}}$ and of integral zero, and the density $\rho_{r_m,\delta}$. Define the density
+\begin{equation}\label{eq:upper_expanded_fluid_density}
+\begin{aligned}
+\tilde\rho_{\ell,a}&=\rho_0\iden_{C_\ell}*\chi_\delta-
+\rho_0\sum_{(z,m)\in J_0(a,\ell)}\iden_{B_{r_m}(c_m+Lz+a)}
++G_{\ell,a},\\
+G_{\ell,a}&=\sum_{(z,m)\in J_0(a,\ell)}g_{r_m,\delta}(\cdot-c_m-Lz-a).
+\end{aligned}
+\end{equation}
+Let $(z,m)\in J_0(a,\ell)$. Since $\rho_0\iden_{C_\ell}*\chi_\delta=\rho_0$ on $C_{\ell-2\delta}$ and the enlarged balls are disjoint, $\tilde\rho_{\ell,a}=0$ in the ball $B_{r_m}(c_m+Lz+a)$, and
 \[
-\int_{\RR^3}|\nabla\sqrt{\rho_0\iden_{C_\ell}*\chi_\delta}|^2\le C\rho_0\ell^2/\delta.
+\tilde\rho_{\ell,a}=\rho_0+g_{r_m,\delta}(\cdot-c_m-Lz-a)=\rho_{r_m,\delta}(\cdot-c_m-Lz-a)
 \]
-Indeed, Lemma~\ref{lem:basic_elementary}(ii) gives
-\[
-|\nabla\sqrt{\iden_{C_\ell}*\chi_\delta}|^2
-\le\int_{\RR^3}|\nabla\sqrt{\chi_\delta}|^2=C/\delta^2,
-\]
-and the left side vanishes outside the boundary layer of width $\delta$, whose volume is $O(\ell^2\delta)$ for $\ell\ge4\delta$. Adding the disjoint shell gradient integrals now yields
+in its shell $B_{r_m+2\delta}(c_m+Lz+a)\setminus B_{r_m}(c_m+Lz+a)$; see Figure~\ref{fig:upper_construction} (bottom). In fact, this profile is zero up to distance $\delta/4$ from the boundary of the ball, leaving a positive separation between the support of $\tilde\rho_{\ell,a}$ and the selected balls. Outside all enlarged balls, it equals $\rho_0\iden_{C_\ell}*\chi_\delta$. The shells are disjoint and lie in the plateau of $\rho_0\iden_{C_\ell}*\chi_\delta$. Thus these descriptions match smoothly at their internal interfaces and
+\begin{equation}\label{eq:upper_fluid_mass_bound}
+0\le \tilde\rho_{\ell,a}\le C\rho_0,
+\qquad
+\int_{\RR^3}\tilde\rho_{\ell,a}=\rho_0(\ell^3-V(a,\ell)).
+\end{equation}
+
+
+Applying Lemma~\ref{lem:basic_elementary}(ii) to the outer smoothing and adding the disjoint shell gradient integrals yields
 \begin{equation}\label{eq:upper_fluid_gradient_bound}
 \int_{\RR^3}|\nabla\sqrt{\tilde\rho_{\ell,a}}|^2
 \le C\rho_0\ell^2/\delta+C\rho_0A(a,\ell)/\delta.
 \end{equation}
 
-Next, we construct a background state in between the ball states. Theorem~\ref{thm:basic_fluid} gives a grand-canonical state $\tilde\vGamma_{\ell,a}$ with density $\tilde\rho_{\ell,a}$ that satisfies~\eqref{eq:basic_fluid_bound} with $\varepsilon=1$. Since $\tilde\rho_{\ell,a}$ vanishes on the selected balls, the one-particle space of $\tilde\vGamma_{\ell,a}$ is orthogonal to all functions supported in the selected balls. Using $\int_{\RR^3}\tilde\rho_{\ell,a}^{5/3}\le(C\rho_0)^{2/3}\int_{\RR^3}\tilde\rho_{\ell,a}$, \eqref{eq:upper_fluid_mass_bound} and~\eqref{eq:upper_fluid_gradient_bound}, its indirect energy satisfies
+Next, we construct a background state in between the ball states. Theorem~\ref{thm:basic_fluid} gives a grand-canonical state $\tilde\vGamma_{\ell,a}$ with density $\tilde\rho_{\ell,a}$ that satisfies~\eqref{eq:basic_fluid_bound} with $\varepsilon=1$. Since $\tilde\rho_{\ell,a}$ vanishes on the selected balls, $\tilde\vGamma_{\ell,a}$ is supported outside them. Using $\int_{\RR^3}\tilde\rho_{\ell,a}^{5/3}\le(C\rho_0)^{2/3}\int_{\RR^3}\tilde\rho_{\ell,a}$, \eqref{eq:upper_fluid_mass_bound} and~\eqref{eq:upper_fluid_gradient_bound}, its indirect energy satisfies
 \begin{equation}\label{eq:upper_fluid_energy_expanded}
 \begin{aligned}
 \EC(\tilde\vGamma_{\ell,a})
@@ -1461,14 +1421,14 @@ Next, we construct a background state in between the ball states. Theorem~\ref{t
 \end{equation}
 The constants $C$ here do not depend on the packing.
 
-For $(z,m)\in J_0(a,\ell)$, the state $\Gamma_{z,m}$ is supported in $B_{r_m}(c_m+Lz+a)$, and $\tilde\vGamma_{\ell,a}$ is supported outside all selected balls. By taking the antisymmetric product of these states (Lemma~\ref{lem:basic_product}), we obtain
+For $(z,m)\in J_0(a,\ell)$, the state $\Gamma_{z,m,a}$ is supported in $B_{r_m}(c_m+Lz+a)$, and $\tilde\vGamma_{\ell,a}$ is supported outside all selected balls. By taking the antisymmetric product of these states (Lemma~\ref{lem:basic_product}), we obtain
 \[
-\vGamma_{\ell,a}=\tilde\vGamma_{\ell,a}\wedge\bigwedge_{(z,m)\in J_0(a,\ell)}\Gamma_{z,m}.
+\vGamma_{\ell,a}=\tilde\vGamma_{\ell,a}\wedge\bigwedge_{(z,m)\in J_0(a,\ell)}\Gamma_{z,m,a}.
 \]
-Its mean particle number is exactly $\rho_0\ell^3$. Indeed, by~\eqref{eq:basic_product_density}, by~\eqref{eq:upper_fluid_mass_bound}, since $\Gamma_{z,m}$ has $\rho_0|B_{r_m}|$ particles, and by the definition of $V(a,\ell)$,
+Its mean particle number is exactly $\rho_0\ell^3$. Indeed, by~\eqref{eq:basic_product_density}, \eqref{eq:upper_fluid_mass_bound}, the fact that $\Gamma_{z,m,a}$ has $\rho_0|B_{r_m}|$ particles, and by the definition of $V(a,\ell)$,
 \begin{align*}
 \int_{\RR^3}\rho_{\vGamma_{\ell,a}}
-&=\int_{\RR^3}\tilde\rho_{\ell,a}+\sum_{(z,m)\in J_0(a,\ell)}\int_{\RR^3}\rho_{\Gamma_{z,m}}\\
+&=\int_{\RR^3}\tilde\rho_{\ell,a}+\sum_{(z,m)\in J_0(a,\ell)}\int_{\RR^3}\rho_{\Gamma_{z,m,a}}\\
 &=\rho_0\big(\ell^3-V(a,\ell)\big)+\rho_0\sum_{(z,m)\in J_0(a,\ell)}|B_{r_m}|
 =\rho_0\ell^3.
 \end{align*}
@@ -1479,28 +1439,28 @@ Next we compute the Jellium energy of our state $\vGamma_{\ell,a}$. To apply~\eq
 &=\Big(\rho_0\iden_{C_\ell}*\chi_\delta-\sum_{(z,m)\in J_0(a,\ell)}\rho_0\iden_{B_{r_m}(c_m+Lz+a)}\Big)\\
 &\quad+\sum_{(z,m)\in J_0(a,\ell)}\rho_0\iden_{B_{r_m}(c_m+Lz+a)}.
 \end{align*}
-The first part is the background belonging to $\tilde\vGamma_{\ell,a}$, and $\rho_0\iden_{B_{r_m}(c_m+Lz+a)}$ is the background belonging to $\Gamma_{z,m}$. The first part is nonnegative, because the selected balls lie in $C_{\ell-2\delta}$, where $\rho_0\iden_{C_\ell}*\chi_\delta=\rho_0$. By~\eqref{eq:upper_expanded_fluid_density}, the density $\tilde\rho_{\ell,a}$ of $\tilde\vGamma_{\ell,a}$ exceeds it by exactly $G_{\ell,a}$. Then \eqref{eq:basic_product_J} gives the exact equality
+The first part is the background belonging to $\tilde\vGamma_{\ell,a}$, and $\rho_0\iden_{B_{r_m}(c_m+Lz+a)}$ is the background belonging to $\Gamma_{z,m,a}$. The first part is nonnegative, because the selected balls lie in $C_{\ell-2\delta}$, where $\rho_0\iden_{C_\ell}*\chi_\delta=\rho_0$. By~\eqref{eq:upper_expanded_fluid_density}, the density $\tilde\rho_{\ell,a}$ of $\tilde\vGamma_{\ell,a}$ differs from it by exactly $G_{\ell,a}$. Then \eqref{eq:basic_product_J} gives the exact equality
 \begin{align*}
 &\mathcal J_{\rho_0\iden_{C_\ell}*\chi_\delta}(\vGamma_{\ell,a})\\
 &=\sum_{(z,m)\in J_0(a,\ell)}
-\mathcal J_{\rho_0\iden_{B_{r_m}(c_m+Lz+a)}}(\Gamma_{z,m})
+\mathcal J_{\rho_0\iden_{B_{r_m}(c_m+Lz+a)}}(\Gamma_{z,m,a})
 +\mathcal J_{\tilde\rho_{\ell,a}-G_{\ell,a}}(\tilde\vGamma_{\ell,a})\\
-&\quad+\sum_{\substack{(z,m),(z',m')\in J_0(a,\ell)\\(z,m)\ne(z',m')}}
-D\big(\rho_{\Gamma_{z,m}}-\rho_0\iden_{B_{r_m}(c_m+Lz+a)},\rho_{\Gamma_{z',m'}}-\rho_0\iden_{B_{r_{m'}}(c_{m'}+Lz'+a)}\big)\\
-&\quad+2\sum_{(z,m)\in J_0(a,\ell)}D\big(\rho_{\Gamma_{z,m}}-\rho_0\iden_{B_{r_m}(c_m+Lz+a)},G_{\ell,a}\big)\\
+&+\sum_{\substack{(z,m),(z',m')\in J_0(a,\ell)\\(z,m)\ne(z',m')}}
+D\big(\rho_{\Gamma_{z,m,a}}-\rho_0\iden_{B_{r_m}(c_m+Lz+a)},\rho_{\Gamma_{z',m',a}}-\rho_0\iden_{B_{r_{m'}}(c_{m'}+Lz'+a)}\big)\\
+&\quad+2\sum_{(z,m)\in J_0(a,\ell)}D\big(\rho_{\Gamma_{z,m,a}}-\rho_0\iden_{B_{r_m}(c_m+Lz+a)},G_{\ell,a}\big)\\
 &=\sum_{(z,m)\in J_0(a,\ell)}
-\mathcal J_{\rho_0\iden_{B_{r_m}(c_m+Lz+a)}}(\Gamma_{z,m})
+\mathcal J_{\rho_0\iden_{B_{r_m}(c_m+Lz+a)}}(\Gamma_{z,m,a})
 +\EC(\tilde\vGamma_{\ell,a})+D(G_{\ell,a}).
 \end{align*}
-For the second equality, \eqref{eq:conj_identity} gives $\mathcal J_{\tilde\rho_{\ell,a}-G_{\ell,a}}(\tilde\vGamma_{\ell,a})=\EC(\tilde\vGamma_{\ell,a})+D(G_{\ell,a})$, since $\tilde\rho_{\ell,a}$ is the density of $\tilde\vGamma_{\ell,a}$. Moreover, for $(z,m)\in J_0(a,\ell)$ the net charge $\rho_{\Gamma_{z,m}}-\rho_0\iden_{B_{r_m}(c_m+Lz+a)}$ of the selected ball has zero potential outside $B_{r_m}(c_m+Lz+a)$ by~\eqref{eq:upper_core_zero_potential}. Every other selected ball and every shell lies outside that ball, including the shell surrounding the same ball, so both sums of cross terms vanish. Similarly, each term $g_{r_m,\delta}(\cdot-c_m-Lz-a)$ of $G_{\ell,a}$ has zero potential outside $B_{r_m+2\delta}(c_m+Lz+a)$, and the enlarged balls are disjoint. Thus the cross terms in $D(G_{\ell,a})$ vanish, and by translation invariance
+For the second equality, \eqref{eq:conj_identity} gives $\mathcal J_{\tilde\rho_{\ell,a}-G_{\ell,a}}(\tilde\vGamma_{\ell,a})=\EC(\tilde\vGamma_{\ell,a})+D(G_{\ell,a})$, since $\tilde\rho_{\ell,a}$ is the density of $\tilde\vGamma_{\ell,a}$. Moreover, for $(z,m)\in J_0(a,\ell)$ the net charge $\rho_{\Gamma_{z,m,a}}-\rho_0\iden_{B_{r_m}(c_m+Lz+a)}$ of the selected ball has zero potential outside $B_{r_m}(c_m+Lz+a)$ by~\eqref{eq:upper_core_zero_potential}. Every other selected ball and every shell lies outside that ball, including the shell surrounding the same ball, so both sums of cross terms vanish. Similarly, each term $g_{r_m,\delta}(\cdot-c_m-Lz-a)$ of $G_{\ell,a}$ has zero potential outside $B_{r_m+2\delta}(c_m+Lz+a)$, and the enlarged balls are disjoint. Thus the cross terms in $D(G_{\ell,a})$ vanish, and by translation invariance
 \[
 D(G_{\ell,a})=\sum_{(z,m)\in J_0(a,\ell)}D\big(g_{r_m,\delta}(\cdot-c_m-Lz-a)\big)=\sum_{(z,m)\in J_0(a,\ell)}D(g_{r_m,\delta}).
 \]
-Translation invariance also gives $\mathcal J_{\rho_0\iden_{B_{r_m}(c_m+Lz+a)}}(\Gamma_{z,m})=\mathcal J_{\rho_0\iden_{B_{r_m}}}(\Gamma_{r_m})$. We obtain
+By translation invariance, each state $\Gamma_{z,m,a}$ has Jellium energy $E_\Jel(\rho_0,B_{r_m})$. We obtain
 \begin{equation}\label{eq:upper_exact_identity}
 \mathcal J_{\rho_0\iden_{C_\ell}*\chi_\delta}(\vGamma_{\ell,a})
 =\sum_{(z,m)\in J_0(a,\ell)}
-\mathcal J_{\rho_0\iden_{B_{r_m}}}(\Gamma_{r_m})
+E_\Jel(\rho_0,B_{r_m})
 +\EC(\tilde\vGamma_{\ell,a})
 +\sum_{(z,m)\in J_0(a,\ell)}D(g_{r_m,\delta}).
 \end{equation}
@@ -1514,7 +1474,7 @@ Using \eqref{eq:upper_core_energy}, \eqref{eq:upper_collar_costs} and \eqref{eq:
 &\quad+C\left(\rho_0\delta^{-1}+\rho_0^2\delta^3\right)A(a,\ell)+C\rho_0\delta^{-1}\ell^2,
 \end{aligned}
 \end{equation}
-where the constants $C$ do not depend on the packing. We now let $\ell\to\infty$ with the packing held fixed, as the error term in~\eqref{eq:upper_explicit_counting} depends on $L$. By~\eqref{eq:upper_explicit_counting}, the terms of order $\ell^2$ disappear after division by $\ell^3$, and
+where the constants $C$ do not depend on the packing. We now let $\ell\to\infty$ with the packing held fixed, as the error term in~\eqref{eq:upper_explicit_counting} depends on $L$. By~\eqref{eq:upper_explicit_counting}, the terms of order $\ell^2$ disappear after division by $\ell^3$. We arrive at
 \begin{equation}\label{eq:upper_fixed_packing}
 \limsup_{\ell\to\infty}\sup_{a\in C_L}
 \frac{\mathcal J_{\rho_0\iden_{C_\ell}*\chi_\delta}(\vGamma_{\ell,a})}{\ell^3}
@@ -1526,7 +1486,7 @@ Define
 \[
 \overline{\vGamma}_\ell=\frac1{L^3}\int_{C_L}\vGamma_{\ell,a}\,\mathrm da.
 \]
-The average is well defined. In fact, for fixed $\ell$ and $L$, only finitely many pairs $(z,m)\in\ZZ^3\times\{1,\dots,M\}$ belong to $J_0(a,\ell)$ for some $a\in C_L$, since the corresponding balls lie in $C_\ell$ and $a$ ranges over the bounded set $C_L$. For each such pair, the set of $a\in C_L$ with $(z,m)\in J_0(a,\ell)$ is the intersection of $C_L$ with an open cube. Hence $C_L$ splits into finitely many measurable sets and on each $J_0(a,\ell)$ is constant. On each of these sets, translation is continuous for the density matrices $\Gamma_{z,m}$ in trace norm and for $\tilde\rho_{\ell,a}$ in $L^1$. We choose the states $\tilde\vGamma_{\ell,a}$ using the explicit quasi-free construction in~\cite[proof of Thm.~8 and Sec.~3.3]{lewin2020local}, which depends measurably on $\tilde\rho_{\ell,a}$. Thus the full family is measurable. Their kinetic energies are uniformly bounded for fixed $\ell,L$. Thus the averaged state has trace one and finite kinetic energy.
+The average is well defined. In fact, for fixed $\ell$ and $L$, only finitely many pairs $(z,m)\in\ZZ^3\times\{1,\dots,M\}$ belong to $J_0(a,\ell)$ for some $a\in C_L$, since the corresponding balls lie in $C_\ell$ and $a$ ranges over the bounded set $C_L$. For each such pair, the set of $a\in C_L$ with $(z,m)\in J_0(a,\ell)$ is the intersection of $C_L$ with an open cube. Hence $C_L$ splits into finitely many measurable sets and on each $J_0(a,\ell)$ is constant. On each of these sets, translation is continuous for the density matrices $\Gamma_{z,m,a}$ in trace norm and for $\tilde\rho_{\ell,a}$ in $L^1$. We choose the states $\tilde\vGamma_{\ell,a}$ using the explicit quasi-free construction in~\cite[proof of Thm.~8 and Sec.~3.3]{lewin2020local}, which depends measurably on $\tilde\rho_{\ell,a}$. Thus the full family is measurable. Their kinetic energies are uniformly bounded for fixed $\ell,L$. Thus the averaged state has trace one and finite kinetic energy.
 
 Before averaging, \eqref{eq:basic_product_density} and~\eqref{eq:upper_expanded_fluid_density} give its density as
 \begin{equation}\label{eq:upper_density_before_average}
@@ -1537,10 +1497,7 @@ Before averaging, \eqref{eq:basic_product_density} and~\eqref{eq:upper_expanded_
 \sum_{(z,m)\in J_0(a,\ell)}(\rho_{\Gamma_{r_m}}-\rho_0\iden_{B_{r_m}}+g_{r_m,\delta})(\cdot-c_m-Lz-a).
 \end{aligned}
 \end{equation}
-Set
-\[
-\delta'=5\delta+2\max_{1\le m\le M}r_m.
-\]
+Set $\delta'=5\delta+2\max_{1\le m\le M}r_m$.
 Fix $x\in C_\ell$ with $d(x,\partial C_\ell)>\delta'$. For every $a\in C_L$, the translated terms $(\rho_{\Gamma_{r_m}}-\rho_0\iden_{B_{r_m}}+g_{r_m,\delta})(\cdot-c_m-Lz-a)$ with $(z,m)\notin J_0(a,\ell)$ vanish at $x$: such a term is supported in its closed enlarged ball, which has diameter $2r_m+4\delta\le\delta'-\delta$ and would therefore lie in $C_{\ell-2\delta}$ if it contained $x$. Hence, at $x$, the second sum in~\eqref{eq:upper_density_before_average} may be taken over all $(z,m)\in\ZZ^3\times\{1,\dots,M\}$.
 
 Now fix $m=1,\ldots,M$. As $a$ ranges over $C_L$ and $z$ over $\ZZ^3$, the point $Lz+a$ covers $\RR^3$ exactly once up to a null set, because the cells $C_L+Lz$ tile $\RR^3$. The change of variables $y=x-c_m-Lz-a$ therefore gives
@@ -1550,13 +1507,13 @@ Now fix $m=1,\ldots,M$. As $a$ ranges over $C_L$ and $z$ over $\ZZ^3$, the point
 &\qquad=\frac1{L^3}\int_{\RR^3}(\rho_{\Gamma_{r_m}}-\rho_0\iden_{B_{r_m}}+g_{r_m,\delta})(y)\,\mathrm dy
 =0,
 \end{align*}
-because the net charge distribution $\rho_{\Gamma_{r_m}}-\rho_0\iden_{B_{r_m}}$ of the ball and the shell profile $g_{r_m,\delta}$ both have integral zero. The density of $\overline{\vGamma}_\ell$ is the average over $a\in C_L$ of~\eqref{eq:upper_density_before_average}, and $(\rho_0\iden_{C_\ell}*\chi_\delta)(x)=\rho_0$ because $x\in C_{\ell-2\delta}$. We conclude that
+because the charge distribution $\rho_{\Gamma_{r_m}}-\rho_0\iden_{B_{r_m}}$ of the ball and the shell profile $g_{r_m,\delta}$ both have integral zero. The density of $\overline{\vGamma}_\ell$ is the average over $a\in C_L$ of~\eqref{eq:upper_density_before_average}, and $(\rho_0\iden_{C_\ell}*\chi_\delta)(x)=\rho_0$ because $x\in C_{\ell-2\delta}$. We conclude that
 \begin{equation}\label{eq:upper_density_bulk_exact}
 \rho_{\overline{\vGamma}_\ell}(x)=\rho_0
 \quad\hbox{whenever }x\in C_\ell\hbox{ and }d(x,\partial C_\ell)>\delta'.
 \end{equation}
 
-There is also a pointwise bound on $\rho_{\overline{\vGamma}_\ell}$ that is independent of the packing. By the first line of~\eqref{eq:upper_density_before_average}, $\rho_{\overline{\vGamma}_\ell}$ is the average over $a\in C_L$ of $\tilde\rho_{\ell,a}$ plus the sum of the densities $\rho_{\Gamma_{z,m}}$. The density $\tilde\rho_{\ell,a}$ is at most $C\rho_0$ by~\eqref{eq:upper_fluid_mass_bound}. In the average of this sum we may extend the sum to all $(z,m)\in\ZZ^3\times\{1,\dots,M\}$, since the added terms are nonnegative. The same change of variables as above then gives, for every $x\in\RR^3$,
+There is also a pointwise bound on $\rho_{\overline{\vGamma}_\ell}$ that is independent of the packing. By the first line of~\eqref{eq:upper_density_before_average}, $\rho_{\overline{\vGamma}_\ell}$ is the average over $a\in C_L$ of $\tilde\rho_{\ell,a}$ plus the sum of the densities $\rho_{\Gamma_{z,m,a}}$. The density $\tilde\rho_{\ell,a}$ is at most $C\rho_0$ by~\eqref{eq:upper_fluid_mass_bound}. In the average of this sum we may extend the sum to all $(z,m)\in\ZZ^3\times\{1,\dots,M\}$, since the added terms are nonnegative. The same change of variables as above then gives, for every $x\in\RR^3$,
 \begin{align*}
 &\frac1{L^3}\int_{C_L}\sum_{(z,m)\in J_0(a,\ell)}
 \rho_{\Gamma_{r_m}}(x-c_m-Lz-a)\,\mathrm da\\
@@ -1569,14 +1526,14 @@ because $\Gamma_{r_m}$ has $\rho_0|B_{r_m}|$ particles. Since $\theta\le1$, we c
 \begin{equation}\label{eq:upper_density_uniform_bound}
 0\le \rho_{\overline{\vGamma}_\ell}\le(C+1)\rho_0\iden_{C_\ell+B_\delta}.
 \end{equation}
-The support assertion follows because $\tilde\rho_{\ell,a}$ equals $\rho_0\iden_{C_\ell}*\chi_\delta$ outside the selected enlarged balls, all of which lie in $C_{\ell-2\delta}$. Finite kinetic energy of $\overline{\vGamma}_\ell$ gives $\sqrt{\rho_{\overline{\vGamma}_\ell}}\in H^1(\RR^3)$ by the Hoffmann--Ostenhof inequality (Lemma~\ref{lem:basic_apriori}(i)).
+The averaged density $\rho_{\overline{\vGamma}_\ell}$ vanishes outside $C_\ell+B_\delta$. Indeed, for every $a$, all selected enlarged balls lie in $C_{\ell-2\delta}$, and outside these balls the density $\rho_{\vGamma_{\ell,a}}$ equals $\rho_0\iden_{C_\ell}*\chi_\delta$, which vanishes outside $C_\ell+B_\delta$. Averaging over $a$ preserves this property. Finite kinetic energy of $\overline{\vGamma}_\ell$ gives $\sqrt{\rho_{\overline{\vGamma}_\ell}}\in H^1(\RR^3)$ by the Hoffmann--Ostenhof inequality~\cite{hoffmann1977schrodinger}.
 
 All hypotheses of Lemma~\ref{lem:upper_bounded_layer} hold for $\rho_{\overline{\vGamma}_\ell}$, with the layer width $\delta'$, which does not depend on $\ell$, and with the packing-independent constant $\Lambda=C+1$ as the density bound. Therefore
 \[
 e_\UEG(\rho_0)
 \le\liminf_{\ell\to\infty}\frac{E(\rho_{\overline{\vGamma}_\ell})}{\ell^3}.
 \]
-On the other hand, the averaged state is a competitor for $E(\rho_{\overline{\vGamma}_\ell})$, and~\eqref{eq:conj_identity} with the fixed background $\zeta=\rho_0\iden_{C_\ell}*\chi_\delta$ gives
+On the other hand, the averaged state $\overline{\vGamma}_\ell$ is a competitor for $E(\rho_{\overline{\vGamma}_\ell})$, and~\eqref{eq:conj_identity} with the fixed background $\zeta=\rho_0\iden_{C_\ell}*\chi_\delta$ gives
 \begin{align*}
 E(\rho_{\overline{\vGamma}_\ell})
 &\le\EC(\overline{\vGamma}_\ell)\\
@@ -1584,7 +1541,7 @@ E(\rho_{\overline{\vGamma}_\ell})
 -D(\rho_{\overline{\vGamma}_\ell}-\rho_0\iden_{C_\ell}*\chi_\delta)\\
 &\le\frac1{L^3}\int_{C_L}\mathcal J_{\rho_0\iden_{C_\ell}*\chi_\delta}(\vGamma_{\ell,a})\,\mathrm da.
 \end{align*}
-The last step uses affinity of Jellium in the state with its background held fixed. Combining this bound with \eqref{eq:upper_fixed_packing} proves
+Combining the bound from Lemma~\ref{lem:upper_bounded_layer} with the preceding estimate and~\eqref{eq:upper_fixed_packing} yields
 \begin{equation}\label{eq:upper_quantitative_error}
 \begin{aligned}
 e_\UEG(\rho_0)
@@ -1602,10 +1559,10 @@ To finish, keep $\delta$ fixed. Estimate~\eqref{eq:upper_quantitative_error} hol
 \appendix
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Proof sketches for Jellium}\label{sec:LN_proof}
+\section{Proof sketch for the thermodynamic limit of Jellium}\label{sec:LN_proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We describe the proof of Theorem~\ref{thm:LN_main}(i)--(ii) at $T=0$. The arguments of~\cite{lieb1975thermodynamic} are given at positive temperature, and they carry over when Gibbs states are replaced by ground states, with one extra observation. Newton's theorem requires the states in the packed balls to have radial densities. A ground state $\Psi$ in a ball, which may be degenerate, can be replaced by its rotation average $\int_{\SO(3)}U_R|\Psi\rangle\langle\Psi|U_R^*\,\mathrm{d}R$, which has the same energy and a radial density. The method is the one Lieb and Lebowitz~\cite{lieb1972constitution} introduced for real matter: pack large balls with smaller neutral balls and use Newton's theorem to remove the interactions between them. The new difficulty for Jellium is that the background is rigid. The part of a large ball not covered by the packing cannot be left empty, since its uncompensated background charge would cost an electrostatic energy which is not $o(|B_K|)$~\cite[Sec.~3.1]{lieb1975thermodynamic}. One therefore has to place the right number of particles there and control their energy. Classically this is easy; quantum mechanically it is the main technical step.
+We sketch the proof of Theorem~\ref{thm:LN_main}(i) at $T=0$. The arguments of~\cite{lieb1975thermodynamic} are given at positive temperature, and they carry over to the zero temperature case when Gibbs states are replaced by ground states, with one extra observation. Newton's theorem requires the states in the packed balls to have radial densities. A ground state $\Psi$ in a ball, which may be degenerate, can be replaced by its rotation average $\int_{\SO(3)}R|\Psi\rangle\langle\Psi|R^*\,\mathrm{d}R$, which has the same energy and a radial density. The method is the one Lieb and Lebowitz~\cite{lieb1972constitution} introduced for real matter: pack large balls with smaller neutral balls and use Newton's theorem to remove the interactions between them. The new difficulty for Jellium is that the background is rigid. The part of a large ball not covered by the packing cannot be left empty, since its uncompensated background charge would cost an electrostatic energy which is not $o(|\mathcal B_K|)$~\cite[Sec.~3.1]{lieb1975thermodynamic}. One therefore has to place the right number of particles there and control their energy.
 
 \medskip
 
@@ -1616,9 +1573,13 @@ We describe the proof of Theorem~\ref{thm:LN_main}(i)--(ii) at $T=0$. The argume
 \noindent\textbf{Step 1: Swiss-cheese packing.} See Figure~\ref{fig:LN_packing}.
 
 \begin{lemma}[{\cite[Secs.~III--IV]{lieb1972constitution}}, {\cite[Secs.~3.1 and~5.1]{lieb1975thermodynamic}}]\label{lem:LN_packing}
-Let $p=26$ and $\gamma:=p/(1+p)=26/27$, and let $B_k$, $k\ge0$, be the balls of radii $R_k=R_0\,27^k$ with $\rho_0|B_0|=1$, so that $N_k:=\rho_0|B_k|=27^{3k}$. For each $K\ge1$ the ball $B_K$ contains pairwise disjoint balls, namely $n_{K-j}:=p^{K-j-1}(1+p)^{2(K-j)}$ translates of $B_j$ for each $0\le j\le K-1$. The uncovered set $D_K$ satisfies $|D_K|=\gamma^K|B_K|$, so that $M_K:=\rho_0|D_K|=26^K\,27^{2K}\in\NN$.
+Let $p=26$ and $\gamma:=p/(1+p)=26/27$, and let $\mathcal B_k$, $k\ge0$, be the balls of radii $R_k=R_0\,27^k$ with $\rho_0|\mathcal B_0|=1$, so that $N_k:=\rho_0|\mathcal B_k|=27^{3k}$. For each $K\ge1$ the ball $\mathcal B_K$ contains pairwise disjoint balls, namely $n_{K-j}:=p^{K-j-1}(1+p)^{2(K-j)}$ translates of $\mathcal B_j$ for each $0\le j\le K-1$. The uncovered set $\mathcal D_K$ satisfies $|\mathcal D_K|=\gamma^K|\mathcal B_K|$, so that $M_K:=\rho_0|\mathcal D_K|=26^K\,27^{2K}\in\NN$.
 
-For the quantum problem the radii are shrunk to $R_k=R_0'(27^k-\frac12)$, still with $\rho_0|B_0|=1$, so that $N_k=(2\cdot27^k-1)^3\in\NN$. With the same multiplicities, the packing can then be chosen so that each packed ball is at distance at least $4h$ from $\partial B_K$ and at least $8h$ from the other packed balls, where $h:=R_0'(1-\frac1{27})/8$. Moreover $|D_K|/|B_K|=O(\gamma^K)$.
+For the quantum problem we use the radii $R_k=R_0'(27^k-\frac12)$, still with $\rho_0|\mathcal B_0|=1$, so that $N_k=(2\cdot27^k-1)^3\in\NN$. With the same multiplicities, the packing can then be chosen so that each packed ball is at distance at least $4h$ from $\partial \mathcal B_K$ and at least $8h$ from the other packed balls, where $h:=R_0'(1-\frac1{27})/8$. For this packing,
+\[
+M_K:=\rho_0|\mathcal D_K|=N_K-\sum_{j=0}^{K-1}n_{K-j}N_j\in\NN,
+\]
+and $|\mathcal D_K|/|\mathcal B_K|=\mathcal O(\gamma^K)$.
 \end{lemma}
 
 \begin{figure}[ht]
@@ -1634,120 +1595,120 @@ For the quantum problem the radii are shrunk to $R_k=R_0'(27^k-\frac12)$, still 
       \draw[densely dashed,gray!70!black,thin] (\x,\y) circle ({\r+\h});
       \fill[white] (\x,\y) circle (\r);
       \draw (\x,\y) circle (\r);
-    };
+    }
   \draw[thick] (0,0) circle (3);
-  \node at (0,1.48) {$B_{K-1}$};
-  \draw[->] (3.7,2.25) node[right] {$B_{K-2}$} -- (2.24,1.78);
-  \draw[->] (3.7,-0.6) node[right] {$B_{K-3}$} -- (2.71,-0.09);
-  \draw[->] (3.7,-1.9) node[right] {$D_K$} -- (2.2,-1.83);
-  \node at (140:3.5) {$B_K$};
+  \node at (0,1.48) {$\mathcal B_{K-1}$};
+  \draw[->] (3.7,2.25) node[right] {$\mathcal B_{K-2}$} -- (2.24,1.78);
+  \draw[->] (3.7,-0.6) node[right] {$\mathcal B_{K-3}$} -- (2.71,-0.09);
+  \draw[->] (3.7,-1.9) node[right] {$\mathcal D_K$} -- (2.2,-1.83);
+  \node at (140:3.5) {$\mathcal B_K$};
 \end{tikzpicture}
-\caption{Schematic cross-section of the Swiss-cheese packing of Lemma~\ref{lem:LN_packing}, not to scale. The ball $B_K$ contains pairwise disjoint translates of $B_{K-1},B_{K-2},\dots,B_0$, of which three generations are shown. The uncovered set $D_K$ is shaded. In the quantum version, the dashed shells of width $4h$ around the packed balls are pairwise disjoint and contained in $B_K$. Equivalently, each packed ball is at distance at least $4h$ from $\partial B_K$ and at least $8h$ from the other packed balls.}
+\caption{Schematic cross-section of the Swiss-cheese packing of Lemma~\ref{lem:LN_packing}, not to scale. The ball $\mathcal B_K$ contains pairwise disjoint translates of $\mathcal B_{K-1},\mathcal B_{K-2},\dots,\mathcal B_0$, of which three generations are shown. The uncovered set $\mathcal D_K$ is shaded. In the quantum version, the dashed shells of width $4h$ around the packed balls are pairwise disjoint and contained in $\mathcal B_K$. Equivalently, each packed ball is at distance at least $4h$ from $\partial \mathcal B_K$ and at least $8h$ from the other packed balls.}
 \label{fig:LN_packing}
 \end{figure}
 
-\noindent\textbf{Step 2: The basic inequality for balls.} Let $\Gamma_j$ be rotation-averaged ground states in $B_j$ and let $\Psi_K$ be the trial state on $D_K$ from Lemma~\ref{lem:LN_trial} below. The antisymmetrized tensor product of copies of the $\Gamma_j$, placed in the packed balls, with $\Psi_K$ is an admissible state of $N_K$ particles in $B_K$, since the supports are disjoint and lie in $B_K$. By Step~0 all the cross interactions vanish, because the packed balls are neutral with radial charge. Hence
+\noindent\textbf{Step 2: The basic inequality for balls.} Let $\Gamma_j$ be rotation-averaged ground states in $\mathcal B_j$ and let $\Psi_K$ be the trial state on $\mathcal D_K$ from Lemma~\ref{lem:LN_trial} below. The antisymmetrized tensor product of copies of the $\Gamma_j$, placed in the packed balls, with $\Psi_K$ is an admissible state of $N_K$ particles in $\mathcal B_K$, since the supports are disjoint and lie in $\mathcal B_K$. By Step~0 all the cross interactions vanish, because the packed balls are neutral with radial charge. Hence
 \[
-E^\hbar_\Jel(\rho_0,B_K)\le\sum_{j=0}^{K-1}n_{K-j}\,E^\hbar_\Jel(\rho_0,B_j)+\big\langle\Psi_K,H^{\hbar,\rho_0}_{D_K}\Psi_K\big\rangle.
+E_\Jel(\rho_0,\mathcal B_K)\le\sum_{j=0}^{K-1}n_{K-j}\,E_\Jel(\rho_0,\mathcal B_j)+\big\langle\Psi_K,H^{\rho_0}_{\mathcal D_K}\Psi_K\big\rangle.
 \]
-With $e_k:=E^\hbar_\Jel(\rho_0,B_k)/|B_k|$ and $w_{K,j}:=n_{K-j}|B_j|/|B_K|$ (which equals $p^{-1}\gamma^{K-j}$ for the unshrunk radii), this reads
+With $e_k:=E_\Jel(\rho_0,\mathcal B_k)/|\mathcal B_k|$ and $w_{K,j}:=n_{K-j}|\mathcal B_j|/|\mathcal B_K|$ (which equals $p^{-1}\gamma^{K-j}$ when $R_k=R_0\,27^k$), this reads
 \begin{equation}\label{eq:LN_recursion}
-e_K\le\sum_{j=0}^{K-1}w_{K,j}\,e_j+\frac{\langle\Psi_K,H^{\hbar,\rho_0}_{D_K}\Psi_K\rangle}{|B_K|},\qquad\sum_{j=0}^{K-1}w_{K,j}=1-\frac{|D_K|}{|B_K|}.
+e_K\le\sum_{j=0}^{K-1}w_{K,j}\,e_j+\frac{\langle\Psi_K,H^{\rho_0}_{\mathcal D_K}\Psi_K\rangle}{|\mathcal B_K|},\qquad\sum_{j=0}^{K-1}w_{K,j}=1-\frac{|\mathcal D_K|}{|\mathcal B_K|}.
 \end{equation}
 
-\noindent\textbf{Step 3: The leftover region.} Classically, averaging over independent uniformly distributed points in $D:=D_K$, with $M=\rho_0|D|$, gives
+\noindent\textbf{Step 3: The leftover region.} Classically, let $M=\rho_0|\mathcal D_K|$. Writing $Y=(y_1,\ldots,y_M)$ and $\mathrm dY=\mathrm dy_1\cdots\mathrm dy_M$, integration against the uniform probability measure on $\mathcal D_K^M$ gives
 \[
-\big\langle U^{\rho_0}_D\big\rangle=-\frac{\rho_0}{|D|}\,D(\iden_D)\le0
+\frac1{|\mathcal D_K|^M}\int_{\mathcal D_K^M}U^{\rho_0}_{\mathcal D_K}(Y)\,\mathrm dY
+=-\frac{\rho_0}{|\mathcal D_K|}\,D(\iden_{\mathcal D_K})\le0
 \]
-\cite[Eq.~(11)]{lieb1975thermodynamic}. At $T>0$ this enters through Jensen's inequality; at $T=0$ it yields a configuration with $U^{\rho_0}_D\le0$. Quantum mechanically one needs a wave function. A Slater determinant with Dirichlet conditions on $\partial D$ does not have constant density, so the cancellation behind the classical identity is lost. Instead, particles are localized in~\cite{lieb1975thermodynamic} around well-chosen points.
-
+\cite[Eq.~(11)]{lieb1975thermodynamic}. Consequently, there exists a configuration $Y\in\mathcal D_K^M$ such that $U^{\rho_0}_{\mathcal D_K}(Y)\le0$. A substitute in the quantum case is provided by
 \begin{lemma}[Trial state on the leftover region {\cite[Sec.~5.1]{lieb1975thermodynamic}}]\label{lem:LN_trial}
-For the quantum packing of Lemma~\ref{lem:LN_packing} there exist $C=C(\hbar,\rho_0)$, independent of $K$, and normalized states $\Psi_K\in\bigwedge^{M_K}H^1_0(D_K;\CC^q)$ with
+For the quantum packing of Lemma~\ref{lem:LN_packing} there exist $C=C(\rho_0)$, independent of $K$, and normalized states $\Psi_K\in\bigwedge^{M_K}H^1_0(\mathcal D_K;\CC^q)$ with
 \[
-\big\langle\Psi_K,H^{\hbar,\rho_0}_{D_K}\Psi_K\big\rangle\le C\,|D_K|.
+\big\langle\Psi_K,H^{\rho_0}_{\mathcal D_K}\Psi_K\big\rangle\le C\,|\mathcal D_K|.
 \]
 \end{lemma}
 
 \begin{proof}[Sketch]
-Write $D=D_K$ and $M=M_K$.
 
-(a) \emph{Penalization.} Let $L(y):=8\pi^2\hbar^2|y|^{-2}\iden_{\{|y|\le1\}}$ (integrable) and $U'(Y):=U^{\rho_0}_D(Y)+\sum_{i<j}L(y_i-y_j)$. The penalty $L$ enforces an effective minimal separation of the points.
-
-(b) \emph{Keeping away from $\partial D$.} Around each packed ball $B^i$ (radius $R^i$) take the shells $S^i$ and $T^i$ of radii $(R^i,R^i+h)$ and $(R^i+h,R^i+2h)$, and inside $\partial B_K$ the shells $S_K$ and $T_K$ of radii $(R_K-h,R_K)$ and $(R_K-2h,R_K-h)$. By the gaps in Lemma~\ref{lem:LN_packing}, all of them are disjoint and contained in $D$. Let $f:=0$ on the $S$-shells, $f:=1+|S^i|/|T^i|$ on $T^i$, $f:=1+|S_K|/|T_K|$ on $T_K$ and $f:=1$ on the rest of $D$. Then $\int_Df=|D|$ and $f\le3$.
-
-(c) \emph{Averaging.} Average $U'$ over $Y\in D^M$ with probability density $\prod_if(y_i)/|D|$. A direct computation gives
+(a) \emph{Penalization.} For $Y=(y_1,\ldots,y_{M_K})\in\mathcal D_K^{M_K}$, define
 \[
-\big\langle U^{\rho_0}_D\big\rangle_f=D\big(\rho_0(\iden_D-f)\big)-\frac{\rho_0}{|D|}D(f)
+U'(Y):=U^{\rho_0}_{\mathcal D_K}(Y)
++8\pi^2\sum_{1\le i<j\le M_K}\frac{\iden_{\{|y_i-y_j|\le1\}}}{|y_i-y_j|^2}.
 \]
-\cite[Eq.~(49)]{lieb1975thermodynamic}. Here $\rho_0(\iden_D-f)$ is a sum of neutral radial double layers $\tau^i$ (on $S^i\cup T^i$) and $\tau_K$ (on $S_K\cup T_K$). By Step~0 its self-energy is $\sum_iD(\tau^i)+D(\tau_K)\le C\rho_0^2h^2|D|$, because each double layer has energy of order $\rho_0^2h^2$ times its volume and all the shells lie in $D$. Moreover $\langle\sum_{i<j}L(y_i-y_j)\rangle_f\le C\hbar^2\rho_0M$. Hence some $Y$ with all $y_i$ at distance $\ge h$ from $\partial D$ satisfies $U'(Y)\le C|D|$.
+The added term penalizes close pairs and is integrable on $\mathcal D_K^{M_K}$.
+
+(b) \emph{Keeping away from $\partial\mathcal D_K$.} Around each packed ball $\mathcal B^i$ (radius $R^i$) take the shells $S^i$ and $T^i$ of radii $(R^i,R^i+h)$ and $(R^i+h,R^i+2h)$, and inside $\partial \mathcal B_K$ the shells $S_K$ and $T_K$ of radii $(R_K-h,R_K)$ and $(R_K-2h,R_K-h)$. By the gaps in Lemma~\ref{lem:LN_packing}, all of them are disjoint and contained in $\mathcal D_K$. Let $f:=0$ on the $S$-shells, $f:=1+|S^i|/|T^i|$ on $T^i$, $f:=1+|S_K|/|T_K|$ on $T_K$ and $f:=1$ on the rest of $\mathcal D_K$, and extend $f$ by zero outside $\mathcal D_K$. Then $\int_{\mathcal D_K}f=|\mathcal D_K|$ and $f\le3$.
+
+(c) \emph{Averaging.} Integrate $U'$ over $\mathcal D_K^{M_K}$ against the product of the probability densities $f(y_i)/|\mathcal D_K|$. A direct computation gives
+\[
+\frac1{|\mathcal D_K|^{M_K}}\int_{\mathcal D_K^{M_K}}U^{\rho_0}_{\mathcal D_K}(Y)\prod_{i=1}^{M_K} f(y_i)\,\mathrm dY
+=D\big(\rho_0(\iden_{\mathcal D_K}-f)\big)-\frac{\rho_0}{|\mathcal D_K|}D(f)
+\]
+\cite[Eq.~(49)]{lieb1975thermodynamic}. Here $\rho_0(\iden_{\mathcal D_K}-f)$ is a sum of neutral radial double layers $\tau^i$ (on $S^i\cup T^i$) and $\tau_K$ (on $S_K\cup T_K$). By Step~0 its self-energy is $\sum_iD(\tau^i)+D(\tau_K)\le C\rho_0^2h^2|\mathcal D_K|$, because each double layer has energy of order $\rho_0^2h^2$ times its volume and all the shells lie in $\mathcal D_K$. Moreover,
+\[
+\frac{8\pi^2}{|\mathcal D_K|^{M_K}}\int_{\mathcal D_K^{M_K}}
+\Bigg(\sum_{1\le i<j\le M_K}\frac{\iden_{\{|y_i-y_j|\le1\}}}{|y_i-y_j|^2}\Bigg)
+\prod_{i=1}^{M_K} f(y_i)\,\mathrm dY
+\le C\rho_0M_K.
+\]
+Hence some $Y$ with all $y_i$ at distance $\ge h$ from $\partial\mathcal D_K$ satisfies $U'(Y)\le C|\mathcal D_K|$.
 
 (d) \emph{Orbitals.} Let
 \begin{align*}
 d_i&:=\frac12\min\{2h,1,\min_{j\ne i}|y_i-y_j|\},\\
 \varphi_i(x)&=(2\pi d_i)^{-1/2}|x-y_i|^{-1}\sin(\pi|x-y_i|/d_i)\,\iden_{B_{d_i}(y_i)}(x),
 \end{align*}
-where $\varphi_i$ is the Dirichlet ground state of the ball $B_{d_i}(y_i)\subset D$. These balls are pairwise disjoint, so the Slater determinant $\Psi_K$ of the $\varphi_i$ (with any fixed spins) has the same energy as the Hartree product.
+where $\varphi_i$ is the Dirichlet ground state of the ball $B_{d_i}(y_i)\subset\mathcal D_K$. These balls are pairwise disjoint, so the Slater determinant $\Psi_K$ of the $\varphi_i$ (with any fixed spins) has the same energy as the Hartree product.
 
 (e) \emph{Energy.} The kinetic energy satisfies
-\[
-\hbar^2\sum_i\Big(\frac{\pi}{d_i}\Big)^2\le\sum_{i<j}L(y_i-y_j)+4\pi^2\hbar^2\max\{(2h)^{-2},1\}\,M.
-\]
-By Newton's theorem the pair interaction equals that of the point charges $y_i$. The background attraction decreases, since $V_D$ is superharmonic, but per particle by at most
+\begin{align*}
+\sum_{i=1}^{M_K}\Big(\frac{\pi}{d_i}\Big)^2
+&\le8\pi^2\sum_{1\le i<j\le M_K}\frac{\iden_{\{|y_i-y_j|\le1\}}}{|y_i-y_j|^2}\\
+&\quad+4\pi^2\max\{(2h)^{-2},1\}\,M_K.
+\end{align*}
+By Newton's theorem the pair interaction equals that of the point charges $y_i$. The background attraction decreases, since $V_{\mathcal D_K}$ is superharmonic, but per particle by at most
 \[
 \rho_0\int_{\RR^3}\Big(\frac{1}{|z|}-\int_{\RR^3}\frac{|\varphi_i(y_i+y)|^2}{|z-y|}\,\mathrm{d}y\Big)\,\mathrm{d}z=\xi\rho_0d_i^2,
 \]
-for a universal constant $\xi$. Altogether $\langle\Psi_K,H^{\hbar,\rho_0}_D\Psi_K\rangle\le U'(Y)+C'M\le C|D|$.
+for a universal constant $\xi$. Altogether $\langle\Psi_K,H^{\rho_0}_{\mathcal D_K}\Psi_K\rangle\le U'(Y)+C'M_K\le C|\mathcal D_K|$.
 \end{proof}
 
-\noindent\textbf{Step 4: Convergence for balls.} By Lemma~\ref{lem:LN_trial} and Lemma~\ref{lem:LN_packing}, the error term in~\eqref{eq:LN_recursion} is $O(\gamma^K)$, while $e_k\ge-c_{\rm LN}\rho_0^{4/3}$ by Theorem~\ref{thm:LN_stability}. An elementary lemma on sequences~\cite[Sec.~IV.D]{lieb1972constitution} then implies that $e_K$ converges: up to $O(\gamma^K)$, $e_K$ is at most an average of the earlier values, with weights summing to $1-O(\gamma^K)$, and the sequence is bounded below. This proves Theorem~\ref{thm:LN_main}(i).
+\noindent\textbf{Step 4: Convergence for balls.} We use the following elementary lemma on sequences (cf.~\cite[Sec.~IV.D]{lieb1972constitution}).
 
-\medskip
-
-\noindent\textbf{Step 5: General domains.} For the \emph{upper bound} on $E^\hbar_\Jel(\rho_0,\Omega_N)$, we use the general-domain comparison of~\cite[Sec.~5.2, Eq.~(57)]{lieb1975thermodynamic}, with its ground-state conclusion stated in~\cite[Sec.~5.4(iii)]{lieb1975thermodynamic}. It packs $\Omega_N$ with standard balls and controls the leftover region and the inner-boundary modification under the stated LN-admissibility hypotheses. This general-domain estimate is imported here from that argument. Lemma~\ref{lem:LN_trial} treats the spherical container, and no bound on $|\Sigma^{-1}_{N,h}|/|\Sigma^{-2}_{N,h}|$ is assumed. The inner-boundary correction to the averaged electron density minus the background is $-\rho_0\sigma^-_{N,h}$, whose self-energy is $o(|\Omega_N|)$ by~(iv). The cited comparison gives $\limsup_N E^\hbar_\Jel(\rho_0,\Omega_N)/|\Omega_N|\le\lim_Ke_K$.
-
-For the \emph{lower bound}, fix $h>0$ small. Embed $\Omega_N$ in a standard ball $B_{K(N)}$ of comparable volume, by~(B), with distance at least $4h$ from its boundary. Pack $B_{K(N)}\setminus\Omega_N$ with standard balls, each at distance at least $4h$ from $\Omega_N$ and the enclosing boundary and at least $8h$ from the other balls, and denote the leftover region by $D_N$. Let $\Gamma_N$ be a ground state of $\Omega_N$ and put
+\begin{lemma}\label{lem:LN_sequences}
+Let $0<\gamma<1$ and let $(a_K)_{K\ge0}$ be a real sequence bounded below. Suppose that, for some $C\ge0$ and every $K\ge1$,
 \[
-\nu_N:=\rho_{\Gamma_N}-\rho_0\iden_{\Omega_N},\qquad
-w_N(x):=\int_{\RR^3}\frac{\nu_N(y)}{|x-y|}\,\mathrm dy,\qquad M_N:=\rho_0|D_N|\in\NN_0.
+a_K\le(1-\gamma)\sum_{j=0}^{K-1}\gamma^{K-1-j}a_j+C\gamma^K.
 \]
-For $M_N>0$, use the sampling density $f_N$ of Lemma~\ref{lem:LN_trial} on $D_N$, extended by zero outside $D_N$, now also setting it to zero on $\Sigma^{+1}_{N,h}$ and to $1+|\Sigma^{+1}_{N,h}|/|\Sigma^{+2}_{N,h}|$ on $\Sigma^{+2}_{N,h}$. Then $\int_{D_N}f_N=|D_N|$, and~(i) bounds $f_N$ uniformly in $N$ at fixed $h$. Write $\langle\cdot\rangle_{f_N}$ for the average over independent centers with density $\prod_{i=1}^{M_N}\big(f_N(y_i)/|D_N|\big)$. Include the interaction with $\Omega_N$ before selecting the centers, by defining
-\begin{align*}
-I_N(Y)&:=\sum_{i=1}^{M_N}w_N(y_i)-\rho_0\int_{D_N}w_N(x)\,\mathrm dx,\\
-\mathcal W_N(Y)&:=U^{\rho_0}_{D_N}(Y)+\sum_{i<j}L(y_i-y_j)+I_N(Y),
-\end{align*}
-where $L$ is the penalty in step~(a) of Lemma~\ref{lem:LN_trial}.
+Then $(a_K)$ converges to a finite limit.
+\end{lemma}
 
-The averaged point charge $\rho_0(f_N-\iden_{D_N})$ is $-\rho_0\sigma^+_{N,h}$ plus neutral radial double layers around the packed balls and inside the enclosing ball. The former have zero potential on $\Omega_N$, while the latter has constant potential there and $\int\nu_N=0$. Consequently
+\begin{proof}
+Set
 \[
-\langle I_N\rangle_{f_N}=-\rho_0\int_{\RR^3}\nu_N\varphi_{N,h},\qquad
-\big|\langle I_N\rangle_{f_N}\big|\le2\rho_0^2\varepsilon(h)|\Omega_N|,
+b_K:=(1-\gamma)\sum_{j=0}^{K-1}\gamma^{K-1-j}a_j+C\gamma^K.
 \]
-where $\varepsilon(h):=\sup_N\|\varphi_{N,h}\|_{L^\infty(\Omega_N)}\to0$ as $h\to0$ by~(ii), and we used $\|\nu_N\|_1\le2\rho_0|\Omega_N|$. This is the averaged interaction estimate of~\cite[Eq.~(59)]{lieb1975thermodynamic}. The self-energy and penalty estimates in Lemma~\ref{lem:LN_trial}, together with~(i), give
+For $K\ge1$, the hypothesis gives
 \[
-\langle\mathcal W_N\rangle_{f_N}
-\le C_h|D_N|+\rho_0^2D(\sigma^+_{N,h})+2\rho_0^2\varepsilon(h)|\Omega_N|.
+b_{K+1}=\gamma b_K+(1-\gamma)a_K\le b_K.
 \]
-Choose a configuration with $\mathcal W_N(Y)\le\langle\mathcal W_N\rangle_{f_N}$ and form its localized-orbital Slater state as in steps~(d)--(e) of that lemma. Its interaction $\Delta_N$ with $\Omega_N$ equals $I_N(Y)$, since $w_N$ is harmonic on every orbital ball and the orbitals are radial about their centers. Thus, after increasing $C_h$, the \emph{combined} added energy satisfies
-\[
-\big\langle H^{\hbar,\rho_0}_{D_N}\big\rangle_{\rm trial}+\Delta_N
-\le C_h|D_N|+\rho_0^2D(\sigma^+_{N,h})+2\rho_0^2\varepsilon(h)|\Omega_N|.
-\]
-Here the absolute-value estimate applies to $\langle I_N\rangle_{f_N}$, not to the interaction of the selected configuration. The case $M_N=0$ uses the vacuum state.
+Moreover, $b_K$ is bounded below, since it is a convex combination of $C,a_0,\ldots,a_{K-1}$. Thus $b_K\to b$ for some $b\in\RR$, and
+$a_K=\frac{b_{K+1}-\gamma b_K}{1-\gamma}\to b$.
+\end{proof}
 
-The variational principle for the product of $\Gamma_N$, the rotation-averaged ball states and this trial state gives
-\begin{multline*}
-E^\hbar_\Jel(\rho_0,B_{K(N)})\le E^\hbar_\Jel(\rho_0,\Omega_N)+\sum_km'_{N,k}E^\hbar_\Jel(\rho_0,B_k)\\
-+C_h|D_N|+\rho_0^2D(\sigma^+_{N,h})+2\rho_0^2\varepsilon(h)|\Omega_N|.
-\end{multline*}
-At fixed $h$, take the thermodynamic and packing limits as in~\cite[Sec.~V]{lieb1972constitution}, so that the leftover volume fraction vanishes. Dividing by $|\Omega_N|$ and using~(iii) and Step~4 yields
+By Lemma~\ref{lem:LN_trial} and Lemma~\ref{lem:LN_packing}, the last term in~\eqref{eq:LN_recursion} is at most $C\gamma^K$, while $e_k\ge-c_{\rm LN}\rho_0^{4/3}$ by Theorem~\ref{thm:LN_stability}. For the radii $R_k=R_0\,27^k$, $w_{K,j}=p^{-1}\gamma^{K-j}=(1-\gamma)\gamma^{K-1-j}$, so Lemma~\ref{lem:LN_sequences} applies directly to $a_K=e_K$.
+
+For the quantum radii $R_k=R_0'(27^k-\frac12)$, put
 \[
-\liminf_{N\to\infty}\frac{E^\hbar_\Jel(\rho_0,\Omega_N)}{|\Omega_N|}\ge\lim_{K\to\infty}e_K-2\rho_0^2\varepsilon(h).
+\alpha_K:=\left(1-\frac{1}{2\cdot27^K}\right)^3,
+\qquad a_K:=\alpha_K e_K.
 \]
-Finally let $h\to0$ to obtain Theorem~\ref{thm:LN_main}(ii).
-
-\medskip
-
-\noindent\textbf{Step 6: Scaling and regularity.} The dilation $x\mapsto\rho_0^{1/3}x$ maps $H^{\hbar,\rho_0}_\Omega$ unitarily onto $\rho_0^{1/3}H^{\hbar\rho_0^{1/6},1}_{\rho_0^{1/3}\Omega}$, so that $E^\hbar_\Jel(\rho_0,\Omega)=\rho_0^{1/3}E^{\hbar\rho_0^{1/6}}_\Jel(1,\rho_0^{1/3}\Omega)$. Admissibility is preserved under dilations, and (iii) follows. For (iv), $\lambda\mapsto E^{\sqrt\lambda}_\Jel(1,\Omega)$ is an infimum of affine non-decreasing functions of $\lambda$, hence concave and non-decreasing. These properties pass to the pointwise limit, and pointwise convergence of concave functions on an open interval is locally uniform.
+The volume formula and the packing multiplicities give
+\[
+\alpha_K w_{K,j}=(1-\gamma)\gamma^{K-1-j}\alpha_j.
+\]
+Multiplying~\eqref{eq:LN_recursion} by $\alpha_K\le1$ therefore gives the inequality in Lemma~\ref{lem:LN_sequences} for $(a_K)$. Since $1/8\le\alpha_K\le1$, this sequence is bounded below and hence converges. Finally, $\alpha_K\to1$, so $e_K=a_K/\alpha_K$ has the same finite limit. This proves Theorem~\ref{thm:LN_main}(i).
 
 \medskip
 
@@ -1763,41 +1724,46 @@ Since $0\le s/m-1\le2h/R_N$ in the integral, $|\varphi_{N,h}(x)|\le16\pi h^2(1+2
 
 We prove Lemma~\ref{lem:lower_completion}. The construction adapts the sampling and localized orbitals of~\cite[Sec.~5.1]{lieb1975thermodynamic}, recalled in Lemma~\ref{lem:LN_trial}, while retaining the interaction with the possibly charged ball $B_\ell$. Constants below may depend on $\rho_0$ and $C_0$, but not on $\ell$, $N$ or the state $\Gamma_N$.
 
-We proceed in four steps.
-Step~1 uses the Onsager bound and the hypothesis $\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)\le C_0\ell^3$ to show that the excess background charge $Q=\rho_0|B_\ell|-N$ of the ball $B_\ell$ satisfies $|Q|\le K\ell^2$. Step~2 chooses $\ell'$ and places in the annulus $B_{\ell'}\setminus\overline{B_\ell}$ a background of density $\rho_0$ and $M-N$ particles with uniform density in a slightly thinner annulus. By Newton's theorem, the resulting radial shell charge costs at most $-Q^2/(2\ell')+C\ell^2$, including its interaction with the ball $B_\ell$. Step~3 averages over the positions of $M-N$ centers in this thinner annulus and selects a configuration whose classical energy, plus a short-range pair potential, obeys the same bound. Step~4 places disjointly supported orbitals around these centers, at an additional cost $O(\ell^2)$, and takes the fermionic product with $\Gamma_N$.
+We proceed in five steps.
+Step~1 uses the Onsager bound and the hypothesis $\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)\le C_0\ell^3$ to show that the excess background charge $Q=\rho_0|B_\ell|-N$ of the ball $B_\ell$ satisfies $|Q|\le K_0\ell^2$. Step~2 chooses $\ell'$ and places in the annulus $B_{\ell'}\setminus\overline{B_\ell}$ a background of density $\rho_0$ and $M-N$ particles with uniform density in a slightly thinner annulus. By Newton's theorem, the resulting radial shell charge costs at most $-Q^2/(2\ell')+C\ell^2$, including its interaction with the ball $B_\ell$. Step~3 averages over the positions of $M-N$ centers in this thinner annulus and selects a configuration whose classical energy, plus a short-range pair potential, obeys the same bound. Step~4 places disjointly supported orbitals around these centers, at an additional cost $\mathcal O(\ell^2)$. Step~5 takes the fermionic product with $\Gamma_N$.
 
 \medskip
 
-\noindent\textbf{Step 1: Control of the charge.}
-Fix a configuration $X=(x_1,\dots,x_N)\in B_\ell^N$, let $U^{\rho_0}_{B_\ell}(X)$ be the classical Jellium energy~\eqref{eq:LN_U}, 
+\noindent\textbf{Step 1: Control of the excess charge.}
+Fix a configuration $X=(x_1,\dots,x_N)\in B_\ell^N$, let $U^{\rho_0}_{B_\ell}(X)$ be the classical Jellium energy~\eqref{eq:LN_U},
  and let
 \[
 \sigma_X=\sum_{j=1}^N\frac{\iden_{B_1(x_j)}}{|B_1|}-\rho_0\iden_{B_\ell}
 \]
-be the charge obtained by smearing each particle uniformly over a unit ball. Keeping the positive Coulomb term, Lemma~\ref{lem:basic_onsager} with $\rho=\rho_0\iden_{B_\ell}$ and $a=1$ gives
+be the total charge of the configuration, with each particle smeared uniformly over a unit ball and the background kept as it is. Keeping the positive Coulomb term, Lemma~\ref{lem:basic_onsager} with $\rho=\rho_0\iden_{B_\ell}$ and $a=1$ gives
 \begin{equation}\label{eq:completion_onsager}
 U^{\rho_0}_{B_\ell}(X)\ge D(\sigma_X)-cN,
 \qquad c=\frac35+\frac{2\pi}5\rho_0.
 \end{equation}
-The charge distribution $\sigma_X$ is supported in $\overline{B_{\ell+1}}$ and has total charge $-Q$, where $Q=\rho_0|B_\ell|-N$ is the excess background charge. 
+The charge distribution $\sigma_X$ is supported in $\overline{B_{\ell+1}}$ and has total charge $-Q$, where $Q=\rho_0|B_\ell|-N$ is the excess background charge.
 Every signed charge distribution $\sigma$ of finite Coulomb energy supported in $\overline{B_r}$ satisfies
 \[
 D(\sigma)\ge\frac{(\int_{\RR^3}\sigma)^2}{2r}.
 \]
-Indeed, if $\omega_r$ is the uniform probability measure on $\partial B_r$, its potential is $1/r$ throughout $B_r$ and $D(\omega_r)=1/(2r)$. Expanding $D(\sigma-(\int_{\RR^3}\sigma)\omega_r)\ge0$ proves the estimate. With $r=\ell+1$, \eqref{eq:completion_onsager} becomes
+Indeed, if $\omega_r$ is the uniform probability measure on $\partial B_r$, its potential is $1/r$ throughout $B_r$ and $D(\omega_r)=1/(2r)$. Expanding $D(\sigma-(\int_{\RR^3}\sigma)\omega_r)\ge0$ proves the estimate. Then \eqref{eq:completion_onsager} becomes
 \[
 U^{\rho_0}_{B_\ell}(X)\ge\frac{Q^2}{2(\ell+1)}-cN
 \qquad\text{for all }X\in B_\ell^N.
 \]
-The energy $\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)$ is the expectation in $\Gamma_N$ of the nonnegative kinetic energy plus $U^{\rho_0}_{B_\ell}$. Hence
+The energy $\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)$ is the expectation of the nonnegative kinetic energy plus $U^{\rho_0}_{B_\ell}$ with respect to $\Gamma_N$. Hence
 \begin{equation}\label{eq:completion_charge_coercivity}
 \mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)
 \ge\frac{Q^2}{2(\ell+1)}-cN.
 \end{equation}
-Since the l.h.s. is at most $C_0\ell^3$ and $N=\rho_0|B_\ell|-Q$, this implies $Q^2\le C\ell^4+C\ell|Q|$ for $\ell\ge1$, and hence
+Since the left side is at most $C_0\ell^3$ by hypothesis, $N=\rho_0|B_\ell|-Q\le\frac{4\pi}3\rho_0\ell^3+|Q|$, and $2(\ell+1)\le4\ell$ for $\ell\ge1$, this implies
+\[
+Q^2\le4\Big(C_0+\frac{4\pi}3c\rho_0\Big)\ell^4+4c\ell|Q|.
+\]
+Solving this quadratic inequality and using $\ell\le\ell^2$ gives
 \begin{equation}\label{eq:completion_charge_bound}
-|Q|\le K\ell^2.
+|Q|\le K_0\ell^2,\qquad K_0:=4c+2\sqrt{C_0+\frac{4\pi}3c\rho_0}.
 \end{equation}
+Note that the constant $K_0$ depends only on $\rho_0$ and $C_0$.
 
 \begin{figure}[ht]
 \centering
@@ -1819,35 +1785,42 @@ Since the l.h.s. is at most $C_0\ell^3$ and $N=\rho_0|B_\ell|-Q$, this implies $
   \draw[->] (4.2,2.6) node[right] {$y_j\in\mathcal A'$} -- (50:2.72);
   \draw[->] (4.2,-1.6) node[right] {$\operatorname{supp}\mu\subset\overline{\mathcal A}$} -- (-28:3.17);
 \end{tikzpicture}
-\caption{The geometrical setup of the proof.}\label{fig:completion_shell}
+\caption{The geometrical setup of the proof of Lemma~\ref{lem:lower_completion}.}\label{fig:completion_shell}
 \end{figure}
 
 \medskip
 
-\noindent\textbf{Step 2: The compensating annulus.}
-Choose a fixed $h'>4$ with $4\pi\rho_0h'>K+1$, and set
+\noindent\textbf{Step 2: The annulus.}
+Choose $h'>4$ such that $4\pi\rho_0h'>K_0+1$, and set
 \[
 M=\left\lceil\rho_0|B_{\ell+h'}|\right\rceil,
 \qquad
 \ell'=\left(\frac{3M}{4\pi\rho_0}\right)^{1/3}.
 \]
-Then $\ell'=\ell+h'+O(\ell^{-2})$. For all sufficiently large $\ell$, we have $\ell'\in[\ell,\ell+h]$ with $h=h'+1$, and $M-N$ is a positive integer with $M-N=O(\ell^2)$. Write
+Then $\ell'\ge\ell+h'$, and $\ell'\le\ell+h$ with $h:=h'+1$. Indeed, $M<\rho_0|B_{\ell+h'}|+1$, so it suffices that $(s+1)^3-s^3\ge3/(4\pi\rho_0)$ for $s=\ell+h'$. This holds because $s>\max\{4,1/(4\pi\rho_0)\}$ implies $s^2\ge1/(4\pi\rho_0)$. Moreover, $M-N$ is an integer, and~\eqref{eq:completion_charge_bound} gives
+\begin{align*}
+M-N&\ge\rho_0\big(|B_{\ell+h'}|-|B_\ell|\big)+Q\ge(4\pi\rho_0h'-K_0)\ell^2>\ell^2,\\
+M-N&\le\rho_0\big(|B_{\ell+h'}|-|B_\ell|\big)+Q+1\le C\ell^2,
+\end{align*}
+where $C$ depends only on $\rho_0$ and $C_0$. Write
 \[
 \mathcal A=B_{\ell'}\setminus\overline{B_\ell},\qquad
 \mathcal A'=B_{\ell'-1}\setminus\overline{B_{\ell+1}};
 \]
-see Figure~\ref{fig:completion_shell}. Since $h'>4$, we have $|\mathcal A'|\ge c\ell^2$, and hence $(M-N)/|\mathcal A'|\le C$. Put
+see Figure~\ref{fig:completion_shell}. Since $h'>4$, we have $|\mathcal A'|\ge8\pi\ell^2$, and hence $(M-N)/|\mathcal A'|\le C$. Put
 \[
 \nu=\rho_{\Gamma_N}-\rho_0\iden_{B_\ell},\qquad
 \mu=\frac{M-N}{|\mathcal A'|}\iden_{\mathcal A'}-\rho_0\iden_{\mathcal A},\qquad
 m(t)=\int_{\ell<|x|<t}\mu(x)\,\mathrm dx.
 \]
-The ball charge $\nu$ need not be radial. We only use its support in $\overline{B_\ell}$ and its total charge $-Q$. The shell charge $\mu$ is radial and has total charge $Q$, so $m(\ell)=0$ and $m(\ell')=Q$. By Newton's theorem~\eqref{eq:basic_newton}, the potential of $\mu$ is constant on $\overline{B_\ell}$, where it equals
+The charge distribution $\nu$ need not be radial. We only use its support in $\overline{B_\ell}$ and its total charge $-Q$. The shell charge $\mu$ is radial and has total charge $Q$, so $m(\ell)=0$ and $m(\ell')=Q$. Let $0<|x|\le\ell$. Since $\mu$ vanishes outside $\{\ell\le|y|\le\ell'\}$, the first term on the right of Newton's formula~\eqref{eq:basic_newton} vanishes, and the second reduces to an integral over $[\ell,\ell']$. Using $\mathrm dm(t)=4\pi t^2\mu(t)\,\mathrm dt$ and integrating by parts, we get
 \[
-\int_\ell^{\ell'}\frac{1}{t}\,\mathrm dm(t)
+\int_{\RR^3}\frac{\mu(y)}{|x-y|}\,\mathrm dy
+=4\pi\int_\ell^{\ell'}\mu(t)\,t\,\mathrm dt
+=\int_\ell^{\ell'}\frac{1}{t}\,\mathrm dm(t)
 =\frac Q{\ell'}+\int_\ell^{\ell'}\frac{m(t)}{t^2}\,\mathrm dt,
 \]
-after an integration by parts. Since $\nu$ is supported in $\overline{B_\ell}$ with total charge $-Q$, this gives
+which does not depend on $x$. Since $\nu$ is supported in $\overline{B_\ell}$ with total charge $-Q$, this gives
 \[
 2D(\nu,\mu)=-\frac{Q^2}{\ell'}-Q\int_\ell^{\ell'}\frac{m(t)}{t^2}\,\mathrm dt.
 \]
@@ -1862,7 +1835,7 @@ D(\mu)+2D(\nu,\mu)
 =-\frac{Q^2}{2\ell'}
 +\frac12\int_\ell^{\ell'}\frac{m(t)^2-2Qm(t)}{t^2}\,\mathrm dt.
 \end{equation}
-Since $\sup|m|\le\|\mu\|_1\le C\ell^2$ and $\ell'-\ell=O(1)$, we obtain
+Since $\sup|m|\le\|\mu\|_1\le C\ell^2$ and $\ell'-\ell=\mathcal O(1)$, we obtain
 \begin{equation}\label{eq:completion_shell_bound}
 D(\mu)+2D(\nu,\mu)\le-\frac{Q^2}{2\ell'}+C\ell^2.
 \end{equation}
@@ -1873,9 +1846,9 @@ D(\mu)+2D(\nu,\mu)\le-\frac{Q^2}{2\ell'}+C\ell^2.
 For $M-N$ particles in the annulus $\mathcal A'$, at positions $Y=(y_1,\dots,y_{M-N})$, the classical energy added to the ball $B_\ell$ by these particles and the annular background $\rho_0\iden_{\mathcal A}$ is
 \[
 \mathcal W(Y)=U^{\rho_0}_{\mathcal A}(Y)
-+\sum_j v_\nu(y_j)-2D(\nu,\rho_0\iden_{\mathcal A}),
++\sum_{j=1}^{M-N}v_\nu(y_j)-2D(\nu,\rho_0\iden_{\mathcal A}),
 \]
-where $U^{\rho_0}_{\mathcal A}$ is the classical Jellium energy~\eqref{eq:LN_U} of the annulus and $v_\nu$ is the potential of $\nu$. We average over configurations with respect to the uniform probability measure on $(\mathcal A')^{M-N}$, writing $\mathrm dY=\mathrm dy_1\cdots\mathrm dy_{M-N}$. Integrating term by term gives
+where $U^{\rho_0}_{\mathcal A}$ is the classical Jellium energy~\eqref{eq:LN_U} of the annulus and $v_\nu$ is the potential of $\nu$. We average over configurations with respect to the uniform probability measure on $(\mathcal A')^{M-N}$, writing $\mathrm dY=\mathrm dy_1\cdots\mathrm dy_{M-N}$. Integrating term by term, then dropping the negative last term and applying~\eqref{eq:completion_shell_bound}, gives
 \begin{equation}\label{eq:completion_sampling}
 \begin{split}
 \frac1{|\mathcal A'|^{M-N}}\int_{(\mathcal A')^{M-N}}\mathcal W(Y)\,\mathrm dY
@@ -1888,14 +1861,14 @@ The negative term accounts for the absence of self-interaction of the $M-N$ part
 w(y)=8\pi^2\frac{\iden_{\{|y|\le1\}}}{|y|^2}.
 \]
 Its average is
-\begin{align*}
-\frac1{|\mathcal A'|^{M-N}}\int_{(\mathcal A')^{M-N}}\sum_{j<k}w(y_j-y_k)\,\mathrm dY
-&=\binom{M-N}2\frac1{|\mathcal A'|^2}\int_{\mathcal A'}\int_{\mathcal A'}w(x-y)\,\mathrm dx\,\mathrm dy\\
-&\le\frac{(M-N)^2}{2|\mathcal A'|}\|w\|_1\le C\ell^2.
-\end{align*}
-The last step uses $\|w\|_1=32\pi^3$, together with $M-N=O(\ell^2)$ and $(M-N)/|\mathcal A'|\le C$ from Step~2. Since configurations with coinciding particles form a null set, there is consequently a configuration $\widetilde Y=(\tilde y_1,\dots,\tilde y_{M-N})$ of distinct particles in $\mathcal A'$ such that
+\begin{multline*}
+\frac1{|\mathcal A'|^{M-N}}\int_{(\mathcal A')^{M-N}}\sum_{1\le j<k\le M-N}w(y_j-y_k)\,\mathrm dY\\
+=\binom{M-N}2\frac1{|\mathcal A'|^2}\int_{\mathcal A'}\int_{\mathcal A'}w(x-y)\,\mathrm dx\,\mathrm dy
+\le\frac{(M-N)^2}{2|\mathcal A'|}\|w\|_1\le C\ell^2.
+\end{multline*}
+The last step uses $\|w\|_1=32\pi^3$, together with $M-N=\mathcal O(\ell^2)$ and $(M-N)/|\mathcal A'|\le C$ from Step~2. Since configurations with coinciding particles form a null set, there is consequently a configuration $\widetilde Y=(\tilde y_1,\dots,\tilde y_{M-N})$ of distinct particles in $\mathcal A'$ such that
 \begin{equation}\label{eq:completion_penalized_configuration}
-\mathcal W(\widetilde Y)+\sum_{j<k}w(\tilde y_j-\tilde y_k)
+\mathcal W(\widetilde Y)+\sum_{1\le j<k\le M-N}w(\tilde y_j-\tilde y_k)
 \le-\frac{Q^2}{2\ell'}+C\ell^2.
 \end{equation}
 
@@ -1917,15 +1890,17 @@ times any fixed unit spin vector in $\CC^q$, as in step~(d) of the proof of Lemm
 Its kinetic energy satisfies
 \begin{equation}\label{eq:completion_kinetic}
 \TC\big(|\Psi\rangle\langle\Psi|\big)
-=\sum_j\left(\frac\pi{d_j}\right)^2
-\le\sum_{j<k}w(\tilde y_j-\tilde y_k)+4\pi^2(M-N).
+=\sum_{j=1}^{M-N}\left(\frac\pi{d_j}\right)^2
+\le\sum_{1\le j<k\le M-N}w(\tilde y_j-\tilde y_k)+4\pi^2(M-N).
 \end{equation}
 The inequality follows by summing $d_j^{-2}\le4\big(1+\sum_{k\ne j}|\tilde y_j-\tilde y_k|^{-2}\iden_{\{|\tilde y_j-\tilde y_k|\le1\}}\big)$ over $j$.
 Disjoint supports remove exchange terms between these orbitals, and Newton's theorem makes their mutual Coulomb interaction exactly the interaction of point particles at the $\tilde y_j$:
 \begin{equation}\label{eq:completion_coulomb}
+\begin{split}
 \Cc\big(|\Psi\rangle\langle\Psi|\big)
-=\sum_{j<k}\int_{\RR^3}\int_{\RR^3}\frac{|\varphi_j(x)|^2|\varphi_k(y)|^2}{|x-y|}\,\mathrm dx\,\mathrm dy
-=\sum_{j<k}\frac1{|\tilde y_j-\tilde y_k|}.
+&=\sum_{1\le j<k\le M-N}\int_{\RR^3}\int_{\RR^3}\frac{|\varphi_j(x)|^2|\varphi_k(y)|^2}{|x-y|}\,\mathrm dx\,\mathrm dy\\
+&=\sum_{1\le j<k\le M-N}\frac1{|\tilde y_j-\tilde y_k|}.
+\end{split}
 \end{equation}
 Moreover, $v_\nu$ is harmonic throughout each orbital ball, so radial averaging gives
 \[
@@ -1933,22 +1908,35 @@ Moreover, $v_\nu$ is harmonic throughout each orbital ball, so radial averaging 
 \]
 Since $2D(\nu,f)=\int_{\RR^3}f\,v_\nu$ and $\rho_\Psi=\sum_j|\varphi_j|^2$, the ball--shell interaction is therefore
 \begin{equation}\label{eq:completion_core_shell}
-2D(\nu,\rho_\Psi-\rho_0\iden_{\mathcal A})=\sum_jv_\nu(\tilde y_j)-2D(\nu,\rho_0\iden_{\mathcal A}),
+2D(\nu,\rho_\Psi-\rho_0\iden_{\mathcal A})=\sum_{j=1}^{M-N}v_\nu(\tilde y_j)-2D(\nu,\rho_0\iden_{\mathcal A}),
 \end{equation}
 exactly the ball--shell part of $\mathcal W(\widetilde Y)$, even when the density in $B_\ell$ is not radial.
 
 We claim that replacing the point charges at $\tilde y_j$ by the orbital densities $|\varphi_j|^2$ in the attraction to the background $\rho_0\iden_{\mathcal A}$ increases the energy by at most $C(M-N)$, that is,
 \begin{equation}\label{eq:completion_claim}
 -2D(\rho_\Psi,\rho_0\iden_{\mathcal A})
-\le-\rho_0\sum_jV_{\mathcal A}(\tilde y_j)+C(M-N),
+\le-\rho_0\sum_{j=1}^{M-N}V_{\mathcal A}(\tilde y_j)+C(M-N),
 \end{equation}
-where $V_{\mathcal A}(x)=\int_{\mathcal A}|x-y|^{-1}\,\mathrm dy$, so that $\rho_0V_{\mathcal A}$ is the potential of the background, as in~\eqref{eq:LN_U}. Indeed, the kernel difference
+where $V_{\mathcal A}(x)=\int_{\mathcal A}|x-y|^{-1}\,\mathrm dy$, so that $\rho_0V_{\mathcal A}$ is the potential of the background, as in~\eqref{eq:LN_U}. To prove~\eqref{eq:completion_claim}, fix $j$ and consider the kernel difference
 \[
-\kappa_j(z)=\frac1{|z|}-\int_{\RR^3}\frac{|\varphi_j(\tilde y_j+u)|^2}{|z-u|}\,\mathrm du
+\kappa_j(z)=\frac1{|z|}-\int_{\RR^3}\frac{|\varphi_j(\tilde y_j+u)|^2}{|z-u|}\,\mathrm du,\qquad z\ne0.
 \]
-is nonnegative and supported in $\overline{B_{d_j}}$ by Newton's theorem, and $\int_{\RR^3}\kappa_j\le2\pi d_j^2$. Since the background density is at most $\rho_0$ and $d_j\le\frac12$, the increase is at most $2\pi\rho_0d_j^2\le\frac\pi2\rho_0$ per particle, which proves the claim.
+The function $u\mapsto|\varphi_j(\tilde y_j+u)|^2$ is a radial probability density supported in $\overline{B_{d_j}}$. Hence $\kappa_j\ge0$ by Theorem~\ref{thm:basic_newton}(ii), and $\kappa_j(z)=0$ for $|z|\ge d_j$ by Theorem~\ref{thm:basic_newton}(i). Since the integral in the definition of $\kappa_j$ is nonnegative, we also have
+\[
+\int_{\RR^3}\kappa_j\le\int_{B_{d_j}}\frac{\mathrm dz}{|z|}=2\pi d_j^2.
+\]
+Now $2D(\rho_\Psi,\rho_0\iden_{\mathcal A})=\rho_0\int_{\RR^3}\rho_\Psi V_{\mathcal A}$ and $\rho_\Psi=\sum_j|\varphi_j|^2$. Exchanging the order of integration and substituting $x=\tilde y_j+u$ gives
+\[
+V_{\mathcal A}(\tilde y_j)-\int_{\RR^3}|\varphi_j(x)|^2V_{\mathcal A}(x)\,\mathrm dx
+=\int_{\mathcal A}\kappa_j(y-\tilde y_j)\,\mathrm dy
+\le2\pi d_j^2.
+\]
+Multiplying by $\rho_0$, summing over $j$ and using $d_j\le\frac12$ proves~\eqref{eq:completion_claim} with $C=\frac\pi2\rho_0$.
 
-It remains to assemble the trial state. Let $\Gamma_M=\Gamma_N\wedge|\Psi\rangle\langle\Psi|$ be the antisymmetrized product given by Lemma~\ref{lem:basic_product}, with $A_1=B_\ell$ and $A_2=\mathcal A$. It is a normalized Dirichlet state of exactly $N+(M-N)=M$ particles in $B_{\ell'}$, and its background charge is $\rho_0|B_{\ell'}|=M$. Since $\rho_0\iden_{B_{\ell'}}=\rho_0\iden_{B_\ell}+\rho_0\iden_{\mathcal A}$ almost everywhere, \eqref{eq:basic_product_J} gives
+\medskip
+
+\noindent\textbf{Step 5: Assembly.}
+Let $\Gamma_M=\Gamma_N\wedge|\Psi\rangle\langle\Psi|$ be the antisymmetrized product given by Lemma~\ref{lem:basic_product}, with $A_1=B_\ell$ and $A_2=\mathcal A$. It is a normalized state of exactly $N+(M-N)=M$ particles supported in $B_{\ell'}$ satisfying homogeneous Dirichlet boundary conditions, and its background charge is $\rho_0|B_{\ell'}|=M$. Since $\rho_0\iden_{B_{\ell'}}=\rho_0\iden_{B_\ell}+\rho_0\iden_{\mathcal A}$ almost everywhere, \eqref{eq:basic_product_J} gives
 \begin{equation}\label{eq:completion_product}
 \mathcal J_{\rho_0\iden_{B_{\ell'}}}(\Gamma_M)
 =\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)
@@ -1964,21 +1952,144 @@ By the definition of $\mathcal J_\zeta(\vGamma)$ in Section~\ref{sec:basic},
 Inserting~\eqref{eq:completion_kinetic}, \eqref{eq:completion_coulomb} and~\eqref{eq:completion_claim}, and comparing with~\eqref{eq:LN_U}, we obtain
 \[
 \mathcal J_{\rho_0\iden_{\mathcal A}}\big(|\Psi\rangle\langle\Psi|\big)
-\le U^{\rho_0}_{\mathcal A}(\widetilde Y)+\sum_{j<k}w(\tilde y_j-\tilde y_k)+C(M-N).
+\le U^{\rho_0}_{\mathcal A}(\widetilde Y)+\sum_{1\le j<k\le M-N}w(\tilde y_j-\tilde y_k)+C(M-N).
 \]
 Adding~\eqref{eq:completion_core_shell} and recalling the definition of $\mathcal W(Y)$, the last two terms in~\eqref{eq:completion_product} are therefore at most
 \[
-\mathcal W(\widetilde Y)+\sum_{j<k}w(\tilde y_j-\tilde y_k)+C(M-N)
+\mathcal W(\widetilde Y)+\sum_{1\le j<k\le M-N}w(\tilde y_j-\tilde y_k)+C(M-N)
 \le-\frac{Q^2}{2\ell'}+C\ell^2,
 \]
-where we used~\eqref{eq:completion_penalized_configuration} and $M-N=O(\ell^2)$. Inserting this into~\eqref{eq:completion_product} and dropping the nonpositive term $-Q^2/(2\ell')$ gives
+where we used~\eqref{eq:completion_penalized_configuration} and $M-N=\mathcal O(\ell^2)$. Inserting this into~\eqref{eq:completion_product} and dropping the nonpositive term $-Q^2/(2\ell')$ gives
 \[
 \mathcal J_{\rho_0\iden_{B_{\ell'}}}(\Gamma_M)
-\le\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)+C\ell^2,
+\le\mathcal J_{\rho_0\iden_{B_\ell}}(\Gamma_N)+C_1\ell^2,
 \]
 which is~\eqref{eq:lower_completion}.
 
-\bibliographystyle{plainnat}
-\bibliography{dft}
+\begin{thebibliography}{19}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\end{document}%  
+\bibitem[Cotar and Petrache(2019)]{cotar2017equality}
+Codina Cotar and Mircea Petrache.
+\newblock Equality of the {J}ellium and uniform electron gas next-order
+  asymptotic terms for {C}oulomb and {R}iesz potentials.
+\newblock \emph{arXiv preprint arXiv:1707.07664}, 2019.
+\newblock URL \url{https://arxiv.org/abs/1707.07664v5}.
+
+\bibitem[Evans and Gariepy(2015)]{evans2015measure}
+Lawrence~C. Evans and Ronald~F. Gariepy.
+\newblock \emph{Measure Theory and Fine Properties of Functions}.
+\newblock Textbooks in Mathematics. CRC Press, Boca Raton, FL, revised edition,
+  2015.
+
+\bibitem[Fisher(1964)]{fisher1964free}
+Michael~E. Fisher.
+\newblock The free energy of a macroscopic system.
+\newblock \emph{Archive for Rational Mechanics and Analysis}, 17\penalty0
+  (5):\penalty0 377--410, 1964.
+
+\bibitem[Giuliani and Vignale(2005)]{giuliani2005quantum}
+Gabriele Giuliani and Giovanni Vignale.
+\newblock \emph{Quantum theory of the electron liquid}.
+\newblock Cambridge University Press, 2005.
+
+\bibitem[Graf and Schenker(1995)]{graf1995molecular}
+Gian~Michele Graf and Daniel Schenker.
+\newblock On the molecular limit of {C}oulomb gases.
+\newblock \emph{Communications in Mathematical Physics}, 174:\penalty0
+  215--227, 1995.
+
+\bibitem[Hoffmann-Ostenhof and
+  Hoffmann-Ostenhof(1977)]{hoffmann1977schrodinger}
+Maria Hoffmann-Ostenhof and Thomas Hoffmann-Ostenhof.
+\newblock ``{S}chr{\"o}dinger inequalities'' and asymptotic behavior of the
+  electron density of atoms and molecules.
+\newblock \emph{Physical Review A}, 16\penalty0 (5):\penalty0 1782, 1977.
+
+\bibitem[Lewin(2022)]{lewin2022coulomb}
+Mathieu Lewin.
+\newblock {C}oulomb and {R}iesz gases: {T}he known and the unknown.
+\newblock \emph{Journal of Mathematical Physics}, 63\penalty0 (6):\penalty0
+  061101, 2022.
+\newblock \doi{10.1063/5.0086835}.
+
+\bibitem[Lewin and Lieb(2015)]{lewin2015improved}
+Mathieu Lewin and Elliott~H. Lieb.
+\newblock Improved {L}ieb--{O}xford exchange-correlation inequality with a
+  gradient correction.
+\newblock \emph{Physical Review A}, 91\penalty0 (2):\penalty0 022507, 2015.
+
+\bibitem[Lewin et~al.(2018)Lewin, Lieb, and Seiringer]{lewin2018statistical}
+Mathieu Lewin, Elliott~H. Lieb, and Robert Seiringer.
+\newblock Statistical mechanics of the uniform electron gas.
+\newblock \emph{Journal de l’{\'E}cole polytechnique-Math{\'e}matiques},
+  5:\penalty0 79--116, 2018.
+
+\bibitem[Lewin et~al.(2019)Lewin, Lieb, and Seiringer]{lewin2019floating}
+Mathieu Lewin, Elliott~H. Lieb, and Robert Seiringer.
+\newblock Floating {W}igner crystal with no boundary charge fluctuations.
+\newblock \emph{Physical Review B}, 100\penalty0 (3):\penalty0 035127, 2019.
+
+\bibitem[Lewin et~al.(2020)Lewin, Lieb, and Seiringer]{lewin2020local}
+Mathieu Lewin, Elliott~H. Lieb, and Robert Seiringer.
+\newblock The local density approximation in density functional theory.
+\newblock \emph{Pure and Applied Analysis}, 2\penalty0 (1):\penalty0 35--73,
+  2020.
+
+\bibitem[Lewin et~al.(2023)Lewin, Lieb, and Seiringer]{lewin2019universal}
+Mathieu Lewin, Elliott~H. Lieb, and Robert Seiringer.
+\newblock Universal functionals in density functional theory.
+\newblock In Eric Canc{\`e}s and Gero Friesecke, editors, \emph{Density
+  Functional Theory: Modeling, Mathematical Analysis, Computational Methods,
+  and Applications}, pages 115--182. Springer, 2023.
+\newblock \doi{10.1007/978-3-031-22340-2_3}.
+
+\bibitem[Lieb and Lebowitz(1972)]{lieb1972constitution}
+Elliott~H. Lieb and Joel~L. Lebowitz.
+\newblock The constitution of matter: {E}xistence of thermodynamics for systems
+  composed of electrons and nuclei.
+\newblock \emph{Advances in Mathematics}, 9\penalty0 (3):\penalty0 316--398,
+  1972.
+
+\bibitem[Lieb and Narnhofer(1975)]{lieb1975thermodynamic}
+Elliott~H. Lieb and Heide Narnhofer.
+\newblock The thermodynamic limit for jellium.
+\newblock \emph{Journal of Statistical Physics}, 12\penalty0 (4):\penalty0
+  291--310, 1975.
+
+\bibitem[Lieb and Oxford(1981)]{lieb1981improved}
+Elliott~H. Lieb and Stephen Oxford.
+\newblock Improved lower bound on the indirect {C}oulomb energy.
+\newblock \emph{International Journal of Quantum Chemistry}, 19\penalty0
+  (3):\penalty0 427--439, 1981.
+
+\bibitem[Lieb and Seiringer(2010)]{lieb2010stability}
+Elliott~H. Lieb and Robert Seiringer.
+\newblock \emph{The stability of matter in quantum mechanics}.
+\newblock Cambridge University Press, 2010.
+
+\bibitem[Onsager(1939)]{onsager1939electrostatic}
+Lars Onsager.
+\newblock Electrostatic interaction of molecules.
+\newblock \emph{The Journal of Physical Chemistry}, 43\penalty0 (2):\penalty0
+  189--196, 1939.
+
+\bibitem[Sari and Merlini(1976)]{sari1976nu}
+R.~R. Sari and D.~Merlini.
+\newblock On the $\nu$-dimensional one-component classical plasma: the
+  thermodynamic limit problem revisited.
+\newblock \emph{Journal of Statistical Physics}, 14\penalty0 (2):\penalty0
+  91--100, 1976.
+
+\bibitem[Wigner(1934)]{wigner1934interaction}
+Eugene Wigner.
+\newblock On the interaction of electrons in metals.
+\newblock \emph{Physical Review}, 46\penalty0 (11):\penalty0 1002--1011, 1934.
+
+\end{thebibliography}
+
+\end{document}%

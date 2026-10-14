@@ -11,24 +11,49 @@ infima in that abstract model. Neither desired comparison nor the canonical
 completion estimate is assumed as an input.
 
 This is relative formal verification. Concrete trace-class Fock operators,
-Sobolev domains, literature theorems and the local orbital-sampling construction
-remain inputs. The lower confined-state predicate and upper near-ground-ball
-law are separately supplied interfaces. Their interpretation as the same
+Sobolev domains and literature theorems remain inputs. The local orbital
+estimate and iid sampler are derived from general Sobolev/Fock product laws
+and exact electrostatic identities. The lower confined-state predicate and
+upper near-ground-ball law are separately supplied interfaces. Their interpretation as the same
 physical canonical Dirichlet problem is not constructed from operator theory.
 LITERATURE.txt describes these qualifications and the primary references.
 
 Manuscript
 
-The reviewed source is jellium_ueg.tex dated 12 October 2026. The update covers
+The reviewed source is jellium_ueg.tex dated 14 October 2026. The update covers
 the main proof in Section 4 and the shell completion in Appendix B, together
-with the scaling reduction of the main theorem. The Basic facts subsection
-is outside the requested formalization scope. Its analytic and operator
-results remain explicit inputs. Existing helper identities are retained.
-Appendix A reviews the literature behind the Jellium inputs and is not
-separately rebuilt. verification.json records the precise manuscript and
-local-source SHA-256 hashes.
+with the scaling reduction of the main theorem. The Basic facts subsection's
+analytic and operator results remain explicit inputs. Existing helper
+identities are retained. Appendix A now sketches the limit on balls. Its
+elementary sequence-convergence lemma is formalized separately, while the
+thermodynamic limit remains a literature input to the main equality.
+verification.json records the precise manuscript, bibliography and local-source
+SHA-256 hashes.
 
 Changes made for this revision
+
+The local orbital construction now uses explicit nearest-neighbour balls,
+radial sine profiles and uniform independent centers in the trimmed annulus.
+The new OrbitalGeometry, OrbitalRadial, OrbitalSampling, OrbitalAnnulus,
+OrbitalKernel and OrbitalConstruction modules prove the geometric, scalar,
+integral and probability estimates. Neutralization.StandardLaws.sample is a
+derived construction rather than a field of StandardLaws. The physical
+Sobolev lifting, disjoint Fock product and exact electrostatic identities
+remain visible hypotheses, with no assumed local orbital cost.
+
+ThermodynamicSequence.exists_limit_of_geometric_recursion proves the new
+elementary lemma in Appendix A. It derives the envelope recursion, bounds
+the envelope below, proves its tail is decreasing, and recovers the finite
+limit of the original sequence. This supplementary theorem does not replace
+the physical Lieb–Narnhofer limit assumed by the main equality.
+
+Neutralization.charge_bound now gives the square-root charge constant.
+charge_bound_unit_smearing specializes it to the manuscript's coefficient
+4*c + 2*sqrt(C + c*b), where b = 4*pi*rho/3. The general bound is used in the
+completion proof. The rounded annulus uses one extra unit of width, proves
+a trimmed volume of at least 8*pi*R^2, and uses the resulting sharper bound
+on the sampling density. The audit requires the charge and annular geometry
+proofs in the final equality's dependency graph.
 
 Main.UnitParameterInputs collects the existing lower, upper, localization
 and interpolation inputs at hbar = 1. Main.equality uses these at each
@@ -49,7 +74,7 @@ the weaker completion result drops it for the lower comparison.
 UniformCounting now proves pointwise counting bounds for the actual selected
 periodic balls, uniformly over the translation cell. UpperBox uses these to
 prove an explicit normalized energy remainder and the eventual uniform
-upper bound in eq:attack_fixed_packing_upper. The existing equality proof
+upper bound in eq:upper_fixed_packing. The existing equality proof
 continues to use exact averaged coverage.
 
 Proof map
@@ -81,6 +106,9 @@ This is an equivalent explicit choice rather than the exact ell^(-1/2)
 parametrization in the manuscript.
 
 LowerPhysical.exists_trial_sequence chooses constrained-search near-minimizers.
+The current manuscript chooses exact minimizers using attainment. The Lean
+argument retains the sufficient variational approximation with vanishing
+normalized error and needs no additional attainment assumption.
 exists_sector_le selects an occupied sector with energy no greater than its
 countable mixture average. It assumes neither integer mean particle number
 nor radiality of the selected sector.
@@ -89,7 +117,7 @@ Neutralization.charge_bound derives the surface-order charge bound from the
 Onsager/capacity lower bound and extensive upper energy estimate.
 NeutralizationGeometry.exists_prepared_annulus constructs the rounded neutral
 outer radius, positive integer shell population, fixed width and a lower
-bound for the trimmed sampling volume. shellCharge_properties constructs the
+bound 8*pi*R^2 for the trimmed sampling volume. shellCharge_properties constructs the
 radial signed shell charge and controls its mass and total variation.
 
 NeutralizationElectrostatics proves shell cancellation through a symmetric
@@ -100,21 +128,49 @@ Neutralization.shell_correction_bound_at_outer_radius. Its negative monopole
 term is retained in exists_neutral_completion_with_monopole before being
 dropped for the thermodynamic comparison.
 
-OrbitalSample provides the iid classical expectation with its negative
-omitted self-interaction, an integrable kinetic penalty, particle count and
-local orbital energy estimate. select_orbitals proves favorable realization
-selection. The continuum iid measure, actual orbitals, exact numerical
-penalty constants and their Fock realization are not implemented here.
-The completion theorem combines these local inputs with the proved charge,
-geometry and cancellation estimates. LowerPhysical.lower_comparison then
-uses only the canonical LN limit on neutral balls to obtain eJ <= eU.
+OrbitalAnnulus defines normalized Lebesgue measure on the actual trimmed
+annulus. OrbitalSampling uses its finite product, proves almost-sure distinct
+centers and derives the classical expectation with its negative omitted
+self-interaction. OrbitalGeometry chooses radii equal to half the minimum
+of one and the nearest-neighbour distance. It proves pairwise disjoint balls,
+strict annular confinement and the kinetic sum estimate with baseline 4*pi^2
+per particle and the inverse-square pair penalty.
+
+OrbitalRadial constructs the reduced profile sqrt(2/r)*sin(pi*s/r), the
+zero-extended Euclidean orbital and its density. It proves unit reduced mass,
+the Dirichlet integral pi^2/r^2, and the density's radial mass identity.
+The Newton kernel gives the point-charge potential outside the orbital ball.
+The point-charge minus smeared-potential defect is nonnegative and its radial
+integrand is at most the radius variable. Its integral against a measurable
+angular occupation fraction between zero and one bounds background loss by
+2*pi*rho*r^2, hence pi*rho/2 for the chosen radii. The needed scalar defect
+integrability is also proved.
+
+OrbitalKernel integrates the three-dimensional penalty to 32*pi^3 and bounds
+its mean under the uniform center law. OrbitalConstruction.exists_local_state
+combines these facts with general operator identities for arbitrary smooth
+normalized reduced profiles. The product law supplies existence, confinement
+and exact energy decomposition of the many-body state. Pair Newton, harmonic
+core averaging and the exact polar/Fubini background identity remain inputs.
+No concrete Sobolev-domain or antisymmetrized Fock implementation is claimed.
+
+Neutralization.StandardLaws.sample constructs OrbitalSample with the derived
+constant kineticCoeff*(4*pi^2 + 16*pi^3) + (pi/2)*abs(rho). Its remaining
+shell_pairing law is an exact Coulomb expansion for a uniform annular charge
+of arbitrary real mass and the confined core. select_orbitals proves favorable
+realization selection. The completion theorem combines these results with
+the proved charge, annular geometry and shell cancellation estimates.
+LowerPhysical.lower_comparison then uses the canonical LN limit on neutral
+balls to obtain eJ <= eU.
 
 3. Upper comparison
 
 SmoothCollar and RadialCollar construct compensated profiles and prove their
 neutrality, regularity, zero exterior potential and surface costs. Gluing,
 FluidRegularity and UpperConstruction produce the core-plus-fluid geometry
-and finite trial estimate. The fluid law is a bounded-density quasifree bound.
+and finite trial estimate. NearGroundBallLaw retains near-ground-state bounds,
+which suffice where the current manuscript chooses exact ball ground states.
+The fluid law is a bounded-density quasifree bound.
 It suffices for the proved fluid density cap, but does not verify the full
 unbounded-density LLS epsilon-dependent lemma or its numerical constants.
 
@@ -124,7 +180,7 @@ the measurable finite selection of translates. SmoothCube and UpperBackground
 supply the fixed smoothed cubic background.
 
 CoulombForm.core_fluid_identity and MeasurableTrial.given_product_jellium give
-the exact fixed-background identity eq:attack_exact_upper_identity. Core-core,
+the exact fixed-background identity eq:upper_exact_identity. Core-core,
 core-collar and distinct-collar cross terms vanish by proved support and
 Newton cancellation. No estimate for a moving outer background is used.
 
@@ -145,7 +201,7 @@ fixed-packing constant than the manuscript's 26*(a + L). The rate is still
 O(R^2). UpperPhysical.fixed_packing_uniform_rate gives a normalized energy
 remainder of order 1/R. fixed_packing_uniform_upper proves that, for every
 positive eta, every shift is eventually bounded by the fixed-packing energy
-plus eta. This is the epsilon form of eq:attack_fixed_packing_upper, without
+plus eta. This is the epsilon form of eq:upper_fixed_packing, without
 introducing explicit supremum or limsup operators.
 
 These uniform estimates supplement the equality proof, which uses the exact
@@ -172,12 +228,13 @@ This logical audit does not prove that the physical inputs are implemented.
 
 Reproduction
 
-From lean/ run
+From lean_gpt/ run
 
-    python3 check.py
+    python3 check.py --record --jobs 4
 
-The current full run uses python3 check.py --jobs 4. This forces the same
-checks with four compiler processes, scheduled after their local imports.
+This records a full run with four compiler processes, scheduled after their
+local imports. Omit --record to check without replacing the saved log and
+JSON record, or omit --jobs 4 to use one compiler process.
 
 This forces a rebuild of all local sources with autoImplicit=false,
 relaxedAutoImplicit=false and warnings treated as errors. For changed modules
@@ -192,29 +249,23 @@ The cached mathlib commit matches the pinned revision. Its only tracked
 differences are existing executable-bit changes on Python utility scripts,
 with no content changes. The verification does not execute those scripts.
 
-The unchanged runner was previously checked using a temporary compiler fixture. Those checks
-covered dependency ordering with parallel workers, incremental freshness,
-mandatory audit execution, wrong-version rejection and failure propagation.
+The --record option writes compiler output and audit results from the actual
+run. It records failures and refuses partial source lists. Source paths use
+the current lean_gpt directory. The saved hashes identify the checked inputs
+and do not imply that Lean reads or proves the LaTeX manuscript itself.
 
 Build result
 
-Passed on 12 October 2026 at 19.39 CEST.
+verification.json is the generated record of the latest full check. It gives
+the completion time, exit status, compiler, mathlib revision, checked modules,
+declaration counts and audit results. verification.log contains the complete
+compiler output, theorem types and principal input laws. The record also
+contains the source and documentation hashes and log digest.
 
-    python3 check.py --jobs 4
-
-The full forced rebuild exited successfully. All 64 local modules were
-compiled, comprising 62 mathematical modules, Jellium.lean and Audit.lean.
-Warnings were treated as errors. The audit checked 939 theorem declarations
-and 470 definitions with no sorryAx or additional axioms. It confirmed
-that every required main, lower, shell, upper, localization and scaling step
-is present in the main theorem's dependency graph. No retired assignment,
-contraction or scalar-obligation proof is used.
-The complete output, theorem types and principal input laws are in verification.log.
-The checked manuscript and Lean files match the recorded source hashes.
-
-SHA-256 of the checked jellium_ueg.tex
-
-    854fd12270e0d3e66b0a0c555871dd885402ea53d63557f4a54da37b226cd774
-
-verification.json records the source hashes, checked module list, compiler,
-mathlib revision and log digest. This task did not edit the manuscript.
+The checker treats warnings as errors. The audit permits only propext,
+Classical.choice and Quot.sound. It requires the local orbital construction,
+its geometric, radial, kernel and sampling estimates, and the main lower,
+shell, upper, localization and scaling steps in the equality's proof. It rejects retired
+assignment, contraction and scalar-obligation dependencies.
+The manuscript and bibliography hashes identify the source references.
+They do not assert that the LaTeX text itself is a Lean theorem.

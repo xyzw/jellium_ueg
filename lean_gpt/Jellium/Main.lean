@@ -50,7 +50,7 @@ theorem unit_parameter_equality {ρ eJ eU : ℝ}
   Conjecture51.equality χ inputs.lower inputs.upper μ inputs.localization
     hρ zero_lt_one hcTF hsf ha inputs.interpolation inputs.interpolation_nonnegative
 
-/-- Theorem `thm:attack_equality` at every positive hbar and
+/-- Theorem `thm:main` at every positive hbar and
 density. The powers six and minus eight are derived from density scaling. -/
 theorem equality
     (jellium ueg : ℝ → ℝ → ℝ) (jelliumCoupling uegCoupling : ℝ → ℝ)

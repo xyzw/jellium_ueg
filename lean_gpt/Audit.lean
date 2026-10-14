@@ -47,12 +47,26 @@ run_cmd do
 #print axioms Jellium.UpperDensity.Inputs.average_uniform_bounds
 #print axioms Jellium.InnerDensity.discrepancy_l1
 #print axioms Jellium.InnerDensity.discrepancy_coulomb_tendsto_zero
+#print axioms Jellium.ThermodynamicSequence.exists_limit_of_geometric_recursion
+#print axioms Jellium.Neutralization.charge_bound
+#print axioms Jellium.Neutralization.charge_bound_unit_smearing
 #print axioms Jellium.NeutralizationGeometry.exists_prepared_annulus
 #print axioms Jellium.Neutralization.shell_cancellation_identity
 #print axioms Jellium.Neutralization.shell_correction_bound
 #print axioms Jellium.Neutralization.shell_correction_bound_at_outer_radius
 #print axioms Jellium.Neutralization.potential_constant_inside
 #print axioms Jellium.Neutralization.core_shell_interaction
+#print axioms Jellium.OrbitalGeometry.balls_pairwise_disjoint
+#print axioms Jellium.OrbitalGeometry.kinetic_sum_bound
+#print axioms Jellium.OrbitalRadial.reduced_normalized
+#print axioms Jellium.OrbitalRadial.reduced_kinetic
+#print axioms Jellium.OrbitalRadial.orbital_weightedBackgroundLoss_bound
+#print axioms Jellium.OrbitalAnnulus.ae_centers
+#print axioms Jellium.OrbitalKernel.kernel_l1
+#print axioms Jellium.OrbitalKernel.integrable_coulomb_centerLaw_prod
+#print axioms Jellium.OrbitalSampling.integral_classicalEnergy
+#print axioms Jellium.OrbitalConstruction.exists_local_state
+#print axioms Jellium.Neutralization.StandardLaws.sample
 #print axioms Jellium.Neutralization.select_orbitals
 #print axioms Jellium.Neutralization.exists_neutral_completion_with_monopole
 #print axioms Jellium.Neutralization.exists_neutral_completion
@@ -92,8 +106,23 @@ run_cmd do
     ``Jellium.EnergyScaling.equality_iff_coupling_equality,
     ``Jellium.LowerPhysical.exists_trial_sequence,
     ``Jellium.LowerPhysical.exists_sector_le,
+    ``Jellium.Neutralization.charge_bound,
+    ``Jellium.NeutralizationGeometry.exists_prepared_annulus,
     ``Jellium.Neutralization.exists_neutral_completion_with_monopole,
     ``Jellium.Neutralization.select_orbitals,
+    ``Jellium.Neutralization.StandardLaws.sample,
+    ``Jellium.OrbitalConstruction.exists_local_state,
+    ``Jellium.OrbitalGeometry.balls_pairwise_disjoint,
+    ``Jellium.OrbitalGeometry.kinetic_sum_bound,
+    ``Jellium.OrbitalRadial.reduced_normalized,
+    ``Jellium.OrbitalRadial.reduced_kinetic,
+    ``Jellium.OrbitalRadial.orbital_weightedBackgroundLoss_bound,
+    ``Jellium.OrbitalRadial.orbital_potential_eq_point,
+    ``Jellium.OrbitalAnnulus.ae_centers,
+    ``Jellium.OrbitalSampling.ae_injective,
+    ``Jellium.OrbitalSampling.integral_classicalEnergy,
+    ``Jellium.OrbitalKernel.integral_w_centerLaw_prod_le,
+    ``Jellium.OrbitalKernel.integrable_coulomb_centerLaw_prod,
     ``Jellium.Neutralization.shell_correction_bound_at_outer_radius,
     ``Jellium.Neutralization.potential_constant_inside,
     ``Jellium.UpperPhysical.fixed_family_comparison,
@@ -126,6 +155,7 @@ run_cmd do
 #check Jellium.Conjecture51.equality
 #check Jellium.Main.equality
 #check Jellium.Main.coupling_equality
+#check Jellium.ThermodynamicSequence.exists_limit_of_geometric_recursion
 #print Jellium.Main.UnitParameterInputs
 #check Jellium.Neutralization.exists_neutral_completion_with_monopole
 #print Jellium.LowerPhysical.StandardLaws
@@ -133,4 +163,6 @@ run_cmd do
 #print Jellium.UpperDensity.LocalizationLaws
 #print Jellium.TrialState.StateAPI
 #print Jellium.Neutralization.StandardLaws
+#print Jellium.OrbitalConstruction.OperatorLaws
+#check Jellium.OrbitalConstruction.exists_local_state
 #print Jellium.Neutralization.OrbitalSample

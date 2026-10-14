@@ -30,6 +30,12 @@ import Jellium.MixtureIntegrability
 import Jellium.Neutralization
 import Jellium.NeutralizationElectrostatics
 import Jellium.NeutralizationGeometry
+import Jellium.OrbitalAnnulus
+import Jellium.OrbitalConstruction
+import Jellium.OrbitalGeometry
+import Jellium.OrbitalKernel
+import Jellium.OrbitalRadial
+import Jellium.OrbitalSampling
 import Jellium.Packing
 import Jellium.PackingParameters
 import Jellium.Periodic
@@ -47,6 +53,7 @@ import Jellium.SmoothCollar
 import Jellium.SmoothCube
 import Jellium.SmoothingError
 import Jellium.Spatial
+import Jellium.ThermodynamicSequence
 import Jellium.TrialState
 import Jellium.UniformCounting
 import Jellium.Upper
